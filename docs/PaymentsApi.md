@@ -11,7 +11,7 @@ Method | HTTP request | Description
 > PageablePaymentResources GetPayments(ctx, optional)
 Get payments
 
-Get payments of the user that is authorized by the access_token. <p>Note: For requesting / executing payments, please refer to the 'Accounts' section of the API.</p>
+Get payments of the user that is authorized by the access_token.
 
 ### Required Parameters
 

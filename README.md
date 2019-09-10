@@ -2,7 +2,7 @@
 
 > This package provides a finAPI SDK for Go. It was created via [swagger-codegen](https://github.com/swagger-api/swagger-codegen) as described in [the finAPI documentation](https://finapi.zendesk.com/hc/en-us/articles/219390177-SDK-creation-for-finAPI-). Addionally some wrapper code was added to improve the usability.
 
-- API version: v1.71.0.b1
+- API version: v1.79.0
 - Package version: 1.0.0
 - Build package: io.swagger.codegen.languages.GoClientCodegen
 
@@ -47,7 +47,7 @@ bankConnection, res, err := client.BankConnectionsApi.ImportBankConnection(userC
 
 ## Documentation for API Endpoints
 
-All URIs are relative to the enpoint your provided in the configuration.
+All URIs are relative to *https://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -64,6 +64,7 @@ Class | Method | HTTP request | Description
 *AccountsApi* | [**RequestSepaMoneyTransfer**](docs/AccountsApi.md#requestsepamoneytransfer) | **Post** /api/v1/accounts/requestSepaMoneyTransfer | Request SEPA Money Transfer
 *AuthorizationApi* | [**GetToken**](docs/AuthorizationApi.md#gettoken) | **Post** /oauth/token | Get tokens
 *AuthorizationApi* | [**RevokeToken**](docs/AuthorizationApi.md#revoketoken) | **Post** /oauth/revoke | Revoke a token
+*BankConnectionsApi* | [**ConnectInterface**](docs/BankConnectionsApi.md#connectinterface) | **Post** /api/v1/bankConnections/connectInterface | Connect a new interface
 *BankConnectionsApi* | [**DeleteAllBankConnections**](docs/BankConnectionsApi.md#deleteallbankconnections) | **Delete** /api/v1/bankConnections | Delete all bank connections
 *BankConnectionsApi* | [**DeleteBankConnection**](docs/BankConnectionsApi.md#deletebankconnection) | **Delete** /api/v1/bankConnections/{id} | Delete a bank connection
 *BankConnectionsApi* | [**EditBankConnection**](docs/BankConnectionsApi.md#editbankconnection) | **Patch** /api/v1/bankConnections/{id} | Edit a bank connection
@@ -71,6 +72,7 @@ Class | Method | HTTP request | Description
 *BankConnectionsApi* | [**GetBankConnection**](docs/BankConnectionsApi.md#getbankconnection) | **Get** /api/v1/bankConnections/{id} | Get a bank connection
 *BankConnectionsApi* | [**GetMultipleBankConnections**](docs/BankConnectionsApi.md#getmultiplebankconnections) | **Get** /api/v1/bankConnections/{ids} | Get multiple bank connections
 *BankConnectionsApi* | [**ImportBankConnection**](docs/BankConnectionsApi.md#importbankconnection) | **Post** /api/v1/bankConnections/import | Import a new bank connection
+*BankConnectionsApi* | [**RemoveInterface**](docs/BankConnectionsApi.md#removeinterface) | **Post** /api/v1/bankConnections/removeInterface | Remove an interface
 *BankConnectionsApi* | [**UpdateBankConnection**](docs/BankConnectionsApi.md#updatebankconnection) | **Post** /api/v1/bankConnections/update | Update a bank connection
 *BanksApi* | [**GetAndSearchAllBanks**](docs/BanksApi.md#getandsearchallbanks) | **Get** /api/v1/banks | Get and search all banks
 *BanksApi* | [**GetBank**](docs/BanksApi.md#getbank) | **Get** /api/v1/banks/{id} | Get a bank
@@ -113,6 +115,16 @@ Class | Method | HTTP request | Description
 *SecuritiesApi* | [**GetAndSearchAllSecurities**](docs/SecuritiesApi.md#getandsearchallsecurities) | **Get** /api/v1/securities | Get and search all securities
 *SecuritiesApi* | [**GetMultipleSecurities**](docs/SecuritiesApi.md#getmultiplesecurities) | **Get** /api/v1/securities/{ids} | Get multiple securities
 *SecuritiesApi* | [**GetSecurity**](docs/SecuritiesApi.md#getsecurity) | **Get** /api/v1/securities/{id} | Get a security
+*TPPCertificatesApi* | [**CreateNewCertificate**](docs/TPPCertificatesApi.md#createnewcertificate) | **Post** /api/v1/tppCertificates | Create a new certificate
+*TPPCertificatesApi* | [**DeleteCertificate**](docs/TPPCertificatesApi.md#deletecertificate) | **Delete** /api/v1/tppCertificates/{id} | Delete a certificate
+*TPPCertificatesApi* | [**GetAllCertificates**](docs/TPPCertificatesApi.md#getallcertificates) | **Get** /api/v1/tppCertificates | Get all certificates
+*TPPCertificatesApi* | [**GetCertificate**](docs/TPPCertificatesApi.md#getcertificate) | **Get** /api/v1/tppCertificates/{id} | Get a certificate
+*TPPCredentialsApi* | [**CreateTppCredential**](docs/TPPCredentialsApi.md#createtppcredential) | **Post** /api/v1/tppCredentials | Create new TPP credentials
+*TPPCredentialsApi* | [**DeleteTppCredential**](docs/TPPCredentialsApi.md#deletetppcredential) | **Delete** /api/v1/tppCredentials/{id} | Delete a set of TPP credentials
+*TPPCredentialsApi* | [**EditTppCredential**](docs/TPPCredentialsApi.md#edittppcredential) | **Patch** /api/v1/tppCredentials/{id} | Edit a set of TPP credentials
+*TPPCredentialsApi* | [**GetAllTppCredentials**](docs/TPPCredentialsApi.md#getalltppcredentials) | **Get** /api/v1/tppCredentials | Get all TPP credentials
+*TPPCredentialsApi* | [**GetAndSearchTppAuthenticationGroups**](docs/TPPCredentialsApi.md#getandsearchtppauthenticationgroups) | **Get** /api/v1/tppCredentials/tppAuthenticationGroups | Get all TPP Authentication Groups
+*TPPCredentialsApi* | [**GetTppCredential**](docs/TPPCredentialsApi.md#gettppcredential) | **Get** /api/v1/tppCredentials/{id} | Get a set of TPP credentials
 *TransactionsApi* | [**DeleteAllTransactions**](docs/TransactionsApi.md#deletealltransactions) | **Delete** /api/v1/transactions | Delete all transactions
 *TransactionsApi* | [**DeleteTransaction**](docs/TransactionsApi.md#deletetransaction) | **Delete** /api/v1/transactions/{id} | Delete a transaction
 *TransactionsApi* | [**EditMultipleTransactions**](docs/TransactionsApi.md#editmultipletransactions) | **Patch** /api/v1/transactions | Edit multiple transactions
@@ -140,13 +152,19 @@ Class | Method | HTTP request | Description
 
  - [AccessToken](docs/AccessToken.md)
  - [Account](docs/Account.md)
+ - [AccountInterface](docs/AccountInterface.md)
  - [AccountList](docs/AccountList.md)
  - [AccountParams](docs/AccountParams.md)
+ - [AccountReference](docs/AccountReference.md)
  - [BadCredentialsError](docs/BadCredentialsError.md)
  - [Bank](docs/Bank.md)
  - [BankConnection](docs/BankConnection.md)
+ - [BankConnectionInterface](docs/BankConnectionInterface.md)
  - [BankConnectionList](docs/BankConnectionList.md)
  - [BankConnectionOwner](docs/BankConnectionOwner.md)
+ - [BankConsent](docs/BankConsent.md)
+ - [BankInterface](docs/BankInterface.md)
+ - [BankInterfaceLoginField](docs/BankInterfaceLoginField.md)
  - [BankList](docs/BankList.md)
  - [CashFlow](docs/CashFlow.md)
  - [CashFlowList](docs/CashFlowList.md)
@@ -161,11 +179,13 @@ Class | Method | HTTP request | Description
  - [ClearingAccountData](docs/ClearingAccountData.md)
  - [ClientConfiguration](docs/ClientConfiguration.md)
  - [ClientConfigurationParams](docs/ClientConfigurationParams.md)
+ - [ConnectInterfaceParams](docs/ConnectInterfaceParams.md)
  - [DailyBalance](docs/DailyBalance.md)
  - [DailyBalanceList](docs/DailyBalanceList.md)
  - [DirectDebitOrderingResponse](docs/DirectDebitOrderingResponse.md)
  - [EditBankConnectionParams](docs/EditBankConnectionParams.md)
  - [EditCategoryParams](docs/EditCategoryParams.md)
+ - [EditTppCredentialParams](docs/EditTppCredentialParams.md)
  - [ErrorDetails](docs/ErrorDetails.md)
  - [ErrorMessage](docs/ErrorMessage.md)
  - [ExecutePasswordChangeParams](docs/ExecutePasswordChangeParams.md)
@@ -185,11 +205,15 @@ Class | Method | HTTP request | Description
  - [Label](docs/Label.md)
  - [LabelList](docs/LabelList.md)
  - [LabelParams](docs/LabelParams.md)
+ - [LoginCredential](docs/LoginCredential.md)
+ - [LoginCredentialResource](docs/LoginCredentialResource.md)
  - [MockAccountData](docs/MockAccountData.md)
  - [MockBankConnectionUpdate](docs/MockBankConnectionUpdate.md)
  - [MockBatchUpdateParams](docs/MockBatchUpdateParams.md)
  - [MoneyTransferOrderingResponse](docs/MoneyTransferOrderingResponse.md)
  - [MonthlyUserStats](docs/MonthlyUserStats.md)
+ - [MultiStepAuthenticationCallback](docs/MultiStepAuthenticationCallback.md)
+ - [MultiStepAuthenticationChallenge](docs/MultiStepAuthenticationChallenge.md)
  - [NewTransaction](docs/NewTransaction.md)
  - [NotificationRule](docs/NotificationRule.md)
  - [NotificationRuleList](docs/NotificationRuleList.md)
@@ -201,6 +225,9 @@ Class | Method | HTTP request | Description
  - [PageableLabelList](docs/PageableLabelList.md)
  - [PageablePaymentResources](docs/PageablePaymentResources.md)
  - [PageableSecurityList](docs/PageableSecurityList.md)
+ - [PageableTppAuthenticationGroupResources](docs/PageableTppAuthenticationGroupResources.md)
+ - [PageableTppCertificateList](docs/PageableTppCertificateList.md)
+ - [PageableTppCredentialResources](docs/PageableTppCredentialResources.md)
  - [PageableTransactionList](docs/PageableTransactionList.md)
  - [PageableUserInfoList](docs/PageableUserInfoList.md)
  - [Paging](docs/Paging.md)
@@ -208,6 +235,7 @@ Class | Method | HTTP request | Description
  - [Payment](docs/Payment.md)
  - [PaymentExecutionResponse](docs/PaymentExecutionResponse.md)
  - [PaypalTransactionData](docs/PaypalTransactionData.md)
+ - [RemoveInterfaceParams](docs/RemoveInterfaceParams.md)
  - [RequestPasswordChangeParams](docs/RequestPasswordChangeParams.md)
  - [RequestSepaDirectDebitParams](docs/RequestSepaDirectDebitParams.md)
  - [RequestSepaMoneyTransferParams](docs/RequestSepaMoneyTransferParams.md)
@@ -217,6 +245,11 @@ Class | Method | HTTP request | Description
  - [SingleMoneyTransferRecipientData](docs/SingleMoneyTransferRecipientData.md)
  - [SplitTransactionsParams](docs/SplitTransactionsParams.md)
  - [SubTransactionParams](docs/SubTransactionParams.md)
+ - [TppAuthenticationGroup](docs/TppAuthenticationGroup.md)
+ - [TppCertificate](docs/TppCertificate.md)
+ - [TppCertificateParams](docs/TppCertificateParams.md)
+ - [TppCredentials](docs/TppCredentials.md)
+ - [TppCredentialsParams](docs/TppCredentialsParams.md)
  - [TrainCategorizationData](docs/TrainCategorizationData.md)
  - [TrainCategorizationTransactionData](docs/TrainCategorizationTransactionData.md)
  - [Transaction](docs/Transaction.md)
