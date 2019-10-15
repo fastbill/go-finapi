@@ -17,7 +17,7 @@ import (
 	"net/url"
 	"strings"
 
-	. "github.com/fastbill/go-finapi/model"
+	. "github.com/fastbill/go-finapi/v3/model"
 )
 
 // Linger please

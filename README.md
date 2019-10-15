@@ -9,8 +9,8 @@
 ## Usage
 ```go
 import ( 
-    "github.com/fastbill/go-finapi"
-    finapimodel "github.com/fastbill/go-finapi/model"
+    "github.com/fastbill/go-finapi/v3"
+    finapimodel "github.com/fastbill/go-finapi/v3/model"
 )
 
 
