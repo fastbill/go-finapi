@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: "finAPI RESTful Services"
-  version: "v1.79.0"
+  version: "v1.93.0"
   title: "finAPI RESTful Services"
 basePath: "/"
 tags:
@@ -142,19 +142,19 @@ paths:
         x-exportParamName: "MaxBalance"
         x-optionalDataType: "Float32"
       responses:
-        200:
+        "200":
           description: "List of requested accounts"
           schema:
             $ref: "#/definitions/AccountList"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -177,25 +177,25 @@ paths:
       operationId: "deleteAllAccounts"
       parameters: []
       responses:
-        200:
+        "200":
           description: "List of identifiers of deleted accounts"
           schema:
             $ref: "#/definitions/IdentifierList"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        423:
+        "423":
           description: "No action was performed as at least one account is currently\
             \ being imported, updated (either by the user or by finAPI's automatic\
             \ batch update), or because the categorization of transactions is performed."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -272,21 +272,22 @@ paths:
         required: false
         type: "integer"
         default: 1
-        minimum: 1.0
+        minimum: 1
         x-exportParamName: "Page"
         x-optionalDataType: "Int32"
       - name: "perPage"
         in: "query"
-        description: "Maximum number of records per page. Can be at most 500. NOTE:\
-          \ Due to its validation and visualization, the swagger frontend might show\
-          \ very low performance, or even crashes, when a service responds with a\
-          \ lot of data. It is recommended to use a HTTP client like Postman or DHC\
-          \ instead of our swagger frontend for service calls with large page sizes."
+        description: "Maximum number of records per page. By default it's 20. Can\
+          \ be at most 500. NOTE: Due to its validation and visualization, the swagger\
+          \ frontend might show very low performance, or even crashes, when a service\
+          \ responds with a lot of data. It is recommended to use a HTTP client like\
+          \ Postman or DHC instead of our swagger frontend for service calls with\
+          \ large page sizes."
         required: false
         type: "integer"
         default: 20
-        maximum: 500.0
-        minimum: 1.0
+        maximum: 500
+        minimum: 1
         x-exportParamName: "PerPage"
         x-optionalDataType: "Int32"
       - name: "order"
@@ -309,31 +310,31 @@ paths:
         collectionFormat: "multi"
         x-exportParamName: "Order"
       responses:
-        200:
+        "200":
           description: "List of requested daily balances"
           schema:
             $ref: "#/definitions/DailyBalanceList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Account(s) not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "Invalid date range (e.g. endDate < startDate)"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -364,28 +365,28 @@ paths:
           $ref: "#/definitions/ExecuteSepaDirectDebitParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Response for the SEPA Direct Debit execute"
           schema:
             $ref: "#/definitions/PaymentExecutionResponse"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role or your client does not have\
             \ payments enabled (see client configuration)"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Account not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "ILLEGAL_ENTITY_STATE if no pending SEPA direct debit order\
             \ exists for the account; BANK_SERVER_REJECTION if the bank server responded\
             \ with an error message when finAPI tried to execute the direct debit\
@@ -394,13 +395,13 @@ paths:
             \ useful information."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        423:
+        "423":
           description: "SEPA Direct Debit cannot get executed at the moment as the\
             \ update is currently being executed (either by the user or by finAPI's\
             \ automatic batch update)."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -431,28 +432,28 @@ paths:
           $ref: "#/definitions/ExecuteSepaMoneyTransferParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Response for the SEPA Money Transfer execute"
           schema:
             $ref: "#/definitions/PaymentExecutionResponse"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role or your client does not have\
             \ payments enabled (see client configuration)"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Account not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "ILLEGAL_ENTITY_STATE if no pending SEPA money transfer order\
             \ exists for the account; BANK_SERVER_REJECTION if the bank server responded\
             \ with an error message when finAPI tried to execute the money transfer\
@@ -461,13 +462,13 @@ paths:
             \ useful information."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        423:
+        "423":
           description: "SEPA Money Transfer cannot get executed at the moment as the\
             \ update is currently being executed (either by the user or by finAPI's\
             \ automatic batch update)."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -517,28 +518,28 @@ paths:
           $ref: "#/definitions/RequestSepaDirectDebitParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Response for the SEPA Direct Debit request"
           schema:
             $ref: "#/definitions/DirectDebitOrderingResponse"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role or your client does not have\
             \ payments enabled (see client configuration)"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Account not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "ILLEGAL_FIELD_VALUE if SEPA purpose code is specified incorrectly;<br/>ILLEGAL_ENTITY_STATE\
             \ if no PIN has been specified and finAPI has no PIN stored for the account's\
             \ bank connection or if the account used for the request is DEPRECATED/not\
@@ -558,23 +559,23 @@ paths:
             \ from the bank server that contains  useful information for the user."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        423:
+        "423":
           description: "SEPA Direct Debit cannot get requested at the moment as the\
             \ update is currently being executed (either by the user or by finAPI's\
             \ automatic batch update)."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        451:
+        "451":
           description: "In case the user must enter credentials and/or select a two-step-procedure\
             \ within finAPI's web form. See: <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391'\
             \ target='_blank'>finAPI's Web Form Flow</a>"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        501:
+        "501":
           description: "The given bank is currently not supported by finAPI"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -629,28 +630,28 @@ paths:
           $ref: "#/definitions/RequestSepaMoneyTransferParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Response for the SEPA Money Transfer request"
           schema:
             $ref: "#/definitions/MoneyTransferOrderingResponse"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role or your client does not have\
             \ payments enabled (see client configuration)"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Account not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "ILLEGAL_ENTITY_STATE if no PIN has been specified and finAPI\
             \ has no PIN stored for the account's bank connection or if the account\
             \ used for the request is DEPRECATED/not found on bank side;<br/>UNSUPPORTED_ORDER\
@@ -674,27 +675,27 @@ paths:
             \ incorrectly; if SEPA purpose code is specified incorrectly"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        423:
+        "423":
           description: "SEPA Money Transfer cannot get requested at the moment as\
             \ the update is currently being executed (either by the user or by finAPI's\
             \ automatic batch update)."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        451:
+        "451":
           description: "In case the user must enter credentials and/or select a two-step-procedure\
             \ within finAPI's web form. See: <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391'\
             \ target='_blank'>finAPI's Web Form Flow</a>"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        501:
+        "501":
           description: "The given bank is currently not supported by finAPI"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        510:
+        "510":
           description: "In case the bank requires an additional authentication by\
             \ the user. The error's message will contain instructions for the user.\
             \ Redo the service call and pass the user's answer to the challenge in\
@@ -734,23 +735,23 @@ paths:
         pattern: "[\\d]+,[\\d,]+"
         x-exportParamName: "Ids"
       responses:
-        200:
+        "200":
           description: "List of requested accounts"
           schema:
             $ref: "#/definitions/AccountList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -778,27 +779,27 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "Requested account"
           schema:
             $ref: "#/definitions/Account"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Account not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -832,27 +833,27 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "Account deleted (empty response body)"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Account not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        423:
+        "423":
           description: "Account cannot get deleted at the moment as it is currently\
             \ being imported or updated (either by the user or by finAPI's automatic\
             \ batch update), or because the categorization of transactions is performed."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -887,35 +888,35 @@ paths:
           $ref: "#/definitions/AccountParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Edited account"
           schema:
             $ref: "#/definitions/Account"
-        400:
+        "400":
           description: "MISSING_FIELD if neither a name, nor a type, nor the 'isNew'\
             \ flag were specified; UNKNOWN_ENTITY if the given account type id does\
             \ not exist"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Account not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        423:
+        "423":
           description: "Account cannot get edited at the moment as it is currently\
             \ being imported or updated (either by the user or by finAPI's automatic\
             \ batch update)."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -949,19 +950,19 @@ paths:
         collectionFormat: "multi"
         x-exportParamName: "Ids"
       responses:
-        200:
+        "200":
           description: "List of requested bank connections"
           schema:
             $ref: "#/definitions/BankConnectionList"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -983,26 +984,26 @@ paths:
       operationId: "deleteAllBankConnections"
       parameters: []
       responses:
-        200:
+        "200":
           description: "List of identifiers of deleted bank connections"
           schema:
             $ref: "#/definitions/IdentifierList"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        423:
+        "423":
           description: "No action was performed at the moment as at least one bank\
             \ connection is being imported, updated (either by the user or by finAPI's\
             \ automatic batch update), or because the categorization of transactions\
             \ is currently performed."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -1046,23 +1047,23 @@ paths:
           $ref: "#/definitions/ConnectInterfaceParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Bank connection with the new interface"
           schema:
             $ref: "#/definitions/BankConnection"
-        400:
+        "400":
           description: "Bad Request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "UNKNOWN_ENTITY if the specified bank connection identifier\
             \ does not exist;<br/>ILLEGAL_FIELD_VALUE:<br/> - if the given credentials\
             \ do not contain at least one non-secret and one secret field;<br/> -\
@@ -1083,21 +1084,21 @@ paths:
             \ field was set, but there is no pending challenge for this bank connection;<br/>"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        451:
+        "451":
           description: "In case the user must enter credentials within finAPI's web\
             \ form. See: <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391'\
             \ target='_blank'>finAPI's Web Form Flow</a>"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        501:
+        "501":
           description: "This bank is currently not supported by finAPI"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        510:
+        "510":
           description: "In case the bank requires an additional authentication by\
             \ the user. The error's 'multiStepAuthentication' field contains further\
             \ instructions. The actual MSA flow depends on the bank and may contain\
@@ -1110,7 +1111,7 @@ paths:
             \ means that the bank has requested a challenge code for the previously\
             \ given TSP (SCA). This status can be completed by setting the 'challengeResponse'\
             \ field.<br/>When the web form flow is used, the user should submit the\
-            \ challenge response for the challenge message shown by the web form.<br/><br/>REDIRECT_REQUIRES\
+            \ challenge response for the challenge message shown by the web form.<br/><br/>REDIRECT_REQUIRED\
             \ means that the user must be redirected to the bank's website, where\
             \ the authentication can be finished.<br/>When the web form flow is used,\
             \ the user should visit the web form, get a redirect to the bank's website,\
@@ -1160,8 +1161,28 @@ paths:
         \ for the demo bank connection, i.e. when importing the demo bank connection,\
         \ you will always get the transactions for its account. You can enable multi-step\
         \ authentication for the demo bank connection by setting the bank connection\
-        \ name to \"MSA\".<br/><br/><b>For a more in-depth understanding of the import\
-        \ process, please also read this article on our Dev Portal: <a href='https://finapi.zendesk.com/hc/en-us/articles/115000296607-Import-Update-of-Bank-Connections-Accounts'\
+        \ name to \"MSA\".<br/><br/>The XS2A interface could also be used to initiate\
+        \ a demo connection import.<br/>The finAPI demo XS2A allows you to download\
+        \ a test account by using the 'import' or 'connectInterface' services - in\
+        \ general, this XS2A demo account is the FINTS_SERVER demo account, as it\
+        \ has the same account number and origin of balances and transactions.<br/>Keep\
+        \ in mind, that calling an XS2A demo connection import will result as a newly\
+        \ created bank connection, when the 'connectInterface' service attaches the\
+        \ XS2A demo account to an existing demo connection.<br/>Passing the login\
+        \ credentials is not obligated only for redirect banks, however the demo bank\
+        \ works without any given set of credentials for the XS2A interface. The old\
+        \ API credentials fields (bankingUserId, bankingCustomerId, bankingPin) are\
+        \ DEPRECATED and temporarily mapped on the new credentials data structure,\
+        \ allowing you to use them within the XS2A import. This is not recommended,\
+        \ as those fields are going to be removed at some point later.<br/>If you\
+        \ are looking to test the XS2A SCA (Strong Customer Authentication, or MSA\
+        \ (Multi-Step Authentication) in the finAPI context), you need to pass the\
+        \ bank connection name as \"MSA\" to trigger the SCA flow or as 'DECOUPLED-AUTH'\
+        \ to simulate decoupled authentication. To get better understanding about\
+        \ the Multi-Step Authentication, please refer to the 'Error Messages' section\
+        \ of the swagger documentation.<br/><br/><b>For a more in-depth understanding\
+        \ of the import process, please also read this article on our Dev Portal:\
+        \ <a href='https://finapi.zendesk.com/hc/en-us/articles/115000296607-Import-Update-of-Bank-Connections-Accounts'\
         \ target='_blank'>Import & Update of Bank Connections / Accounts</a></b><br/><br/>NOTE:\
         \ Depending on your license, this service may respond with HTTP code 451,\
         \ containing an error message with a identifier of web form in it. In addition\
@@ -1171,10 +1192,9 @@ paths:
         \ refer to this article: <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391'\
         \ target='_blank'>finAPI's Web Form Flow</a><br/><br/><b>Attention:</b> Due\
         \ to changes on the bank's side we have been forced to limit the maxDaysForDownload\
-        \ field to 89 days. Now any import or update of a bank connection will only\
-        \ fetch the last three months of transactions per account, regardless if maxDaysForDownload\
-        \ is defined or not. We're working of fixing this behaviour by implementing\
-        \ the multi step authentication workflow for FinTS."
+        \ field to 89 days to reduce the risk of strong customer authentication (SCA)\
+        \ requests. If you have implemented the SCA flow, please contact us, so that\
+        \ we can remove this limitation from your client."
       operationId: "importBankConnection"
       parameters:
       - in: "body"
@@ -1185,23 +1205,23 @@ paths:
           $ref: "#/definitions/ImportBankConnectionParams"
         x-exportParamName: "Body"
       responses:
-        201:
+        "201":
           description: "Imported bank connection"
           schema:
             $ref: "#/definitions/BankConnection"
-        400:
+        "400":
           description: "Bad Request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "UNKNOWN_ENTITY if the specified bank identifier does not exist;<br/>ENTITY_EXISTS\
             \ if such a bank connection already exists;<br/>ILLEGAL_FIELD_VALUE:<br/>\
             \ - if the given credentials do not contain at least one non-secret and\
@@ -1224,21 +1244,21 @@ paths:
             \ challenge for this bank connection;<br/>"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        451:
+        "451":
           description: "In case the user must enter credentials within finAPI's web\
             \ form. See: <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391'\
             \ target='_blank'>finAPI's Web Form Flow</a>"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        501:
+        "501":
           description: "This bank is currently not supported by finAPI"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        510:
+        "510":
           description: "In case the bank requires an additional authentication by\
             \ the user. The error's 'multiStepAuthentication' field contains further\
             \ instructions. The actual MSA flow depends on the bank and may contain\
@@ -1251,7 +1271,7 @@ paths:
             \ means that the bank has requested a challenge code for the previously\
             \ given TSP (SCA). This status can be completed by setting the 'challengeResponse'\
             \ field.<br/>When the web form flow is used, the user should submit the\
-            \ challenge response for the challenge message shown by the web form.<br/><br/>REDIRECT_REQUIRES\
+            \ challenge response for the challenge message shown by the web form.<br/><br/>REDIRECT_REQUIRED\
             \ means that the user must be redirected to the bank's website, where\
             \ the authentication can be finished.<br/>When the web form flow is used,\
             \ the user should visit the web form, get a redirect to the bank's website,\
@@ -1288,27 +1308,27 @@ paths:
           $ref: "#/definitions/RemoveInterfaceParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Bank connection interface removed (empty response body)"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Bank connection interface not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        423:
+        "423":
           description: "Bank connection interface cannot be removed at the moment\
             \ as it is currently being imported or updated (either by the user or\
             \ by finAPI's automatic batch update)."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -1324,7 +1344,12 @@ paths:
       summary: "Update a bank connection"
       description: "Update an existing bank connection of the user that is authorized\
         \ by the access_token. Downloads and imports the current account balances\
-        \ and new transactions. Must pass the connection's identifier and the user's\
+        \ and new transactions. Note that if the bank connection has several interfaces\
+        \ and some of its accounts was previously imported or updated via an interface\
+        \ which have higher priority than the interface used in the current update,\
+        \ then balances and transactions will not be downloaded for such accounts\
+        \ (The XS2A interface has the highest priority, followed by FINTS_SERVER and\
+        \ finally WEB_SCRAPER). Must pass the connection's identifier and the user's\
         \ access_token. For more information about the processes of authentication,\
         \ data download and transactions categorization, see POST /bankConnections/import.\
         \ Note that supported two-step-procedures are updated as well. It may unset\
@@ -1344,11 +1369,11 @@ paths:
         \ to finAPI's web form. For a detailed explanation of the Web Form Flow, please\
         \ refer to this article: <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391'\
         \ target='_blank'>finAPI's Web Form Flow</a><br/><br/><b>Attention:</b> Due\
-        \ to changes on the bank's side we have been forced to limit the maxDaysForDownload\
-        \ field to 89 days. Now any import or update of a bank connection will only\
-        \ fetch the last three months of transactions per account, regardless if maxDaysForDownload\
-        \ is defined or not. We're working of fixing this behaviour by implementing\
-        \ the multi step authentication workflow for FinTS."
+        \ to changes on the bank's side we have been forced to limit the transaction\
+        \ download time frame to 89 days. Now any update of a bank connection will\
+        \ fetch the last three months of transactions per account. If the last successful\
+        \ update was more than 3 months ago, an adjusting entry ('Zwischensaldo' transaction)\
+        \ will be created."
       operationId: "updateBankConnection"
       parameters:
       - in: "body"
@@ -1359,27 +1384,27 @@ paths:
           $ref: "#/definitions/UpdateBankConnectionParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Bank connection that the update was triggered for"
           schema:
             $ref: "#/definitions/BankConnection"
-        400:
+        "400":
           description: "Bad Request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Bank connection not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "MISSING_FIELD if the credentials (stored in finAPI and provided\
             \ in the request) do not contain at least one non-secret and one secret\
             \ field;<br/>ILLEGAL_FIELD_VALUE:<br/> - if any of the specified credentials\
@@ -1399,30 +1424,31 @@ paths:
             \ were not correct or that the connection is not activated for online\
             \ banking);<br/>NO_EXISTING_CHALLENGE in case the 'challengeResponse'\
             \ field was set, but there is no pending challenge for this bank connection;<br/>INVALID_CONSENT\
-            \ if access data of the bank connection has already expired."
+            \ if access data of the bank connection has already expired. Please retry\
+            \ the call to request a new consent."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        423:
+        "423":
           description: "Bank connection cannot get updated at the moment as it is\
             \ currently being imported or updated (either by the user or by finAPI's\
             \ automatic batch update)."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        451:
+        "451":
           description: "In case the user must enter credentials within finAPI's web\
             \ form. See: <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391'\
             \ target='_blank'>finAPI's Web Form Flow</a>"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        501:
+        "501":
           description: "This bank is currently not supported by finAPI"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        510:
+        "510":
           description: "In case the bank requires an additional authentication by\
             \ the user. The error's 'multiStepAuthentication' field contains further\
             \ instructions. The actual MSA flow depends on the bank and may contain\
@@ -1435,7 +1461,7 @@ paths:
             \ means that the bank has requested a challenge code for the previously\
             \ given TSP (SCA). This status can be completed by setting the 'challengeResponse'\
             \ field.<br/>When the web form flow is used, the user should submit the\
-            \ challenge response for the challenge message shown by the web form.<br/><br/>REDIRECT_REQUIRES\
+            \ challenge response for the challenge message shown by the web form.<br/><br/>REDIRECT_REQUIRED\
             \ means that the user must be redirected to the bank's website, where\
             \ the authentication can be finished.<br/>When the web form flow is used,\
             \ the user should visit the web form, get a redirect to the bank's website,\
@@ -1482,23 +1508,23 @@ paths:
         pattern: "[\\d]+,[\\d,]+"
         x-exportParamName: "Ids"
       responses:
-        200:
+        "200":
           description: "List of requested bank connections"
           schema:
             $ref: "#/definitions/BankConnectionList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -1526,27 +1552,27 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "Requested bank connection"
           schema:
             $ref: "#/definitions/BankConnection"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Bank connection not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -1578,28 +1604,28 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "Bank connection deleted (empty response body)"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Bank connection not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        423:
+        "423":
           description: "Bank connection cannot get deleted at the moment as it is\
             \ currently being imported or updated (either by the user or by finAPI's\
             \ automatic batch update), or because the categorization of transactions\
             \ is currently performed."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -1640,27 +1666,27 @@ paths:
           $ref: "#/definitions/EditBankConnectionParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Edited bank connection"
           schema:
             $ref: "#/definitions/BankConnection"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Bank connection not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "INVALID_TWO_STEP_PROCEDURE:<br/>if submitted two-step-procedure\
             \ does not exist for the user. Please use one of the procedures that are\
             \ listed in the bank connection;<br/>ILLEGAL_FIELD_VALUE:<br/>- if the\
@@ -1670,19 +1696,19 @@ paths:
             \ interface that is not connected to the bank;"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        423:
+        "423":
           description: "Bank connection cannot get edited at the moment as it is currently\
             \ being imported or updated (either by the user or by finAPI's automatic\
             \ batch update)."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        451:
+        "451":
           description: "In case the user must enter credentials within finAPI's web\
             \ form. See: <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391'\
             \ target='_blank'>finAPI's Web Form Flow</a>"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -1818,21 +1844,22 @@ paths:
         required: false
         type: "integer"
         default: 1
-        minimum: 1.0
+        minimum: 1
         x-exportParamName: "Page"
         x-optionalDataType: "Int32"
       - name: "perPage"
         in: "query"
-        description: "Maximum number of records per page. Can be at most 500. NOTE:\
-          \ Due to its validation and visualization, the swagger frontend might show\
-          \ very low performance, or even crashes, when a service responds with a\
-          \ lot of data. It is recommended to use a HTTP client like Postman or DHC\
-          \ instead of our swagger frontend for service calls with large page sizes."
+        description: "Maximum number of records per page. By default it's 20. Can\
+          \ be at most 500. NOTE: Due to its validation and visualization, the swagger\
+          \ frontend might show very low performance, or even crashes, when a service\
+          \ responds with a lot of data. It is recommended to use a HTTP client like\
+          \ Postman or DHC instead of our swagger frontend for service calls with\
+          \ large page sizes."
         required: false
         type: "integer"
         default: 20
-        maximum: 500.0
-        minimum: 1.0
+        maximum: 500
+        minimum: 1
         x-exportParamName: "PerPage"
         x-optionalDataType: "Int32"
       - name: "order"
@@ -1854,23 +1881,23 @@ paths:
         collectionFormat: "multi"
         x-exportParamName: "Order"
       responses:
-        200:
+        "200":
           description: "List of requested banks"
           schema:
             $ref: "#/definitions/PageableBankList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "You are not allowed to call this service"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -1907,23 +1934,23 @@ paths:
         pattern: "[\\d]+,[\\d,]+"
         x-exportParamName: "Ids"
       responses:
-        200:
+        "200":
           description: "List of requested banks"
           schema:
             $ref: "#/definitions/BankList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "You are not allowed to call this service"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -1952,27 +1979,27 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "Requested Bank"
           schema:
             $ref: "#/definitions/Bank"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "You are not allowed to call this service"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Bank not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -2033,21 +2060,22 @@ paths:
         required: false
         type: "integer"
         default: 1
-        minimum: 1.0
+        minimum: 1
         x-exportParamName: "Page"
         x-optionalDataType: "Int32"
       - name: "perPage"
         in: "query"
-        description: "Maximum number of records per page. Can be at most 500. NOTE:\
-          \ Due to its validation and visualization, the swagger frontend might show\
-          \ very low performance, or even crashes, when a service responds with a\
-          \ lot of data. It is recommended to use a HTTP client like Postman or DHC\
-          \ instead of our swagger frontend for service calls with large page sizes."
+        description: "Maximum number of records per page. By default it's 20. Can\
+          \ be at most 500. NOTE: Due to its validation and visualization, the swagger\
+          \ frontend might show very low performance, or even crashes, when a service\
+          \ responds with a lot of data. It is recommended to use a HTTP client like\
+          \ Postman or DHC instead of our swagger frontend for service calls with\
+          \ large page sizes."
         required: false
         type: "integer"
         default: 20
-        maximum: 500.0
-        minimum: 1.0
+        maximum: 500
+        minimum: 1
         x-exportParamName: "PerPage"
         x-optionalDataType: "Int32"
       - name: "order"
@@ -2069,23 +2097,23 @@ paths:
         collectionFormat: "multi"
         x-exportParamName: "Order"
       responses:
-        200:
+        "200":
           description: "List of requested categories"
           schema:
             $ref: "#/definitions/PageableCategoryList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -2112,28 +2140,28 @@ paths:
           $ref: "#/definitions/CategoryParams"
         x-exportParamName: "Body"
       responses:
-        201:
+        "201":
           description: "Created category"
           schema:
             $ref: "#/definitions/Category"
-        400:
+        "400":
           description: "The category name is too long. The maximum length for a category\
             \ name is 128."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "UNKNOWN_ENTITY if the parent category does not exist."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "ILLEGAL_ENTITY_STATE if The given parentId references a sub-category\
             \ instead of a main category (Multi-level sub-categories are not supported);\
             \ <br/>ENTITY_EXISTS if a category with that name already exists.<br/>NOTE:\
@@ -2150,7 +2178,7 @@ paths:
             \ get created"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -2169,23 +2197,23 @@ paths:
       operationId: "deleteAllCategories"
       parameters: []
       responses:
-        200:
+        "200":
           description: "List of identifiers of deleted categories"
           schema:
             $ref: "#/definitions/IdentifierList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -2425,27 +2453,27 @@ paths:
         collectionFormat: "multi"
         x-exportParamName: "Order"
       responses:
-        200:
+        "200":
           description: "List of requested cash flows"
           schema:
             $ref: "#/definitions/CashFlowList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Category not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -2478,29 +2506,29 @@ paths:
           $ref: "#/definitions/TrainCategorizationData"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Categorization rules updated (empty response body)"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Category not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "The number of transactions exceeds the limit of 100."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -2537,23 +2565,23 @@ paths:
         pattern: "[\\d]+,[\\d,]+"
         x-exportParamName: "Ids"
       responses:
-        200:
+        "200":
           description: "List of requested categories"
           schema:
             $ref: "#/definitions/CategoryList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -2582,27 +2610,27 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "Requested category"
           schema:
             $ref: "#/definitions/Category"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Category not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -2631,29 +2659,29 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "Category was deleted successfully (empty response body)"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Category not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "Category cannot be deleted"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -2686,31 +2714,31 @@ paths:
           $ref: "#/definitions/EditCategoryParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Edited transaction category"
           schema:
             $ref: "#/definitions/Category"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Category not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "Category cannot be edited"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -2729,23 +2757,23 @@ paths:
       operationId: "getClientConfiguration"
       parameters: []
       responses:
-        200:
+        "200":
           description: "Current client configuration"
           schema:
             $ref: "#/definitions/ClientConfiguration"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -2772,23 +2800,23 @@ paths:
           $ref: "#/definitions/ClientConfigurationParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "New client configuration"
           schema:
             $ref: "#/definitions/ClientConfiguration"
-        400:
+        "400":
           description: "Bad request (e.g. invalid callback URL)"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -2839,21 +2867,22 @@ paths:
         required: false
         type: "integer"
         default: 1
-        minimum: 1.0
+        minimum: 1
         x-exportParamName: "Page"
         x-optionalDataType: "Int32"
       - name: "perPage"
         in: "query"
-        description: "Maximum number of records per page. Can be at most 500. NOTE:\
-          \ Due to its validation and visualization, the swagger frontend might show\
-          \ very low performance, or even crashes, when a service responds with a\
-          \ lot of data. It is recommended to use a HTTP client like Postman or DHC\
-          \ instead of our swagger frontend for service calls with large page sizes."
+        description: "Maximum number of records per page. By default it's 20. Can\
+          \ be at most 500. NOTE: Due to its validation and visualization, the swagger\
+          \ frontend might show very low performance, or even crashes, when a service\
+          \ responds with a lot of data. It is recommended to use a HTTP client like\
+          \ Postman or DHC instead of our swagger frontend for service calls with\
+          \ large page sizes."
         required: false
         type: "integer"
         default: 20
-        maximum: 500.0
-        minimum: 1.0
+        maximum: 500
+        minimum: 1
         x-exportParamName: "PerPage"
         x-optionalDataType: "Int32"
       - name: "order"
@@ -2871,23 +2900,23 @@ paths:
         collectionFormat: "multi"
         x-exportParamName: "Order"
       responses:
-        200:
+        "200":
           description: "List of requested labels"
           schema:
             $ref: "#/definitions/PageableLabelList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -2923,28 +2952,28 @@ paths:
           $ref: "#/definitions/LabelParams"
         x-exportParamName: "Body"
       responses:
-        201:
+        "201":
           description: "Created label"
           schema:
             $ref: "#/definitions/Label"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "ILLEGAL_FIELD_VALUE if  the given label name is too long;\
             \ ENTITY_EXISTS if a label with the given name already exists"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -2962,23 +2991,23 @@ paths:
       operationId: "deleteAllLabels"
       parameters: []
       responses:
-        200:
+        "200":
           description: "List of identifiers of deleted labels"
           schema:
             $ref: "#/definitions/IdentifierList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -3014,23 +3043,23 @@ paths:
         pattern: "[\\d]+,[\\d,]+"
         x-exportParamName: "Ids"
       responses:
-        200:
+        "200":
           description: "List of requested labels"
           schema:
             $ref: "#/definitions/LabelList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -3058,27 +3087,27 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "Requested label"
           schema:
             $ref: "#/definitions/Label"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Label not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -3104,25 +3133,25 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "Label deleted (empty response body)"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Label not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -3156,32 +3185,32 @@ paths:
           $ref: "#/definitions/LabelParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Edited label"
           schema:
             $ref: "#/definitions/Label"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Label not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "ILLEGAL_FIELD_VALUE if  the given label name is too long;\
             \ ENTITY_EXISTS if a label with the given name already exists"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -3211,27 +3240,27 @@ paths:
           $ref: "#/definitions/ChangeClientCredentialsParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Client secret successfully changed (empty response body)"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role. Make sure you're authorized\
             \ as the mandator admin client."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "The given 'clientId' is unknown or the given 'oldClientSecret'\
             \ is incorrect"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -3267,24 +3296,24 @@ paths:
           $ref: "#/definitions/UserIdentifiersParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "List of identifiers of deleted and not deleted users"
           schema:
             $ref: "#/definitions/UserIdentifiersList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role. Make sure you're authorized\
             \ as the mandator admin client."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -3407,6 +3436,16 @@ paths:
         format: "int32"
         x-exportParamName: "MinBankConnectionCountInMonthlyStats"
         x-optionalDataType: "Int32"
+      - name: "userId"
+        in: "query"
+        description: "The identifier of a user to search for. If specified, then only\
+          \ the user with the given id will be regarded. If no user can be found for\
+          \ the passed userId (because the user was deleted or his username was misspelled),\
+          \ then the result list will be empty."
+        required: false
+        type: "string"
+        x-exportParamName: "UserId"
+        x-optionalDataType: "String"
       - name: "isDeleted"
         in: "query"
         description: "If NOT specified, then the service will regard both active and\
@@ -3432,21 +3471,22 @@ paths:
         required: false
         type: "integer"
         default: 1
-        minimum: 1.0
+        minimum: 1
         x-exportParamName: "Page"
         x-optionalDataType: "Int32"
       - name: "perPage"
         in: "query"
-        description: "Maximum number of records per page. Can be at most 500. NOTE:\
-          \ Due to its validation and visualization, the swagger frontend might show\
-          \ very low performance, or even crashes, when a service responds with a\
-          \ lot of data. It is recommended to use a HTTP client like Postman or DHC\
-          \ instead of our swagger frontend for service calls with large page sizes."
+        description: "Maximum number of records per page. By default it's 20. Can\
+          \ be at most 500. NOTE: Due to its validation and visualization, the swagger\
+          \ frontend might show very low performance, or even crashes, when a service\
+          \ responds with a lot of data. It is recommended to use a HTTP client like\
+          \ Postman or DHC instead of our swagger frontend for service calls with\
+          \ large page sizes."
         required: false
         type: "integer"
         default: 20
-        maximum: 500.0
-        minimum: 1.0
+        maximum: 500
+        minimum: 1
         x-exportParamName: "PerPage"
         x-optionalDataType: "Int32"
       - name: "order"
@@ -3462,24 +3502,24 @@ paths:
         collectionFormat: "multi"
         x-exportParamName: "Order"
       responses:
-        200:
+        "200":
           description: "Requested users list"
           schema:
             $ref: "#/definitions/PageableUserInfoList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role. Make sure you're authorized\
             \ as the mandator admin client."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -3503,42 +3543,43 @@ paths:
         required: false
         type: "integer"
         default: 1
-        minimum: 1.0
+        minimum: 1
         x-exportParamName: "Page"
         x-optionalDataType: "Int32"
       - name: "perPage"
         in: "query"
-        description: "Maximum number of records per page. Can be at most 500. NOTE:\
-          \ Due to its validation and visualization, the swagger frontend might show\
-          \ very low performance, or even crashes, when a service responds with a\
-          \ lot of data. It is recommended to use a HTTP client like Postman or DHC\
-          \ instead of our swagger frontend for service calls with large page sizes."
+        description: "Maximum number of records per page. By default it's 20. Can\
+          \ be at most 500. NOTE: Due to its validation and visualization, the swagger\
+          \ frontend might show very low performance, or even crashes, when a service\
+          \ responds with a lot of data. It is recommended to use a HTTP client like\
+          \ Postman or DHC instead of our swagger frontend for service calls with\
+          \ large page sizes."
         required: false
         type: "integer"
         default: 20
-        maximum: 500.0
-        minimum: 1.0
+        maximum: 500
+        minimum: 1
         x-exportParamName: "PerPage"
         x-optionalDataType: "Int32"
       responses:
-        200:
+        "200":
           description: "Requested IBAN rules"
           schema:
             $ref: "#/definitions/PageableIbanRuleList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role. Make sure you're authorized\
             \ as the mandator admin client."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -3576,31 +3617,31 @@ paths:
           $ref: "#/definitions/IbanRulesParams"
         x-exportParamName: "Body"
       responses:
-        201:
+        "201":
           description: "Created IBAN rules"
           schema:
             $ref: "#/definitions/IbanRuleList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Category not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "ENTITY_EXISTS if at least one of the given rules already exists"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -3624,31 +3665,31 @@ paths:
           \ is 100."
         required: true
         schema:
-          $ref: "#/definitions/IdentifiersParams"
+          $ref: "#/definitions/IbanRuleIdentifiersParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "List of identifiers of deleted IBAN rules"
           schema:
             $ref: "#/definitions/IdentifierList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role. Make sure you're authorized\
             \ as the mandator admin client."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "IBAN rule not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -3672,42 +3713,43 @@ paths:
         required: false
         type: "integer"
         default: 1
-        minimum: 1.0
+        minimum: 1
         x-exportParamName: "Page"
         x-optionalDataType: "Int32"
       - name: "perPage"
         in: "query"
-        description: "Maximum number of records per page. Can be at most 500. NOTE:\
-          \ Due to its validation and visualization, the swagger frontend might show\
-          \ very low performance, or even crashes, when a service responds with a\
-          \ lot of data. It is recommended to use a HTTP client like Postman or DHC\
-          \ instead of our swagger frontend for service calls with large page sizes."
+        description: "Maximum number of records per page. By default it's 20. Can\
+          \ be at most 500. NOTE: Due to its validation and visualization, the swagger\
+          \ frontend might show very low performance, or even crashes, when a service\
+          \ responds with a lot of data. It is recommended to use a HTTP client like\
+          \ Postman or DHC instead of our swagger frontend for service calls with\
+          \ large page sizes."
         required: false
         type: "integer"
         default: 20
-        maximum: 500.0
-        minimum: 1.0
+        maximum: 500
+        minimum: 1
         x-exportParamName: "PerPage"
         x-optionalDataType: "Int32"
       responses:
-        200:
+        "200":
           description: "Requested keyword rules"
           schema:
             $ref: "#/definitions/PageableKeywordRuleList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role. Make sure you're authorized\
             \ as the mandator admin client."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -3748,32 +3790,32 @@ paths:
           $ref: "#/definitions/KeywordRulesParams"
         x-exportParamName: "Body"
       responses:
-        201:
+        "201":
           description: "Created keyword rules"
           schema:
             $ref: "#/definitions/KeywordRuleList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Category not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "ENTITY_EXISTS if at least one of the given rules already exists;\
             \ ILLEGAL_FIELD_VALUE if the request contains incorrect keywords."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -3797,31 +3839,31 @@ paths:
           \ is 100."
         required: true
         schema:
-          $ref: "#/definitions/IdentifiersParams"
+          $ref: "#/definitions/KeywordRuleIdentifiersParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "List of identifiers of deleted keyword rules"
           schema:
             $ref: "#/definitions/IdentifierList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role. Make sure you're authorized\
             \ as the mandator admin client."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Keyword rule not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -3881,23 +3923,23 @@ paths:
         x-exportParamName: "IncludeDetails"
         x-optionalDataType: "Bool"
       responses:
-        200:
+        "200":
           description: "List of requested notification rules"
           schema:
             $ref: "#/definitions/NotificationRuleList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "You are not allowed to call this service"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -3936,35 +3978,35 @@ paths:
           $ref: "#/definitions/NotificationRuleParams"
         x-exportParamName: "Body"
       responses:
-        201:
+        "201":
           description: "Created notification rule"
           schema:
             $ref: "#/definitions/NotificationRule"
-        400:
+        "400":
           description: "Bad Request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "You are not allowed to call this service"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "ILLEGAL_FIELD_VALUE if the given 'triggerEvent' does not match\
             \ any of the known constants, or if the 'params' field contains illegal\
             \ parameters for the respective trigger event; ENTITY_EXISTS if such a\
             \ notification rule already exists"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        423:
+        "423":
           description: "Notification rules cannot get created at the moment as finAPI's\
             \ automatic batch update is currently being executed"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -3982,24 +4024,24 @@ paths:
       operationId: "deleteAllNotificationRules"
       parameters: []
       responses:
-        200:
+        "200":
           description: "List of identifiers of deleted notification rules"
           schema:
             $ref: "#/definitions/IdentifierList"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "You are not allowed to call this service"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        423:
+        "423":
           description: "Notification rules cannot get deleted at the moment as finAPI's\
             \ automatic batch update is currently being executed"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -4027,27 +4069,27 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "Requested notification rule"
           schema:
             $ref: "#/definitions/NotificationRule"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "You are not allowed to call this service"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Notification rule not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -4074,26 +4116,26 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "Notification rule deleted (empty response body)"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "You are not allowed to call this service"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Notification rule not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        423:
+        "423":
           description: "Notification rules cannot get deleted at the moment as finAPI's\
             \ automatic batch update is currently being executed"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -4158,21 +4200,22 @@ paths:
         required: false
         type: "integer"
         default: 1
-        minimum: 1.0
+        minimum: 1
         x-exportParamName: "Page"
         x-optionalDataType: "Int32"
       - name: "perPage"
         in: "query"
-        description: "Maximum number of records per page. Can be at most 500. NOTE:\
-          \ Due to its validation and visualization, the swagger frontend might show\
-          \ very low performance, or even crashes, when a service responds with a\
-          \ lot of data. It is recommended to use a HTTP client like Postman or DHC\
-          \ instead of our swagger frontend for service calls with large page sizes."
+        description: "Maximum number of records per page. By default it's 20. Can\
+          \ be at most 500. NOTE: Due to its validation and visualization, the swagger\
+          \ frontend might show very low performance, or even crashes, when a service\
+          \ responds with a lot of data. It is recommended to use a HTTP client like\
+          \ Postman or DHC instead of our swagger frontend for service calls with\
+          \ large page sizes."
         required: false
         type: "integer"
         default: 20
-        maximum: 500.0
-        minimum: 1.0
+        maximum: 500
+        minimum: 1
         x-exportParamName: "PerPage"
         x-optionalDataType: "Int32"
       - name: "order"
@@ -4188,23 +4231,23 @@ paths:
         collectionFormat: "multi"
         x-exportParamName: "Order"
       responses:
-        200:
+        "200":
           description: "List of requested payments"
           schema:
             $ref: "#/definitions/PageablePaymentResources"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Authentication required"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "Unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -4268,21 +4311,22 @@ paths:
         required: false
         type: "integer"
         default: 1
-        minimum: 1.0
+        minimum: 1
         x-exportParamName: "Page"
         x-optionalDataType: "Int32"
       - name: "perPage"
         in: "query"
-        description: "Maximum number of records per page. Can be at most 500. NOTE:\
-          \ Due to its validation and visualization, the swagger frontend might show\
-          \ very low performance, or even crashes, when a service responds with a\
-          \ lot of data. It is recommended to use a HTTP client like Postman or DHC\
-          \ instead of our swagger frontend for service calls with large page sizes."
+        description: "Maximum number of records per page. By default it's 20. Can\
+          \ be at most 500. NOTE: Due to its validation and visualization, the swagger\
+          \ frontend might show very low performance, or even crashes, when a service\
+          \ responds with a lot of data. It is recommended to use a HTTP client like\
+          \ Postman or DHC instead of our swagger frontend for service calls with\
+          \ large page sizes."
         required: false
         type: "integer"
         default: 20
-        maximum: 500.0
-        minimum: 1.0
+        maximum: 500
+        minimum: 1
         x-exportParamName: "PerPage"
         x-optionalDataType: "Int32"
       - name: "order"
@@ -4303,23 +4347,23 @@ paths:
         collectionFormat: "multi"
         x-exportParamName: "Order"
       responses:
-        200:
+        "200":
           description: "List of requested securities"
           schema:
             $ref: "#/definitions/PageableSecurityList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -4358,23 +4402,23 @@ paths:
         pattern: "[\\d]+,[\\d,]+"
         x-exportParamName: "Ids"
       responses:
-        200:
+        "200":
           description: "List of requested securities"
           schema:
             $ref: "#/definitions/SecurityList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -4404,27 +4448,27 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "Requested security"
           schema:
             $ref: "#/definitions/Security"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Security not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -4454,23 +4498,23 @@ paths:
           $ref: "#/definitions/CheckCategorizationData"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "List of given transaction IDs, mapped to their found category"
           schema:
             $ref: "#/definitions/CategorizationCheckResults"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        422:
+        "422":
           description: "The number of transactions exceeds the maximum limit"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -4533,28 +4577,28 @@ paths:
           $ref: "#/definitions/MockBatchUpdateParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Mock batch update has been started (empty response body)"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "You are not allowed to call this service (for instance, because\
             \ automatic update is enabled for the user, or because you are trying\
             \ to call the service on a live environment)"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Bank connection or account not found; or account does not\
             \ belong to the bank connection it is nested in."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "At least one of the given account identifiers refers to a\
             \ security account; or at least one of the given bank connections is currently\
             \ locked due to another running update; or not all given bank connections\
@@ -4562,7 +4606,7 @@ paths:
             \ 1000."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -4587,42 +4631,43 @@ paths:
         required: false
         type: "integer"
         default: 1
-        minimum: 1.0
+        minimum: 1
         x-exportParamName: "Page"
         x-optionalDataType: "Int32"
       - name: "perPage"
         in: "query"
-        description: "Maximum number of records per page. Can be at most 500. NOTE:\
-          \ Due to its validation and visualization, the swagger frontend might show\
-          \ very low performance, or even crashes, when a service responds with a\
-          \ lot of data. It is recommended to use a HTTP client like Postman or DHC\
-          \ instead of our swagger frontend for service calls with large page sizes."
+        description: "Maximum number of records per page. By default it's 20. Can\
+          \ be at most 500. NOTE: Due to its validation and visualization, the swagger\
+          \ frontend might show very low performance, or even crashes, when a service\
+          \ responds with a lot of data. It is recommended to use a HTTP client like\
+          \ Postman or DHC instead of our swagger frontend for service calls with\
+          \ large page sizes."
         required: false
         type: "integer"
         default: 20
-        maximum: 500.0
-        minimum: 1.0
+        maximum: 500
+        minimum: 1
         x-exportParamName: "PerPage"
         x-optionalDataType: "Int32"
       responses:
-        200:
+        "200":
           description: "Requested certificates"
           schema:
             $ref: "#/definitions/PageableTppCertificateList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role. Make sure you're authorized\
             \ as the mandator admin client."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -4649,28 +4694,28 @@ paths:
           $ref: "#/definitions/TppCertificateParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "An identifier of the stored certificate"
           schema:
             $ref: "#/definitions/TppCertificate"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role. Make sure you're authorized\
             \ as the mandator admin client."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "Certificate is invalid or expired"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -4696,27 +4741,27 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "Requested certificate"
           schema:
             $ref: "#/definitions/TppCertificate"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Certificate not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -4741,21 +4786,21 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "Certificate deleted (empty response body)"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Certificate not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -4793,42 +4838,43 @@ paths:
         required: false
         type: "integer"
         default: 1
-        minimum: 1.0
+        minimum: 1
         x-exportParamName: "Page"
         x-optionalDataType: "Int32"
       - name: "perPage"
         in: "query"
-        description: "Maximum number of records per page. Can be at most 500. NOTE:\
-          \ Due to its validation and visualization, the swagger frontend might show\
-          \ very low performance, or even crashes, when a service responds with a\
-          \ lot of data. It is recommended to use a HTTP client like Postman or DHC\
-          \ instead of our swagger frontend for service calls with large page sizes."
+        description: "Maximum number of records per page. By default it's 20. Can\
+          \ be at most 500. NOTE: Due to its validation and visualization, the swagger\
+          \ frontend might show very low performance, or even crashes, when a service\
+          \ responds with a lot of data. It is recommended to use a HTTP client like\
+          \ Postman or DHC instead of our swagger frontend for service calls with\
+          \ large page sizes."
         required: false
         type: "integer"
         default: 20
-        maximum: 500.0
-        minimum: 1.0
+        maximum: 500
+        minimum: 1
         x-exportParamName: "PerPage"
         x-optionalDataType: "Int32"
       responses:
-        200:
+        "200":
           description: "Requested TPP credentials"
           schema:
             $ref: "#/definitions/PageableTppCredentialResources"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role. Make sure you're authorized\
             \ as the mandator admin client."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -4854,29 +4900,29 @@ paths:
           $ref: "#/definitions/TppCredentialsParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "An identifier of the stored tpp client credential"
           schema:
             $ref: "#/definitions/TppCredentials"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role. Make sure you're authorized\
             \ as the mandator admin client."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "UNKNOWN_ENTITY if the specified TPP authentication group does\
             \ not exist;<br/>ILLEGAL_FIELD_VALUE if the given validity dates are invalid"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -4898,6 +4944,19 @@ paths:
         \ functions as a 'get all' service."
       operationId: "getAndSearchTppAuthenticationGroups"
       parameters:
+      - name: "ids"
+        in: "query"
+        description: "A comma-separated list of TPP authentication group identifiers.\
+          \ If specified, then only TPP authentication groups whose identifier match\
+          \ any of the given identifiers will be regarded. The maximum number of identifiers\
+          \ is 1000."
+        required: false
+        type: "array"
+        items:
+          type: "integer"
+          format: "int64"
+        collectionFormat: "multi"
+        x-exportParamName: "Ids"
       - name: "name"
         in: "query"
         description: "Only the tpp authentication groups with name matching the given\
@@ -4928,42 +4987,43 @@ paths:
         required: false
         type: "integer"
         default: 1
-        minimum: 1.0
+        minimum: 1
         x-exportParamName: "Page"
         x-optionalDataType: "Int32"
       - name: "perPage"
         in: "query"
-        description: "Maximum number of records per page. Can be at most 500. NOTE:\
-          \ Due to its validation and visualization, the swagger frontend might show\
-          \ very low performance, or even crashes, when a service responds with a\
-          \ lot of data. It is recommended to use a HTTP client like Postman or DHC\
-          \ instead of our swagger frontend for service calls with large page sizes."
+        description: "Maximum number of records per page. By default it's 20. Can\
+          \ be at most 500. NOTE: Due to its validation and visualization, the swagger\
+          \ frontend might show very low performance, or even crashes, when a service\
+          \ responds with a lot of data. It is recommended to use a HTTP client like\
+          \ Postman or DHC instead of our swagger frontend for service calls with\
+          \ large page sizes."
         required: false
         type: "integer"
         default: 20
-        maximum: 500.0
-        minimum: 1.0
+        maximum: 500
+        minimum: 1
         x-exportParamName: "PerPage"
         x-optionalDataType: "Int32"
       responses:
-        200:
+        "200":
           description: "Requested TPP authentication groups"
           schema:
             $ref: "#/definitions/PageableTppAuthenticationGroupResources"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role. Make sure you're authorized\
             \ as the mandator admin client."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -4990,27 +5050,27 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "Requested TPP credentials"
           schema:
             $ref: "#/definitions/TppCredentials"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "TPP credentials not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -5036,21 +5096,21 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "TPP credentials deleted (empty response body)"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "TPP credentials not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -5082,32 +5142,32 @@ paths:
           $ref: "#/definitions/EditTppCredentialParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Edited TPP credentials"
           schema:
             $ref: "#/definitions/TppCredentials"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "TPP credentials not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "UNKNOWN_ENTITY if the specified TPP authentication group does\
             \ not exist;<br/>ILLEGAL_FIELD_VALUE if the given validity dates are invalid"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -5381,21 +5441,22 @@ paths:
         required: false
         type: "integer"
         default: 1
-        minimum: 1.0
+        minimum: 1
         x-exportParamName: "Page"
         x-optionalDataType: "Int32"
       - name: "perPage"
         in: "query"
-        description: "Maximum number of records per page. Can be at most 500. NOTE:\
-          \ Due to its validation and visualization, the swagger frontend might show\
-          \ very low performance, or even crashes, when a service responds with a\
-          \ lot of data. It is recommended to use a HTTP client like Postman or DHC\
-          \ instead of our swagger frontend for service calls with large page sizes."
+        description: "Maximum number of records per page. By default it's 20. Can\
+          \ be at most 500. NOTE: Due to its validation and visualization, the swagger\
+          \ frontend might show very low performance, or even crashes, when a service\
+          \ responds with a lot of data. It is recommended to use a HTTP client like\
+          \ Postman or DHC instead of our swagger frontend for service calls with\
+          \ large page sizes."
         required: false
         type: "integer"
         default: 20
-        maximum: 500.0
-        minimum: 1.0
+        maximum: 500
+        minimum: 1
         x-exportParamName: "PerPage"
         x-optionalDataType: "Int32"
       - name: "order"
@@ -5422,23 +5483,23 @@ paths:
         collectionFormat: "multi"
         x-exportParamName: "Order"
       responses:
-        200:
+        "200":
           description: "List of requested transactions"
           schema:
             $ref: "#/definitions/PageableTransactionList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -5463,8 +5524,8 @@ paths:
           \ If not specified, then no date limitation will be in place for the deletion."
         required: false
         type: "string"
-        maximum: 10.0
-        minimum: 10.0
+        maximum: 10
+        minimum: 10
         x-exportParamName: "MaxDeletionDate"
         x-optionalDataType: "String"
       - name: "safeMode"
@@ -5499,23 +5560,23 @@ paths:
         x-exportParamName: "RememberDeletion"
         x-optionalDataType: "Bool"
       responses:
-        200:
+        "200":
           description: "List of identifiers of all deleted transactions"
           schema:
             $ref: "#/definitions/IdentifierList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -5547,32 +5608,32 @@ paths:
           $ref: "#/definitions/UpdateMultipleTransactionsParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "List of identifiers of all updated transactions"
           schema:
             $ref: "#/definitions/IdentifierList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Category or labels not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "If 'isPotentialDuplicate' is set to 'true' (only 'false' is\
             \ allowed)"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -5617,30 +5678,30 @@ paths:
           $ref: "#/definitions/TriggerCategorizationParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Categorizations have been scheduled (empty response body)"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Given bank connection(s) not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "At least one of the target bank connections is currently locked,\
             \ or there are no bank connections to trigger categorization for"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -5677,23 +5738,23 @@ paths:
         pattern: "[\\d]+,[\\d,]+"
         x-exportParamName: "Ids"
       responses:
-        200:
+        "200":
           description: "List of requested transactions"
           schema:
             $ref: "#/definitions/TransactionList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -5739,32 +5800,32 @@ paths:
           $ref: "#/definitions/UpdateTransactionsParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "List of identifiers of all edited transactions"
           schema:
             $ref: "#/definitions/IdentifierList"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Category or labels not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "If 'isPotentialDuplicate' is set to 'true' (only 'false' is\
             \ allowed)"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -5792,27 +5853,27 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "Requested transaction"
           schema:
             $ref: "#/definitions/Transaction"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Transaction not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -5844,29 +5905,29 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "Transaction deleted (empty response body)"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Transaction not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "Transaction cannot get deleted"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -5903,32 +5964,32 @@ paths:
           $ref: "#/definitions/UpdateTransactionsParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Edited transaction"
           schema:
             $ref: "#/definitions/Transaction"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Transaction, category or labels not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "If 'isPotentialDuplicate' is set to 'true' (only 'false' is\
             \ allowed)"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -5954,32 +6015,32 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "Restored transaction"
           schema:
             $ref: "#/definitions/Transaction"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Transaction not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "The request transaction is a sub-transaction and can not be\
             \ restored."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -6014,34 +6075,34 @@ paths:
           $ref: "#/definitions/SplitTransactionsParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Split transaction"
           schema:
             $ref: "#/definitions/Transaction"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Transaction, category or labels not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "ILLEGAL_ENTITY_STATE if the transaction you are trying to\
             \ split is a sub-transaction; ILLEGAL_FIELD_VALUE if there is less than\
             \ two sub-transactions specified, or the specified sub-transactions' amounts\
             \ do not add up to the original transaction's amount"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -6061,19 +6122,19 @@ paths:
       operationId: "getAuthorizedUser"
       parameters: []
       responses:
-        200:
+        "200":
           description: "Authorized user's data"
           schema:
             $ref: "#/definitions/User"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -6106,29 +6167,29 @@ paths:
           $ref: "#/definitions/UserCreateParams"
         x-exportParamName: "Body"
       responses:
-        201:
+        "201":
           description: "Created user's data"
           schema:
             $ref: "#/definitions/User"
-        400:
+        "400":
           description: "Bad request (for instance if the given password is too short/long)"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "ENTITY_EXISTS if the given userId already exists; ILLEGAL_ENTITY_STATE\
             \ if you passed 'isAutoUpdateEnabled' = true, but the automatic update\
             \ can't be enabled for this user (as it is disabled for the client)."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -6153,24 +6214,24 @@ paths:
       operationId: "deleteAuthorizedUser"
       parameters: []
       responses:
-        200:
+        "200":
           description: "User deleted (empty response body)"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        423:
+        "423":
           description: "User cannot get deleted at the moment as at least one of his\
             \ bank connections is currently being imported or updated (either by the\
             \ user or by finAPI's automatic batch update), or because the categorization\
             \ of transactions is performed."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -6197,27 +6258,27 @@ paths:
           $ref: "#/definitions/UserUpdateParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Edited user data"
           schema:
             $ref: "#/definitions/User"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "The automatic update cannot be enabled"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -6244,26 +6305,26 @@ paths:
           $ref: "#/definitions/ExecutePasswordChangeParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Password changed (empty response body)"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role, or the given password change\
             \ token is not valid"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "User not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -6288,31 +6349,31 @@ paths:
           $ref: "#/definitions/RequestPasswordChangeParams"
         x-exportParamName: "Body"
       responses:
-        200:
+        "200":
           description: "Details of change password request"
           schema:
             $ref: "#/definitions/PasswordChangingResource"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "User not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "User is not verified"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -6338,23 +6399,23 @@ paths:
         type: "string"
         x-exportParamName: "UserId"
       responses:
-        200:
+        "200":
           description: "User's verification status"
           schema:
             $ref: "#/definitions/VerificationStatusResource"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "User not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -6381,29 +6442,29 @@ paths:
         type: "string"
         x-exportParamName: "UserId"
       responses:
-        200:
+        "200":
           description: "User verified (empty response body)"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "User not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "User already verified"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -6433,29 +6494,29 @@ paths:
         type: "string"
         x-exportParamName: "UserId"
       responses:
-        200:
+        "200":
           description: "User deleted (empty response body)"
-        400:
+        "400":
           description: "Identifier is not given"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "User not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        422:
+        "422":
           description: "The user with the given identifier is already verified"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -6484,27 +6545,27 @@ paths:
         format: "int64"
         x-exportParamName: "Id"
       responses:
-        200:
+        "200":
           description: "Requested web form"
           schema:
             $ref: "#/definitions/WebForm"
-        400:
+        "400":
           description: "Bad request"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Not authenticated or invalid access_token"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        404:
+        "404":
           description: "Web Form not found"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -6555,19 +6616,19 @@ paths:
         x-exportParamName: "TokenTypeHint"
         x-optionalDataType: "String"
       responses:
-        200:
+        "200":
           description: "Token was invalidated successfully or token was invalid (empty\
             \ response body)"
-        400:
+        "400":
           description: "The service does not support the revocation of the presented\
             \ token type."
           schema:
             $ref: "#/definitions/ErrorMessage"
-        403:
+        "403":
           description: "Incorrect authorization role"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -6687,28 +6748,28 @@ paths:
         x-exportParamName: "Password"
         x-optionalDataType: "String"
       responses:
-        200:
+        "200":
           description: "Requested token"
           schema:
             $ref: "#/definitions/AccessToken"
-        400:
+        "400":
           description: "Bad user credentials, or invalid refresh_token, or unsupported\
             \ grant_type"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        401:
+        "401":
           description: "Bad client credentials"
           schema:
             $ref: "#/definitions/BadCredentialsError"
-        403:
+        "403":
           description: "User is not verified"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        423:
+        "423":
           description: "User is locked"
           schema:
             $ref: "#/definitions/ErrorMessage"
-        500:
+        "500":
           description: "An unexpected error occurred"
           schema:
             $ref: "#/definitions/ErrorMessage"
@@ -6744,10 +6805,6 @@ definitions:
         example: "0b9KjiBVlZLz7a4HshSAIcFuscStiXT1VzT5mgNYwCQ_dWctTDsaIjedAhD1LpsOFJ7x6K8Emf8M3VOQkwNFR9FHijALYSQw2UeRwAC2MvrOKwfF1dHmOq5VEVYEaGf6"
         description: "Refresh token. Only set in case of grant_type='password'. Token\
           \ has a length of up to 128 characters."
-      access_token:
-        type: "string"
-        example: "yvMbx_TgwdYE0hgOVb8N4ZOvxOukqfjzYOGRZcJiCjQuRGkVIBfjjV3YG4zKTGiY2aPn2cQTGaQOT8uo5uo7_QOXts1s5UBSVuRHc6a8X30RrGBTyqV9h26SUHcZPNbZ"
-        description: "Access token. Token has a length of up to 128 characters."
       expires_in:
         type: "integer"
         format: "int32"
@@ -6755,6 +6812,10 @@ definitions:
         description: "Expiration time in seconds. A value of 0 means that the token\
           \ never expires (unless it is explicitly invalidated, e.g. by revocation,\
           \ or when a user gets locked)."
+      access_token:
+        type: "string"
+        example: "yvMbx_TgwdYE0hgOVb8N4ZOvxOukqfjzYOGRZcJiCjQuRGkVIBfjjV3YG4zKTGiY2aPn2cQTGaQOT8uo5uo7_QOXts1s5UBSVuRHc6a8X30RrGBTyqV9h26SUHcZPNbZ"
+        description: "Access token. Token has a length of up to 128 characters."
     description: "User access token info"
     example:
       access_token: "yvMbx_TgwdYE0hgOVb8N4ZOvxOukqfjzYOGRZcJiCjQuRGkVIBfjjV3YG4zKTGiY2aPn2cQTGaQOT8uo5uo7_QOXts1s5UBSVuRHc6a8X30RrGBTyqV9h26SUHcZPNbZ"
@@ -7330,8 +7391,8 @@ definitions:
           \ set via PATCH),<br/>7 = Membership,<br/>8 = Bausparen<br/><br/><br/> Note:\
           \ this field is deprecated and will be removed at some point. Please refer\
           \ to the accountType field instead."
-        minimum: 1.0
-        maximum: 7.0
+        minimum: 1
+        maximum: 7
       accountType:
         type: "string"
         example: "Checking"
@@ -7455,10 +7516,9 @@ definitions:
       isSupported:
         type: "boolean"
         example: true
-        description: "Whether this bank is supported by finAPI, i.e. whether you can\
-          \ import/update a bank connection of this bank.<br><br>NOTE: This field\
-          \ is deprecated and will be removed at some point. Please refer to field\
-          \ 'interfaces' instead."
+        description: "THIS FIELD IS DEPRECATED AND WILL BE REMOVED. Please refer to\
+          \ field 'interfaces' instead.<br/><br/>Whether this bank is supported by\
+          \ finAPI, i.e. whether you can import/update a bank connection of this bank."
       isTestBank:
         type: "boolean"
         example: true
@@ -7482,15 +7542,16 @@ definitions:
         type: "integer"
         format: "int32"
         example: 100
-        description: "The health status of this bank. This is a value between 0 and\
-          \ 100, depicting the percentage of successful communication attempts with\
-          \ this bank during the latest couple of bank connection imports or updates\
-          \ (across the entire finAPI system). Note that 'successful' means that there\
-          \ was no technical error trying to establish a communication with the bank.\
-          \ Non-technical errors (like incorrect credentials) are regarded successful\
-          \ communication attempts."
-        minimum: 0.0
-        maximum: 100.0
+        description: "THIS FIELD IS DEPRECATED AND WILL BE REMOVED. Refer to the 'health'\
+          \ in the 'interfaces' instead. <br/><br/>The health status of this bank.\
+          \ This is a value between 0 and 100, depicting the percentage of successful\
+          \ communication attempts with this bank during the latest couple of bank\
+          \ connection imports or updates (across the entire finAPI system). Note\
+          \ that 'successful' means that there was no technical error trying to establish\
+          \ a communication with the bank. Non-technical errors (like incorrect credentials)\
+          \ are regarded successful communication attempts."
+        minimum: 0
+        maximum: 100
       loginFieldUserId:
         type: "string"
         example: "Onlinebanking-ID"
@@ -7574,22 +7635,27 @@ definitions:
       lastCommunicationAttempt:
         type: "string"
         example: "2018-01-01 00:00:00.000"
-        description: "Time of the last communication attempt with this bank during\
-          \ a bank connection import or update (across the entire finAPI system).\
-          \ The value is returned in the format 'YYYY-MM-DD HH:MM:SS.SSS' (german\
-          \ time)."
+        description: "THIS FIELD IS DEPRECATED AND WILL BE REMOVED. Refer to the 'lastCommunicationAttempt'\
+          \ in the 'interfaces' instead. <br/><br/>Time of the last communication\
+          \ attempt with this bank during a bank connection import or update (across\
+          \ the entire finAPI system). The value is returned in the format 'YYYY-MM-DD\
+          \ HH:MM:SS.SSS' (german time)."
       lastSuccessfulCommunication:
         type: "string"
         example: "2018-01-01 00:00:00.000"
-        description: "Time of the last successful communication with this bank during\
-          \ a bank connection import or update (across the entire finAPI system).\
-          \ The value is returned in the format 'YYYY-MM-DD HH:MM:SS.SSS' (german\
-          \ time)."
+        description: "THIS FIELD IS DEPRECATED AND WILL BE REMOVED. Refer to the 'lastSuccessfulCommunication'\
+          \ in the 'interfaces' instead. <br/><br/>Time of the last successful communication\
+          \ with this bank during a bank connection import or update (across the entire\
+          \ finAPI system). The value is returned in the format 'YYYY-MM-DD HH:MM:SS.SSS'\
+          \ (german time)."
     description: "Container for a bank's data"
     example:
       lastCommunicationAttempt: "2018-01-01 00:00:00.000"
       interfaces:
       - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
+        lastCommunicationAttempt: "2018-01-01 00:00:00.000"
+        lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+        health: 100
         interface: "FINTS_SERVER"
         tppAuthenticationGroup:
           name: "AirBank XS2A CZ"
@@ -7604,6 +7670,9 @@ definitions:
         properties:
         - "REDIRECT_APPROACH"
       - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
+        lastCommunicationAttempt: "2018-01-01 00:00:00.000"
+        lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+        health: 100
         interface: "FINTS_SERVER"
         tppAuthenticationGroup:
           name: "AirBank XS2A CZ"
@@ -7772,14 +7841,12 @@ definitions:
         description: "NOTE: This field is deprecated and will be removed at some point.\
           \ Please refer to corresponding field in 'interfaces' instead.<br><br>The\
           \ default two-step-procedure. Must match one of the available 'procedureId's\
-          \ from the 'twoStepProcedures' list. When this field is set, you can execute\
-          \ two-step-procedures (accounts/requestSepaMoneyTransfer or /requestSepaDirectDebit)\
-          \ without having to explicitly set a procedure. finAPI will use the default\
-          \ procedure in such cases. Note that the list of available procedures of\
-          \ a bank connection may change as a result of an update of the connection,\
-          \ and if this field references a procedure that is no longer available after\
-          \ an update, finAPI will automatically clear the default procedure (set\
-          \ it to null).s"
+          \ from the 'twoStepProcedures' list. When this field is set, then finAPI\
+          \ will automatically try to select the procedure wherever applicable. Note\
+          \ that the list of available procedures of a bank connection may change\
+          \ as a result of an update of the connection, and if this field references\
+          \ a procedure that is no longer available after an update, finAPI will automatically\
+          \ clear the default procedure (set it to null)."
       twoStepProcedures:
         type: "array"
         description: "NOTE: This field is deprecated and will be removed at some point.\
@@ -7819,16 +7886,18 @@ definitions:
         type: "boolean"
         example: true
         description: "This field indicates whether the last communication with the\
-          \ bank failed with an error that requires the user's attention. If 'furtherLoginNotRecommended'\
-          \ is true, finAPI will stop auto updates of this bank connection to mitigate\
-          \ the risk of the user's bank account getting locked by the bank. Every\
-          \ communication with the bank (via updates, money_transfers, direct debits.\
-          \ etc.) can change the value of this flag. If this field is true, we recommend\
-          \ the user to check his credentials and try a manual update of the bank\
-          \ connection. If the update is successful, the 'furtherLoginNotRecommended'\
-          \ field will be set to false and the bank connection will be reincluded\
-          \ in the next batch update process. A manual update of the bank connection\
-          \ with incorrect credentials will set this field to true and lead to the\
+          \ bank failed with an error that requires the user's attention or multi-step\
+          \ authentication error. If 'furtherLoginNotRecommended' is true, finAPI\
+          \ will stop auto updates of this bank connection to mitigate the risk of\
+          \ the user's bank account getting locked by the bank. Every communication\
+          \ with the bank (via updates, money_transfers, direct debits. etc.) can\
+          \ change the value of this flag. If this field is true, we recommend the\
+          \ user to check his credentials and try a manual update of the bank connection.\
+          \ If the update is successful without any multi-step authentication error,\
+          \ the 'furtherLoginNotRecommended' field will be set to false and the bank\
+          \ connection will be reincluded in the next batch update process. A manual\
+          \ update of the bank connection with incorrect credentials or if multi-step\
+          \ authentication error happens will set this field to true and lead to the\
           \ exclusion of the bank connection from the following batch updates."
     description: "Container for a bank connection's data"
     example:
@@ -7932,6 +8001,9 @@ definitions:
         lastCommunicationAttempt: "2018-01-01 00:00:00.000"
         interfaces:
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
+          lastCommunicationAttempt: "2018-01-01 00:00:00.000"
+          lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
             name: "AirBank XS2A CZ"
@@ -7946,6 +8018,9 @@ definitions:
           properties:
           - "REDIRECT_APPROACH"
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
+          lastCommunicationAttempt: "2018-01-01 00:00:00.000"
+          lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
             name: "AirBank XS2A CZ"
@@ -8209,6 +8284,9 @@ definitions:
           lastCommunicationAttempt: "2018-01-01 00:00:00.000"
           interfaces:
           - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
+            lastCommunicationAttempt: "2018-01-01 00:00:00.000"
+            lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+            health: 100
             interface: "FINTS_SERVER"
             tppAuthenticationGroup:
               name: "AirBank XS2A CZ"
@@ -8223,6 +8301,9 @@ definitions:
             properties:
             - "REDIRECT_APPROACH"
           - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
+            lastCommunicationAttempt: "2018-01-01 00:00:00.000"
+            lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+            health: 100
             interface: "FINTS_SERVER"
             tppAuthenticationGroup:
               name: "AirBank XS2A CZ"
@@ -8380,6 +8461,9 @@ definitions:
           lastCommunicationAttempt: "2018-01-01 00:00:00.000"
           interfaces:
           - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
+            lastCommunicationAttempt: "2018-01-01 00:00:00.000"
+            lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+            health: 100
             interface: "FINTS_SERVER"
             tppAuthenticationGroup:
               name: "AirBank XS2A CZ"
@@ -8394,6 +8478,9 @@ definitions:
             properties:
             - "REDIRECT_APPROACH"
           - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
+            lastCommunicationAttempt: "2018-01-01 00:00:00.000"
+            lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+            health: 100
             interface: "FINTS_SERVER"
             tppAuthenticationGroup:
               name: "AirBank XS2A CZ"
@@ -8542,6 +8629,7 @@ definitions:
   BankInterface:
     type: "object"
     required:
+    - "health"
     - "interface"
     - "loginCredentials"
     properties:
@@ -8573,7 +8661,12 @@ definitions:
         description: "Set of interface properties/specifics. Possible values:<br><br>&bull;\
           \ <code>REDIRECT_APPROACH</code> - means that the interface uses a redirect\
           \ approach when authorizing the user. It requires you to pass the 'redirectUrl'\
-          \ field in all services which define the field.<br/><br/>&bull; <code>DECOUPLED_APPROACH</code>\
+          \ field in all services which define the field. If the user already has\
+          \ imported a bank connection of the same bank that he is about to import,\
+          \ we recommend to confront the user with the question: <blockquote>For the\
+          \ selected bank you have already imported successfully the following accounts:\
+          \ &lt;account list&gt;. Are you sure that you want to import another bank\
+          \ connection from &lt;bank name&gt;?\n</blockquote>&bull; <code>DECOUPLED_APPROACH</code>\
           \ - means that the interface uses a decoupled approach when authorizing\
           \ the user.<br/><br/>&bull; <code>DETAILED_CONSENT</code> - means that the\
           \ interface requires a list of account references when authorizing the user.\
@@ -8598,9 +8691,39 @@ definitions:
           \ note that the contents of this field should always be interpreted as HTML,\
           \ as the text might contain HTML tags for highlighted words, paragraphs,\
           \ etc."
+      health:
+        type: "integer"
+        format: "int32"
+        example: 100
+        description: "The health status of this interface. This is a value between\
+          \ 0 and 100, depicting the percentage of successful communication attempts\
+          \ with the bank via this interface during the latest couple of bank connection\
+          \ imports or updates (across the entire finAPI system). Note that 'successful'\
+          \ means that there was no technical error trying to establish a communication\
+          \ with the bank. Non-technical errors (like incorrect credentials) are regarded\
+          \ successful communication attempts."
+        minimum: 0
+        maximum: 100
+      lastCommunicationAttempt:
+        type: "string"
+        example: "2018-01-01 00:00:00.000"
+        description: "Time of the last communication attempt with this interface during\
+          \ an import, update or connect interface (across the entire finAPI system).\
+          \ The value is returned in the format 'YYYY-MM-DD HH:MM:SS.SSS' (german\
+          \ time)."
+      lastSuccessfulCommunication:
+        type: "string"
+        example: "2018-01-01 00:00:00.000"
+        description: "Time of the last successful communication with this interface\
+          \ during an import, update or connect interface (across the entire finAPI\
+          \ system). The value is returned in the format 'YYYY-MM-DD HH:MM:SS.SSS'\
+          \ (german time)."
     description: "Interface used to connect to a bank"
     example:
       loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
+      lastCommunicationAttempt: "2018-01-01 00:00:00.000"
+      lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+      health: 100
       interface: "FINTS_SERVER"
       tppAuthenticationGroup:
         name: "AirBank XS2A CZ"
@@ -8663,6 +8786,9 @@ definitions:
       - lastCommunicationAttempt: "2018-01-01 00:00:00.000"
         interfaces:
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
+          lastCommunicationAttempt: "2018-01-01 00:00:00.000"
+          lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
             name: "AirBank XS2A CZ"
@@ -8677,6 +8803,9 @@ definitions:
           properties:
           - "REDIRECT_APPROACH"
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
+          lastCommunicationAttempt: "2018-01-01 00:00:00.000"
+          lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
             name: "AirBank XS2A CZ"
@@ -8714,6 +8843,9 @@ definitions:
       - lastCommunicationAttempt: "2018-01-01 00:00:00.000"
         interfaces:
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
+          lastCommunicationAttempt: "2018-01-01 00:00:00.000"
+          lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
             name: "AirBank XS2A CZ"
@@ -8728,6 +8860,9 @@ definitions:
           properties:
           - "REDIRECT_APPROACH"
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
+          lastCommunicationAttempt: "2018-01-01 00:00:00.000"
+          lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
             name: "AirBank XS2A CZ"
@@ -9109,8 +9244,8 @@ definitions:
           \ = CreditCard,<br/>4 = Security,<br/>5 = Loan,<br/>6 = Pocket (DEPRECATED;\
           \ will not be returned for any account unless this type has explicitly been\
           \ set via PATCH),<br/>7 = Membership,<br/>8 = Bausparen<br/><br/>"
-        minimum: 1.0
-        maximum: 7.0
+        minimum: 1
+        maximum: 7
       amount:
         type: "number"
         example: -99.99
@@ -9306,7 +9441,8 @@ definitions:
       isXs2aEnabled:
         type: "boolean"
         example: true
-        description: "Whether this client is allowed to access XS2A services."
+        description: "NOTE: This field is deprecated and will be removed at some point.<br><br>Whether\
+          \ this client is allowed to access XS2A services."
       availableBankGroups:
         type: "array"
         example:
@@ -9345,6 +9481,14 @@ definitions:
           \ user allowing him to choose whether to store login secrets (like a PIN)\
           \ in finAPI. If this field is set to false, then the user won't have an\
           \ option to store this data."
+      supportSubjectDefault:
+        type: "string"
+        example: "Some subject"
+        description: "Default value for the subject element of support emails."
+      supportEmail:
+        type: "string"
+        example: "email@localhost.de"
+        description: "Email address to sent support requests to from the web form."
       pinStorageAvailableInWebForm:
         type: "boolean"
         example: true
@@ -9374,6 +9518,8 @@ definitions:
       - "DE"
       - "AT"
       - "IT"
+      supportSubjectDefault: "Some subject"
+      supportEmail: "email@localhost.de"
       userNotificationCallbackUrl: "https://bank.server.com/notification"
       isXs2aEnabled: true
       isAutomaticBatchUpdateEnabled: true
@@ -9490,6 +9636,19 @@ definitions:
           \ Only hexa decimal characters in capital case with a maximum length of\
           \ 25 characters are allowed. E.g. 'ABCDEF1234567890ABCDEF123'"
         pattern: "[0-9A-F]*"
+      supportSubjectDefault:
+        type: "string"
+        example: "Some subject"
+        description: "Default value for the subject element of support emails. Maximum\
+          \ length is 100. Pass an empty string ('') if you want to clear the current\
+          \ subject default value."
+      supportEmail:
+        type: "string"
+        example: "email@localhost.de"
+        description: "Email address to sent support requests to from the web form.\
+          \ Maximum length is 320. Pass an empty string ('') if you want to clear\
+          \ the current email address."
+        pattern: "[A-Za-z0-9¡-ʯ &\\(\\)\\{\\}\\[\\]\\.:,;\\?!\\+\\-_\\$@#~`\\^€]*"
     description: "Client configuration parameters"
   ConnectInterfaceParams:
     type: "object"
@@ -9776,6 +9935,7 @@ definitions:
           \ do not want to change the current name let this field remain unset. If\
           \ you want to clear the current name, set the field's value to an empty\
           \ string (\"\")."
+        pattern: "[A-Za-z0-9¡-ʯ &\\(\\)\\{\\}\\[\\]\\.:,;\\?!\\+\\-_\\$@#~`\\^€]*"
       bankingUserId:
         type: "string"
         example: "123456"
@@ -9788,7 +9948,7 @@ definitions:
           \ the service recognizes that you wish to use the web form flow. Note that\
           \ you cannot clear the current user ID, i.e. a bank connection must always\
           \ have a user ID (except for when it is a 'demo connection'). Max length:\
-          \ 64."
+          \ 170."
       bankingCustomerId:
         type: "string"
         example: "123456"
@@ -9800,7 +9960,7 @@ definitions:
           \ to let the user update the field, just set the field to non-empty value,\
           \ so that the service recognizes that you wish to use the web form flow.\
           \ If you want to clear the current customer ID, set the field's value to\
-          \ an empty string (\"\"). Max length: 64."
+          \ an empty string (\"\"). Max length: 170."
       bankingPin:
         type: "string"
         example: "123456"
@@ -9947,8 +10107,10 @@ definitions:
       type:
         type: "string"
         example: "TECHNICAL"
-        description: "Error type. BUSINESS errors depict German error messages for\
-          \ the user, e.g. from a bank server. TECHNICAL errors depict internal errors."
+        description: "Error type. BUSINESS errors depict error messages in the language\
+          \ of the bank (or the preferred language) for the user, e.g. from a bank\
+          \ server. TECHNICAL errors are meant to be read by developers and depict\
+          \ internal errors."
         enum:
         - "BUSINESS"
         - "TECHNICAL"
@@ -10013,7 +10175,7 @@ definitions:
         type: "string"
         example: "password"
         description: "User's new password. Minimum length is 6, and maximum length\
-          \ is 36."
+          \ is 128."
         pattern: "[A-Za-z0-9¡-ʯ &\\(\\)\\{\\}\\[\\]\\.:,;\\?!\\+\\-_\\$@#~`\\^€]*"
       passwordChangeToken:
         type: "string"
@@ -10116,6 +10278,22 @@ definitions:
         parentId: 373
       creationDate: "2018-01-01 00:00:00.000"
       direction: "Income"
+  IbanRuleIdentifiersParams:
+    type: "object"
+    required:
+    - "ids"
+    properties:
+      ids:
+        type: "array"
+        example:
+        - 1
+        - 2
+        - 3
+        description: "List of identifiers"
+        items:
+          type: "integer"
+          format: "int64"
+    description: "Identifiers params"
   IbanRuleList:
     type: "object"
     required:
@@ -10164,6 +10342,10 @@ definitions:
     - "direction"
     - "iban"
     properties:
+      iban:
+        type: "string"
+        example: "DE89370400440532013000"
+        description: "IBAN (case-insensitive)"
       categoryId:
         type: "integer"
         format: "int64"
@@ -10183,10 +10365,6 @@ definitions:
         - "Income"
         - "Spending"
         - "Both"
-      iban:
-        type: "string"
-        example: "DE89370400440532013000"
-        description: "IBAN (case-insensitive)"
     description: "Parameters of IBAN rule"
   IbanRulesParams:
     type: "object"
@@ -10222,22 +10400,6 @@ definitions:
       - 1
       - 2
       - 3
-  IdentifiersParams:
-    type: "object"
-    required:
-    - "ids"
-    properties:
-      ids:
-        type: "array"
-        example:
-        - 1
-        - 2
-        - 3
-        description: "List of identifiers"
-        items:
-          type: "integer"
-          format: "int64"
-    description: "Identifiers params"
   ImportBankConnectionParams:
     type: "object"
     required:
@@ -10259,7 +10421,7 @@ definitions:
         description: "NOTE: This field is deprecated and will be removed at some point.\
           \ Use 'loginCredentials' + 'interface' instead. If any of those two fields\
           \ is used, then the value of this field will be ignored.<br><br>Online banking\
-          \ user ID credential. Max length: 64. NOTES:<br/>- if you import the 'demo\
+          \ user ID credential. Max length: 170. NOTES:<br/>- if you import the 'demo\
           \ connection', this field can be left unset;<br/> - if the user will need\
           \ to enter his credentials in finAPI's web form, this field can contain\
           \ any value. It will be ignored."
@@ -10270,7 +10432,7 @@ definitions:
           \ Use 'loginCredentials' + 'interface' instead. If any of those two fields\
           \ is used, then the value of this field will be ignored.<br><br>Online banking\
           \ customer ID credential (for most banks this field can remain unset). Max\
-          \ length: 64. NOTES:<br/>- if the user will need to enter his credentials\
+          \ length: 170. NOTES:<br/>- if the user will need to enter his credentials\
           \ in finAPI's web form, this field can contain any value. It will be ignored."
       bankingPin:
         type: "string"
@@ -10374,8 +10536,10 @@ definitions:
           \ download transactions for the entire given date range, as the bank servers\
           \ may limit the date range on their own. Also note that this parameter only\
           \ applies to transactions, not to security positions; finAPI will always\
-          \ download all positions that it can get.<br/><br/><b>This flag is currently\
-          \ not guaranteed to work for all banks!</b>"
+          \ download all positions that it can get.<br/><br/><b>Please note: If you\
+          \ are not limiting the maxDaysForDownload with a value smaller than 90 days,\
+          \ the bank is more likely to trigger a strong customer authentication request\
+          \ for the user.</b>"
         default: 0
       accountTypes:
         type: "array"
@@ -10525,6 +10689,22 @@ definitions:
         parentId: 373
       creationDate: "2018-01-01 00:00:00.000"
       direction: "Spending"
+  KeywordRuleIdentifiersParams:
+    type: "object"
+    required:
+    - "ids"
+    properties:
+      ids:
+        type: "array"
+        example:
+        - 1
+        - 2
+        - 3
+        description: "List of identifiers"
+        items:
+          type: "integer"
+          format: "int64"
+    description: "Identifiers params"
   KeywordRuleList:
     type: "object"
     required:
@@ -10698,7 +10878,11 @@ definitions:
           \ the user."
       value:
         type: "string"
-        description: "Stored value for this login credential"
+        description: "Stored value for this login credential. Please NOTE:<br/>&bull;\
+          \ If a PIN is stored, this will always be 'XXXXX'.<br/>&bull; If your client\
+          \ has no license for processing banking credentials or if this field contains\
+          \ a value that requires password protection then this field will always\
+          \ be 'XXXXX'."
     description: "Container for a bank login credential"
     example:
       label: "Customer ID"
@@ -10965,14 +11149,27 @@ definitions:
         type: "string"
         example: "CHALLENGE_RESPONSE_REQUIRED"
         description: "Indicates the current status of the multi-step authentication\
-          \ flow:<br/>&bull; CHALLENGE_RESPONSE_REQUIRED - means that the bank has\
-          \ sent a 'challengeMessage' which must be presented to the user. The user's\
-          \ answer must then be passed back to finAPI as 'challengeResponse';<br/>&bull;\
-          \ TWO_STEP_PROCEDURE_REQUIRED - means that the user has to select one of\
-          \ the 'twoStepProcedures'. The selection must then be passed back to finAPI\
-          \ as 'twoStepProcedureId';<br/>&bull; REDIRECT_REQUIRED - means that the\
-          \ bank has sent a 'redirectUrl', to which the user must be forwarded. The\
-          \ bank's callback must then be passed back to finAPI as 'redirectCallback'."
+          \ flow:<br/><br/>TWO_STEP_PROCEDURE_REQUIRED means that the bank has requested\
+          \ an SCA method selection for the user. In this case, the service should\
+          \ be recalled with a chosen TSP-ID set to the 'twoStepProcedureId' field.<br/>When\
+          \ the web form flow is used, the user is forwarded to finAPI's web form\
+          \ to prompt for his credentials (if they are not stored in finAPI) and to\
+          \ select the preferred SCA method.<br/><br/>CHALLENGE_RESPONSE_REQUIRED\
+          \ means that the bank has requested a challenge code for the previously\
+          \ given TSP (SCA). This status can be completed by setting the 'challengeResponse'\
+          \ field.<br/>When the web form flow is used, the user should submit the\
+          \ challenge response for the challenge message shown by the web form.<br/><br/>REDIRECT_REQUIRED\
+          \ means that the user must be redirected to the bank's website, where the\
+          \ authentication can be finished.<br/>When the web form flow is used, the\
+          \ user should visit the web form, get a redirect to the bank's website,\
+          \ complete the authentication and will then be redirected back to the web\
+          \ form.<br/><br/>DECOUPLED_AUTH_REQUIRED means that the bank has asked for\
+          \ the decoupled authentication. In this case, the 'decoupledCallback' field\
+          \ must be set to true to complete the authentication.<br/><br/>DECOUPLED_AUTH_IN_PROGRESS\
+          \ means that the bank is waiting for the completion of the decoupled authentication\
+          \ by the user. Until this is done, the service should be recalled with the\
+          \ 'decoupledCallback' field set to ‘true’. Once the decoupled authentication\
+          \ is completed by the user, the service returns a successful response."
         enum:
         - "CHALLENGE_RESPONSE_REQUIRED"
         - "TWO_STEP_PROCEDURE_REQUIRED"
@@ -11234,6 +11431,9 @@ definitions:
       - lastCommunicationAttempt: "2018-01-01 00:00:00.000"
         interfaces:
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
+          lastCommunicationAttempt: "2018-01-01 00:00:00.000"
+          lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
             name: "AirBank XS2A CZ"
@@ -11248,6 +11448,9 @@ definitions:
           properties:
           - "REDIRECT_APPROACH"
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
+          lastCommunicationAttempt: "2018-01-01 00:00:00.000"
+          lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
             name: "AirBank XS2A CZ"
@@ -11285,6 +11488,9 @@ definitions:
       - lastCommunicationAttempt: "2018-01-01 00:00:00.000"
         interfaces:
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
+          lastCommunicationAttempt: "2018-01-01 00:00:00.000"
+          lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
             name: "AirBank XS2A CZ"
@@ -11299,6 +11505,9 @@ definitions:
           properties:
           - "REDIRECT_APPROACH"
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
+          lastCommunicationAttempt: "2018-01-01 00:00:00.000"
+          lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
             name: "AirBank XS2A CZ"
@@ -12278,16 +12487,22 @@ definitions:
         description: "BIC of the recipient's account. Note: This field is optional\
           \ when you pass a clearing account as the recipient or if the bank connection\
           \ of the account that you want to transfer money from supports the IBAN-Only\
-          \ money transfer. You can find this out via GET /bankConnections/<id>. Also\
-          \ note that when a BIC is given, then this BIC will be used for the money\
-          \ transfer request independent of whether it is required or not (unless\
-          \ you pass a clearing account, in which case this field will always be ignored)."
+          \ money transfer. You can find this out via GET /bankConnections/<id>. If\
+          \ no BIC is given, finAPI will try to recognize it using the given recipientIban\
+          \ value (if it's given). And then if the result value is not empty, it will\
+          \ be used for the money transfer request independent of whether it is required\
+          \ or not (unless you pass a clearing account, in which case the value will\
+          \ always be ignored)."
       clearingAccountId:
         type: "string"
         example: "BA-TUYEF7D24CGK6"
         description: "Identifier of a clearing account. If this field is set, then\
           \ the fields 'recipientName', 'recipientIban' and 'recipientBic' will be\
           \ ignored and the recipient account will be the specified clearing account."
+      endToEndId:
+        type: "string"
+        example: "001100550526"
+        description: "End-To-End ID for the transfer transaction"
       amount:
         type: "number"
         example: 99.99
@@ -12575,9 +12790,10 @@ definitions:
         description: "BIC of the debitor's account. Note: This field is optional if\
           \ - and only if - the bank connection of the account that you want to transfer\
           \ money to supports the IBAN-Only direct debit. You can find this out via\
-          \ GET /bankConnections/<id>. Also note that when a BIC is given, then this\
-          \ BIC will be used for the direct debit request independent of whether it\
-          \ is required or not."
+          \ GET /bankConnections/<id>. If no BIC is given, finAPI will try to recognize\
+          \ it using the given debitorIban value (if it's given). And then if the\
+          \ result value is not empty, it will be used for the direct debit request\
+          \ independent of whether it is required or not."
       amount:
         type: "number"
         example: 99.99
@@ -12635,16 +12851,22 @@ definitions:
         description: "BIC of the recipient's account. Note: This field is optional\
           \ when you pass a clearing account as the recipient or if the bank connection\
           \ of the account that you want to transfer money from supports the IBAN-Only\
-          \ money transfer. You can find this out via GET /bankConnections/<id>. Also\
-          \ note that when a BIC is given, then this BIC will be used for the money\
-          \ transfer request independent of whether it is required or not (unless\
-          \ you pass a clearing account, in which case this field will always be ignored)."
+          \ money transfer. You can find this out via GET /bankConnections/<id>. If\
+          \ no BIC is given, finAPI will try to recognize it using the given recipientIban\
+          \ value (if it's given). And then if the result value is not empty, it will\
+          \ be used for the money transfer request independent of whether it is required\
+          \ or not (unless you pass a clearing account, in which case the value will\
+          \ always be ignored)."
       clearingAccountId:
         type: "string"
         example: "BA-TUYEF7D24CGK6"
         description: "Identifier of a clearing account. If this field is set, then\
           \ the fields 'recipientName', 'recipientIban' and 'recipientBic' will be\
           \ ignored and the recipient account will be the specified clearing account."
+      endToEndId:
+        type: "string"
+        example: "001100550526"
+        description: "End-To-End ID for the transfer transaction"
       amount:
         type: "number"
         example: 99.99
@@ -12808,17 +13030,18 @@ definitions:
         description: "A certificate (public key)"
       privateKey:
         type: "string"
-        description: "A private key in PKCS #8 format. PKCS #8 private keys are typically\
-          \ exchanged in the PEM base64-encoded format (https://support.quovadisglobal.com/kb/a37/what-is-pem-format.aspx)</br></br>NOTE:\
+        description: "A private key in PKCS #8 or PKCS #1 format. PKCS #1/#8 private\
+          \ keys are typically exchanged in the PEM base64-encoded format (https://support.quovadisglobal.com/kb/a37/what-is-pem-format.aspx)</br></br>NOTE:\
           \ The certificate should have one of the following headers:</br>- '-----BEGIN\
-          \ PRIVATE KEY-----'</br>- '-----BEGIN ENCRYPTED PRIVATE KEY-----'<br>Any\
-          \ other header denotes that the private key is NOT in PKCS #8 format!"
+          \ RSA PRIVATE KEY-----'<br>- '-----BEGIN PRIVATE KEY-----'</br>- '-----BEGIN\
+          \ ENCRYPTED PRIVATE KEY-----'<br>Any other header denotes that the private\
+          \ key is neither in PKCS #8 nor in PKCS #1 formats!"
       passphrase:
         type: "string"
         description: "Optional passphrase for the private key"
       label:
         type: "string"
-        description: "Optional label to certificate to identify in the list of certificates"
+        description: "A label for certificate to identify in the list of certificates"
       validFromDate:
         type: "string"
         example: "2019-04-23"
@@ -12869,8 +13092,6 @@ definitions:
     required:
     - "label"
     - "tppAuthenticationGroupId"
-    - "tppClientId"
-    - "tppClientSecret"
     properties:
       tppAuthenticationGroupId:
         type: "integer"
@@ -12936,8 +13157,8 @@ definitions:
           \ = CreditCard,<br/>4 = Security,<br/>5 = Loan,<br/>6 = Pocket (DEPRECATED;\
           \ will not be returned for any account unless this type has explicitly been\
           \ set via PATCH),<br/>7 = Membership,<br/>8 = Bausparen<br/><br/>"
-        minimum: 1.0
-        maximum: 7.0
+        minimum: 1
+        maximum: 7
       amount:
         type: "number"
         example: -99.99
@@ -13853,7 +14074,7 @@ definitions:
         type: "string"
         example: "password"
         description: "User's password. Minimum length is 6, and maximum length is\
-          \ 36. If not specified, then a unique random value will be generated."
+          \ 128. If not specified, then a unique random value will be generated."
         pattern: "[A-Za-z0-9¡-ʯ &\\(\\)\\{\\}\\[\\]\\.:,;\\?!\\+\\-_\\$@#~`\\^€]*"
       email:
         type: "string"

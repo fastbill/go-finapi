@@ -1,4 +1,4 @@
-# IdentifiersParams
+# IbanRuleIdentifiersParams
 
 ## Properties
 Name | Type | Description | Notes

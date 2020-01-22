@@ -9,10 +9,8 @@
 
 package finapi
 
-// Label resources with paging information
-type PageableLabelList struct {
-	// Labels
-	Labels []Label `json:"labels"`
-	// Information for pagination
-	Paging *Paging `json:"paging"`
+// Identifiers params
+type KeywordRuleIdentifiersParams struct {
+	// List of identifiers
+	Ids []int64 `json:"ids"`
 }
