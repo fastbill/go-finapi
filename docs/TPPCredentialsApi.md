@@ -117,7 +117,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **search** | **optional.String**| Returns only the TPP credentials belonging to those banks whose &#39;name&#39;, &#39;blz&#39;, or &#39;bic&#39; contains the given search string (the matching works case-insensitive). Note: If the given search string consists of several terms (separated by whitespace), then ALL of these terms must apply to a bank in order for it to get included into the result. | 
  **page** | **optional.Int32**| Result page that you want to retrieve | [default to 1]
- **perPage** | **optional.Int32**| Maximum number of records per page. Can be at most 500. NOTE: Due to its validation and visualization, the swagger frontend might show very low performance, or even crashes, when a service responds with a lot of data. It is recommended to use a HTTP client like Postman or DHC instead of our swagger frontend for service calls with large page sizes. | [default to 20]
+ **perPage** | **optional.Int32**| Maximum number of records per page. By default it&#39;s 20. Can be at most 500. NOTE: Due to its validation and visualization, the swagger frontend might show very low performance, or even crashes, when a service responds with a lot of data. It is recommended to use a HTTP client like Postman or DHC instead of our swagger frontend for service calls with large page sizes. | [default to 20]
 
 ### Return type
 
@@ -152,11 +152,12 @@ Optional parameters are passed through a pointer to a GetAndSearchTppAuthenticat
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **ids** | [**optional.Interface of []int64**](int64.md)| A comma-separated list of TPP authentication group identifiers. If specified, then only TPP authentication groups whose identifier match any of the given identifiers will be regarded. The maximum number of identifiers is 1000. | 
  **name** | **optional.String**| Only the tpp authentication groups with name matching the given one should appear in the result list | 
  **bankBlz** | **optional.String**| Search by connected banks: only the banks with BLZ matching the given one should appear in the result list | 
  **bankName** | **optional.String**| Search by connected banks: only the banks with name matching the given one should appear in the result list | 
  **page** | **optional.Int32**| Result page that you want to retrieve | [default to 1]
- **perPage** | **optional.Int32**| Maximum number of records per page. Can be at most 500. NOTE: Due to its validation and visualization, the swagger frontend might show very low performance, or even crashes, when a service responds with a lot of data. It is recommended to use a HTTP client like Postman or DHC instead of our swagger frontend for service calls with large page sizes. | [default to 20]
+ **perPage** | **optional.Int32**| Maximum number of records per page. By default it&#39;s 20. Can be at most 500. NOTE: Due to its validation and visualization, the swagger frontend might show very low performance, or even crashes, when a service responds with a lot of data. It is recommended to use a HTTP client like Postman or DHC instead of our swagger frontend for service calls with large page sizes. | [default to 20]
 
 ### Return type
 

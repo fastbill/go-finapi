@@ -1,10 +1,15 @@
-# Go finAPI
+# Go finAPI <!-- omit in toc -->
 
 > This package provides a finAPI SDK for Go. It was created via [swagger-codegen](https://github.com/swagger-api/swagger-codegen) as described in [the finAPI documentation](https://finapi.zendesk.com/hc/en-us/articles/219390177-SDK-creation-for-finAPI-). Addionally some wrapper code was added to improve the usability.
 
-- API version: v1.79.0
+- API version: v1.93.0
 - Package version: 1.0.0
 - Build package: io.swagger.codegen.languages.GoClientCodegen
+
+- [Usage](#usage)
+- [Documentation for API Endpoints](#documentation-for-api-endpoints)
+- [Documentation For Models](#documentation-for-models)
+- [How to Update This SDK](#how-to-update-this-sdk)
 
 ## Usage
 ```go
@@ -192,13 +197,14 @@ Class | Method | HTTP request | Description
  - [ExecuteSepaDirectDebitParams](docs/ExecuteSepaDirectDebitParams.md)
  - [ExecuteSepaMoneyTransferParams](docs/ExecuteSepaMoneyTransferParams.md)
  - [IbanRule](docs/IbanRule.md)
+ - [IbanRuleIdentifiersParams](docs/IbanRuleIdentifiersParams.md)
  - [IbanRuleList](docs/IbanRuleList.md)
  - [IbanRuleParams](docs/IbanRuleParams.md)
  - [IbanRulesParams](docs/IbanRulesParams.md)
  - [IdentifierList](docs/IdentifierList.md)
- - [IdentifiersParams](docs/IdentifiersParams.md)
  - [ImportBankConnectionParams](docs/ImportBankConnectionParams.md)
  - [KeywordRule](docs/KeywordRule.md)
+ - [KeywordRuleIdentifiersParams](docs/KeywordRuleIdentifiersParams.md)
  - [KeywordRuleList](docs/KeywordRuleList.md)
  - [KeywordRuleParams](docs/KeywordRuleParams.md)
  - [KeywordRulesParams](docs/KeywordRulesParams.md)
@@ -268,3 +274,33 @@ Class | Method | HTTP request | Description
  - [UserUpdateParams](docs/UserUpdateParams.md)
  - [VerificationStatusResource](docs/VerificationStatusResource.md)
  - [WebForm](docs/WebForm.md)
+
+## How to Update This SDK
+1. Download the newest version of the official SDK from [docs.finapi.io](https://docs.finapi.io). For that click the download button on the top of the page and select "go" as language.
+2. Save the zip file you get there to some place on your PC and extract it. Open the folder `go-client`.
+3. Replace the folders `docs` and `api` in the current FastBill finAPI SDK repository with the new ones that you downloaded.
+4. Delete everything in the current `model` folder and then copy all files starting with `model_` from the freshly downloaded SDK to the repositories `model` folder.
+5. Copy all files besides the ones with `model_`, `README.md` and `git_push.sh` and use them to replace the files on root level in the current repository.
+6. Rename all occurances of `package swagger` to `package finapi` in the repository.
+7. Add the import statement `. "github.com/fastbill/go-finapi/v3/model"` to all the files in the root folder of the repository besides `configuration.go`, `finapi.go`, `client.go` and `response.go`. When you save the file your IDE should also automatically fix all Go formatting errors in the file. Also some missing import statements for the package `optional` might be added in this process.
+8. In the file `client.go` make sure to keep the following change for the serialization of the Swagger error (either revert the change from copying the file or just paste in the old version again):
+    ```go
+    func (e GenericSwaggerError) Error() string {
+        return e.error + ", body: " + string(e.body)
+    }
+    ```
+9. In the file `client.go` make sure to keep the custom HTTP client with the timeout, not the DefaultClient that you get from the fresh SDK download.
+    ```go
+    func NewAPIClient(cfg *Configuration) *APIClient {
+        if cfg.HTTPClient == nil {
+            cfg.HTTPClient = &http.Client{
+                // The AWS ALB will terminate the connection (e.g. to legacy) after 60s so there is no point
+                // in waiting longer than that for finAPI. Even when they would respond later we could not send
+                // the response anymore.
+                Timeout: 55 * time.Second,
+            }
+        }
+        // ...
+    ```
+10. From the `README.md` file in the downloaded SDK copy the sections `Documentation for API Endpoints` and `Documentation For Models` and use them to replace those sections in the repository `README.md` file. Also update the API version mentioned at the top of the readme.
+11. Review the changes in the Git diff before commiting them. Files in `docs` folder can be commited without thourough checking since they only contain text changes.
