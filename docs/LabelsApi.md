@@ -133,10 +133,10 @@ Get labels of the user that is authorized by the access_token. Must pass the use
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***GetAndSearchAllLabelsOpts** | optional parameters | nil if no parameters
+ **optional** | ***LabelsApiGetAndSearchAllLabelsOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a GetAndSearchAllLabelsOpts struct
+Optional parameters are passed through a pointer to a LabelsApiGetAndSearchAllLabelsOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------

@@ -108,10 +108,10 @@ Get and search all TPP credentials. Must pass the <a href='https://finapi.zendes
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***GetAllTppCredentialsOpts** | optional parameters | nil if no parameters
+ **optional** | ***TPPCredentialsApiGetAllTppCredentialsOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a GetAllTppCredentialsOpts struct
+Optional parameters are passed through a pointer to a TPPCredentialsApiGetAllTppCredentialsOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -145,10 +145,10 @@ Get and search across all available TPP authentication groups. Must pass the <a 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***GetAndSearchTppAuthenticationGroupsOpts** | optional parameters | nil if no parameters
+ **optional** | ***TPPCredentialsApiGetAndSearchTppAuthenticationGroupsOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a GetAndSearchTppAuthenticationGroupsOpts struct
+Optional parameters are passed through a pointer to a TPPCredentialsApiGetAndSearchTppAuthenticationGroupsOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------

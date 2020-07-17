@@ -20,10 +20,10 @@ Get securities of the user that is authorized by the access_token. Must pass the
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***GetAndSearchAllSecuritiesOpts** | optional parameters | nil if no parameters
+ **optional** | ***SecuritiesApiGetAndSearchAllSecuritiesOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a GetAndSearchAllSecuritiesOpts struct
+Optional parameters are passed through a pointer to a SecuritiesApiGetAndSearchAllSecuritiesOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------

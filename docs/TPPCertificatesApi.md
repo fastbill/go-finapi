@@ -77,10 +77,10 @@ Returns all certificates that you have uploaded via 'Create a new certificate' s
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***GetAllCertificatesOpts** | optional parameters | nil if no parameters
+ **optional** | ***TPPCertificatesApiGetAllCertificatesOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a GetAllCertificatesOpts struct
+Optional parameters are passed through a pointer to a TPPCertificatesApiGetAllCertificatesOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------

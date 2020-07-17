@@ -28,10 +28,10 @@ Delete a set, or the entirety, of transactions of the currently authorized user.
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***DeleteAllTransactionsOpts** | optional parameters | nil if no parameters
+ **optional** | ***TransactionsApiDeleteAllTransactionsOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a DeleteAllTransactionsOpts struct
+Optional parameters are passed through a pointer to a TransactionsApiDeleteAllTransactionsOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -180,10 +180,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **view** | **string**| This parameter defines finAPI&#39;s logical view on the transactions when querying them: &#39;bankView&#39; regards only the original transactions as they were received from the bank, without considering how the transactions might have gotten split by the user (see POST /transactions/&lt;id&gt;/split). This means that if a transaction is split into logical sub-transactions, then the service will still regard only the original transaction, and NOT the logical sub-transactions in its processing (though for convenience, the transactions will have the data of their sub-transactions included in the response). &#39;userView&#39; by contrast regards the transactions as they exist for the user. For transactions that have not been split into logical sub-transactions, there is no difference to the \&quot;bankView\&quot;. But for transaction that have been split into logical sub-transactions, the service will ONLY regard these sub-transactions, and not the originally received transaction (though for convenience, the sub-transactions will have the identifier of their original transaction included in the response). | 
- **optional** | ***GetAndSearchAllTransactionsOpts** | optional parameters | nil if no parameters
+ **optional** | ***TransactionsApiGetAndSearchAllTransactionsOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a GetAndSearchAllTransactionsOpts struct
+Optional parameters are passed through a pointer to a TransactionsApiGetAndSearchAllTransactionsOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------

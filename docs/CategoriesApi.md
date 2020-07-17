@@ -26,10 +26,10 @@ Create a new custom transaction category for the authorized user, that can then 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***CreateCategoryOpts** | optional parameters | nil if no parameters
+ **optional** | ***CategoriesApiCreateCategoryOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a CreateCategoryOpts struct
+Optional parameters are passed through a pointer to a CategoriesApiCreateCategoryOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -114,10 +114,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **id** | **int64**| Identifier of the category to edit | 
- **optional** | ***EditCategoryOpts** | optional parameters | nil if no parameters
+ **optional** | ***CategoriesApiEditCategoryOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a EditCategoryOpts struct
+Optional parameters are passed through a pointer to a CategoriesApiEditCategoryOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -150,10 +150,10 @@ Get a list of all global finAPI categories as well as all custom categories of t
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***GetAndSearchAllCategoriesOpts** | optional parameters | nil if no parameters
+ **optional** | ***CategoriesApiGetAndSearchAllCategoriesOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a GetAndSearchAllCategoriesOpts struct
+Optional parameters are passed through a pointer to a CategoriesApiGetAndSearchAllCategoriesOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -190,10 +190,10 @@ Get the cash flow(s) (= total income, spending, and balance) for one or several 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***GetCashFlowsOpts** | optional parameters | nil if no parameters
+ **optional** | ***CategoriesApiGetCashFlowsOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a GetCashFlowsOpts struct
+Optional parameters are passed through a pointer to a CategoriesApiGetCashFlowsOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -298,10 +298,10 @@ This service allows you to create user-specific categorization rules (for the us
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***TrainCategorizationOpts** | optional parameters | nil if no parameters
+ **optional** | ***CategoriesApiTrainCategorizationOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a TrainCategorizationOpts struct
+Optional parameters are passed through a pointer to a CategoriesApiTrainCategorizationOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------

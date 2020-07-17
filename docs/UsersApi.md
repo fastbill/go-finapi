@@ -134,10 +134,10 @@ Change the password of a user. Must pass your global (i.e. client) access_token.
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***ExecutePasswordChangeOpts** | optional parameters | nil if no parameters
+ **optional** | ***UsersApiExecutePasswordChangeOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a ExecutePasswordChangeOpts struct
+Optional parameters are passed through a pointer to a UsersApiExecutePasswordChangeOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -221,10 +221,10 @@ Request password change for a user. Must pass your global (i.e. client) access_t
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***RequestPasswordChangeOpts** | optional parameters | nil if no parameters
+ **optional** | ***UsersApiRequestPasswordChangeOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a RequestPasswordChangeOpts struct
+Optional parameters are passed through a pointer to a UsersApiRequestPasswordChangeOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------

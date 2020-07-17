@@ -2,7 +2,7 @@
 
 > This package provides a finAPI SDK for Go. It was created via [swagger-codegen](https://github.com/swagger-api/swagger-codegen) as described in [the finAPI documentation](https://finapi.zendesk.com/hc/en-us/articles/219390177-SDK-creation-for-finAPI-). Addionally some wrapper code was added to improve the usability.
 
-- API version: v1.93.0
+- API version: v1.106.0
 - Package version: 1.0.0
 - Build package: io.swagger.codegen.languages.GoClientCodegen
 
@@ -70,6 +70,7 @@ Class | Method | HTTP request | Description
 *AuthorizationApi* | [**GetToken**](docs/AuthorizationApi.md#gettoken) | **Post** /oauth/token | Get tokens
 *AuthorizationApi* | [**RevokeToken**](docs/AuthorizationApi.md#revoketoken) | **Post** /oauth/revoke | Revoke a token
 *BankConnectionsApi* | [**ConnectInterface**](docs/BankConnectionsApi.md#connectinterface) | **Post** /api/v1/bankConnections/connectInterface | Connect a new interface
+*BankConnectionsApi* | [**DeleteAccessData**](docs/BankConnectionsApi.md#deleteaccessdata) | **Delete** /api/v1/bankConnections/{id}/aisConsent | Delete a consent
 *BankConnectionsApi* | [**DeleteAllBankConnections**](docs/BankConnectionsApi.md#deleteallbankconnections) | **Delete** /api/v1/bankConnections | Delete all bank connections
 *BankConnectionsApi* | [**DeleteBankConnection**](docs/BankConnectionsApi.md#deletebankconnection) | **Delete** /api/v1/bankConnections/{id} | Delete a bank connection
 *BankConnectionsApi* | [**EditBankConnection**](docs/BankConnectionsApi.md#editbankconnection) | **Patch** /api/v1/bankConnections/{id} | Edit a bank connection
@@ -116,7 +117,10 @@ Class | Method | HTTP request | Description
 *NotificationRulesApi* | [**DeleteNotificationRule**](docs/NotificationRulesApi.md#deletenotificationrule) | **Delete** /api/v1/notificationRules/{id} | Delete a notification rule
 *NotificationRulesApi* | [**GetAndSearchAllNotificationRules**](docs/NotificationRulesApi.md#getandsearchallnotificationrules) | **Get** /api/v1/notificationRules | Get and search all notification rules
 *NotificationRulesApi* | [**GetNotificationRule**](docs/NotificationRulesApi.md#getnotificationrule) | **Get** /api/v1/notificationRules/{id} | Get a notification rule
+*PaymentsApi* | [**CreateDirectDebit**](docs/PaymentsApi.md#createdirectdebit) | **Post** /api/v1/payments/directDebits | Create direct debit
+*PaymentsApi* | [**CreateMoneyTransfer**](docs/PaymentsApi.md#createmoneytransfer) | **Post** /api/v1/payments/moneyTransfers | Create money transfer
 *PaymentsApi* | [**GetPayments**](docs/PaymentsApi.md#getpayments) | **Get** /api/v1/payments | Get payments
+*PaymentsApi* | [**SubmitPayment**](docs/PaymentsApi.md#submitpayment) | **Post** /api/v1/payments/submit | Submit payment
 *SecuritiesApi* | [**GetAndSearchAllSecurities**](docs/SecuritiesApi.md#getandsearchallsecurities) | **Get** /api/v1/securities | Get and search all securities
 *SecuritiesApi* | [**GetMultipleSecurities**](docs/SecuritiesApi.md#getmultiplesecurities) | **Get** /api/v1/securities/{ids} | Get multiple securities
 *SecuritiesApi* | [**GetSecurity**](docs/SecuritiesApi.md#getsecurity) | **Get** /api/v1/securities/{id} | Get a security
@@ -168,6 +172,7 @@ Class | Method | HTTP request | Description
  - [BankConnectionList](docs/BankConnectionList.md)
  - [BankConnectionOwner](docs/BankConnectionOwner.md)
  - [BankConsent](docs/BankConsent.md)
+ - [BankGroup](docs/BankGroup.md)
  - [BankInterface](docs/BankInterface.md)
  - [BankInterfaceLoginField](docs/BankInterfaceLoginField.md)
  - [BankList](docs/BankList.md)
@@ -185,8 +190,12 @@ Class | Method | HTTP request | Description
  - [ClientConfiguration](docs/ClientConfiguration.md)
  - [ClientConfigurationParams](docs/ClientConfigurationParams.md)
  - [ConnectInterfaceParams](docs/ConnectInterfaceParams.md)
+ - [CreateDirectDebitParams](docs/CreateDirectDebitParams.md)
+ - [CreateMoneyTransferParams](docs/CreateMoneyTransferParams.md)
  - [DailyBalance](docs/DailyBalance.md)
  - [DailyBalanceList](docs/DailyBalanceList.md)
+ - [DeleteConsent](docs/DeleteConsent.md)
+ - [DirectDebitOrderParams](docs/DirectDebitOrderParams.md)
  - [DirectDebitOrderingResponse](docs/DirectDebitOrderingResponse.md)
  - [EditBankConnectionParams](docs/EditBankConnectionParams.md)
  - [EditCategoryParams](docs/EditCategoryParams.md)
@@ -216,6 +225,7 @@ Class | Method | HTTP request | Description
  - [MockAccountData](docs/MockAccountData.md)
  - [MockBankConnectionUpdate](docs/MockBankConnectionUpdate.md)
  - [MockBatchUpdateParams](docs/MockBatchUpdateParams.md)
+ - [MoneyTransferOrderParams](docs/MoneyTransferOrderParams.md)
  - [MoneyTransferOrderingResponse](docs/MoneyTransferOrderingResponse.md)
  - [MonthlyUserStats](docs/MonthlyUserStats.md)
  - [MultiStepAuthenticationCallback](docs/MultiStepAuthenticationCallback.md)
@@ -251,6 +261,7 @@ Class | Method | HTTP request | Description
  - [SingleMoneyTransferRecipientData](docs/SingleMoneyTransferRecipientData.md)
  - [SplitTransactionsParams](docs/SplitTransactionsParams.md)
  - [SubTransactionParams](docs/SubTransactionParams.md)
+ - [SubmitPaymentParams](docs/SubmitPaymentParams.md)
  - [TppAuthenticationGroup](docs/TppAuthenticationGroup.md)
  - [TppCertificate](docs/TppCertificate.md)
  - [TppCertificateParams](docs/TppCertificateParams.md)

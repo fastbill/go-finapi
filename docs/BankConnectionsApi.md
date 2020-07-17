@@ -5,6 +5,7 @@ All URIs are relative to *https://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**ConnectInterface**](BankConnectionsApi.md#ConnectInterface) | **Post** /api/v1/bankConnections/connectInterface | Connect a new interface
+[**DeleteAccessData**](BankConnectionsApi.md#DeleteAccessData) | **Delete** /api/v1/bankConnections/{id}/aisConsent | Delete a consent
 [**DeleteAllBankConnections**](BankConnectionsApi.md#DeleteAllBankConnections) | **Delete** /api/v1/bankConnections | Delete all bank connections
 [**DeleteBankConnection**](BankConnectionsApi.md#DeleteBankConnection) | **Delete** /api/v1/bankConnections/{id} | Delete a bank connection
 [**EditBankConnection**](BankConnectionsApi.md#EditBankConnection) | **Patch** /api/v1/bankConnections/{id} | Edit a bank connection
@@ -32,6 +33,35 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**BankConnection**](BankConnection.md)
+
+### Authorization
+
+[finapi_auth](../README.md#finapi_auth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **DeleteAccessData**
+> DeleteConsent DeleteAccessData(ctx, id, interface_)
+Delete a consent
+
+Deletes a consent for an interface of a bank connection.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **id** | **int64**| Identifier of a bank connection | 
+  **interface_** | **string**| Banking interface | 
+
+### Return type
+
+[**DeleteConsent**](DeleteConsent.md)
 
 ### Authorization
 
@@ -136,10 +166,10 @@ Get bank connections of the user that is authorized by the access_token. Must pa
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***GetAllBankConnectionsOpts** | optional parameters | nil if no parameters
+ **optional** | ***BankConnectionsApiGetAllBankConnectionsOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a GetAllBankConnectionsOpts struct
+Optional parameters are passed through a pointer to a BankConnectionsApiGetAllBankConnectionsOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------

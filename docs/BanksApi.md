@@ -20,10 +20,10 @@ Get and search banks from finAPI's database of banks. Must pass the authorized u
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***GetAndSearchAllBanksOpts** | optional parameters | nil if no parameters
+ **optional** | ***BanksApiGetAndSearchAllBanksOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a GetAndSearchAllBanksOpts struct
+Optional parameters are passed through a pointer to a BanksApiGetAndSearchAllBanksOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------

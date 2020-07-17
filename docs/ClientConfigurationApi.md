@@ -19,10 +19,10 @@ Edit your client's configuration. Must pass your global (i.e. client) access_tok
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***EditClientConfigurationOpts** | optional parameters | nil if no parameters
+ **optional** | ***ClientConfigurationApiEditClientConfigurationOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a EditClientConfigurationOpts struct
+Optional parameters are passed through a pointer to a ClientConfigurationApiEditClientConfigurationOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
