@@ -81,10 +81,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **id** | **int64**| Identifier of the account to edit | 
- **optional** | ***EditAccountOpts** | optional parameters | nil if no parameters
+ **optional** | ***AccountsApiEditAccountOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a EditAccountOpts struct
+Optional parameters are passed through a pointer to a AccountsApiEditAccountOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -201,10 +201,10 @@ Get bank accounts of the user that is authorized by the access_token. Must pass 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***GetAndSearchAllAccountsOpts** | optional parameters | nil if no parameters
+ **optional** | ***AccountsApiGetAndSearchAllAccountsOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a GetAndSearchAllAccountsOpts struct
+Optional parameters are passed through a pointer to a AccountsApiGetAndSearchAllAccountsOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -244,16 +244,16 @@ Returns the user's daily balances for a given period and a set of specified acco
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***GetDailyBalancesOpts** | optional parameters | nil if no parameters
+ **optional** | ***AccountsApiGetDailyBalancesOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a GetDailyBalancesOpts struct
+Optional parameters are passed through a pointer to a AccountsApiGetDailyBalancesOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accountIds** | [**optional.Interface of []int64**](int64.md)| A comma-separated list of (non-security) account identifiers. If no accounts are specified, all (non-security) accounts of the user are regarded. | 
- **startDate** | **optional.String**| A string in the format &#39;YYYY-MM-DD&#39;. Note that the requested date range [startDate..endDate] may not exceed 365 days. If startDate is not specified, it defaults to the endDate minus one month. | 
- **endDate** | **optional.String**| A string in the format &#39;YYYY-MM-DD&#39;. Note that the requested date range [startDate..endDate] may not exceed 365 days. If endDate is not specified, it defaults to today&#39;s date. | 
+ **startDate** | **optional.String**| A string in the format &#39;YYYY-MM-DD&#39;. Note that the requested date range [startDate..endDate] may not exceed 1 year (366 days - considering Leap Years too).If startDate is not specified, it defaults to the endDate minus one month. | 
+ **endDate** | **optional.String**| A string in the format &#39;YYYY-MM-DD&#39;. Note that the requested date range [startDate..endDate] may not exceed 1 year (366 days - considering Leap Years too). If endDate is not specified, it defaults to today&#39;s date. | 
  **withProjection** | **optional.Bool**| Whether finAPI should project the first and last actually existing balance of an account into the past and future. When passing &#39;true&#39;, then the result will always contain a daily balance for every day of the entire requested date range, even for days before the first actually existing balance, resp. after the last actually existing balance. Those days will have the same balance as the day of the first actual balance, resp. last actual balance, i.e. the first/last balance will be infinitely projected into the past/the future. When passing &#39;false&#39;, then the result will contain daily balances only from the day on where the first actual balance exists for any of the regarded accounts, and only up to the day where the last actual balance exists for any of the regarded accounts. Note that when in this case there are no actual balances within the requested date range, then an empty array will be returned. Default value for this parameter is &#39;true&#39;. | [default to true]
  **page** | **optional.Int32**| Result page that you want to retrieve. | [default to 1]
  **perPage** | **optional.Int32**| Maximum number of records per page. By default it&#39;s 20. Can be at most 500. NOTE: Due to its validation and visualization, the swagger frontend might show very low performance, or even crashes, when a service responds with a lot of data. It is recommended to use a HTTP client like Postman or DHC instead of our swagger frontend for service calls with large page sizes. | [default to 20]

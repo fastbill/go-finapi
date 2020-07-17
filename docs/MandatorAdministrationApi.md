@@ -194,10 +194,10 @@ Returns all IBAN-based categorization rules that you have defined for your users
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***GetIbanRuleListOpts** | optional parameters | nil if no parameters
+ **optional** | ***MandatorAdministrationApiGetIbanRuleListOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a GetIbanRuleListOpts struct
+Optional parameters are passed through a pointer to a MandatorAdministrationApiGetIbanRuleListOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -230,10 +230,10 @@ Returns all keyword-based categorization rules that you have defined for your us
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***GetKeywordRuleListOpts** | optional parameters | nil if no parameters
+ **optional** | ***MandatorAdministrationApiGetKeywordRuleListOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a GetKeywordRuleListOpts struct
+Optional parameters are passed through a pointer to a MandatorAdministrationApiGetKeywordRuleListOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -266,10 +266,10 @@ Get user list
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***GetUserListOpts** | optional parameters | nil if no parameters
+ **optional** | ***MandatorAdministrationApiGetUserListOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a GetUserListOpts struct
+Optional parameters are passed through a pointer to a MandatorAdministrationApiGetUserListOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------

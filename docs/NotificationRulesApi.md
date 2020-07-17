@@ -102,10 +102,10 @@ Get notification rules of the user that is authorized by the access_token. Must 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***GetAndSearchAllNotificationRulesOpts** | optional parameters | nil if no parameters
+ **optional** | ***NotificationRulesApiGetAndSearchAllNotificationRulesOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a GetAndSearchAllNotificationRulesOpts struct
+Optional parameters are passed through a pointer to a NotificationRulesApiGetAndSearchAllNotificationRulesOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------

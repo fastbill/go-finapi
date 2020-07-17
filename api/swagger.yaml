@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: "finAPI RESTful Services"
-  version: "v1.93.0"
+  version: "1.106.0"
   title: "finAPI RESTful Services"
 basePath: "/"
 tags:
@@ -230,8 +230,9 @@ paths:
       - name: "startDate"
         in: "query"
         description: "A string in the format 'YYYY-MM-DD'. Note that the requested\
-          \ date range [startDate..endDate] may not exceed 365 days. If startDate\
-          \ is not specified, it defaults to the endDate minus one month."
+          \ date range [startDate..endDate] may not exceed 1 year (366 days - considering\
+          \ Leap Years too).If startDate is not specified, it defaults to the endDate\
+          \ minus one month."
         required: false
         type: "string"
         x-exportParamName: "StartDate"
@@ -239,8 +240,8 @@ paths:
       - name: "endDate"
         in: "query"
         description: "A string in the format 'YYYY-MM-DD'. Note that the requested\
-          \ date range [startDate..endDate] may not exceed 365 days. If endDate is\
-          \ not specified, it defaults to today's date."
+          \ date range [startDate..endDate] may not exceed 1 year (366 days - considering\
+          \ Leap Years too). If endDate is not specified, it defaults to today's date."
         required: false
         type: "string"
         x-exportParamName: "EndDate"
@@ -1064,24 +1065,27 @@ paths:
           schema:
             $ref: "#/definitions/ErrorMessage"
         "422":
-          description: "UNKNOWN_ENTITY if the specified bank connection identifier\
-            \ does not exist;<br/>ILLEGAL_FIELD_VALUE:<br/> - if the given credentials\
-            \ do not contain at least one non-secret and one secret field;<br/> -\
-            \ if 'accountReferences' are not given, but the bank connection has the\
-            \ DETAILED_CONSENT property set, or the given 'accountReferences' contain\
-            \ a wrong IBAN;<br/> - if 'redirectUrl' is not given, but the bank connection\
-            \ has the REDIRECT_APPROACH property set and no web form flow is used;<br/>ENTITY_EXISTS\
-            \ if such a bank connection interface already exists;<br/>ILLEGAL_ENTITY_STATE:<br/>\
-            \ - if finAPI supports only web scraping for the bank, but web scraping\
-            \ is disabled for the client;<br/> - if using the XS2A interface is requested,\
-            \ but XS2A services are not allowed for the client;<br/>BANK_SERVER_REJECTION\
-            \ if the bank server responded with an error message when finAPI tried\
-            \ to retrieve the user's data. The response's error message can be forwarded\
-            \ to the user, it will typically contain a german message from the bank\
-            \ server that contains useful information (like that the given login credentials\
-            \ were not correct or that the connection is not activated for online\
-            \ banking);<br/>NO_EXISTING_CHALLENGE in case the 'challengeResponse'\
-            \ field was set, but there is no pending challenge for this bank connection;<br/>"
+          description: "UNKNOWN_ENTITY:<br/> - if the specified bank connection identifier\
+            \ does not exist;<br/> - if the given source interface does not exist\
+            \ for the given bank connection;<br/>ILLEGAL_FIELD_VALUE:<br/> - if the\
+            \ given credentials do not contain at least one non-secret and one secret\
+            \ field;<br/> - if 'accountReferences' are not given, but the bank connection\
+            \ has the DETAILED_CONSENT property set, or the given 'accountReferences'\
+            \ contain a wrong IBAN;<br/> - if 'redirectUrl' is not given, but the\
+            \ bank connection has the REDIRECT_APPROACH property set and no web form\
+            \ flow is used;<br/>ENTITY_EXISTS if such a bank connection interface\
+            \ already exists;<br/>ILLEGAL_ENTITY_STATE:<br/> - if finAPI supports\
+            \ only web scraping for the bank, but web scraping is disabled for the\
+            \ client;<br/>BANK_SERVER_REJECTION if the bank server responded with\
+            \ an error message when finAPI tried to retrieve the user's data. The\
+            \ response's error message can be forwarded to the user, it will typically\
+            \ contain a german message from the bank server that contains useful information\
+            \ (like that the given login credentials were not correct or that the\
+            \ connection is not activated for online banking);<br/>NO_EXISTING_CHALLENGE\
+            \ in case the 'challengeResponse' field was set, but there is no pending\
+            \ challenge for this bank connection;<br/>LOGIN_FIELDS_MISMATCH if the\
+            \ source interface is given, but its login fields differ to the main interface;<br/>MISSING_CREDENTIALS\
+            \ if not all login fields of the source interface have stored values;"
           schema:
             $ref: "#/definitions/ErrorMessage"
         "451":
@@ -1120,9 +1124,10 @@ paths:
             \ for the decoupled authentication. In this case, the 'decoupledCallback'\
             \ field must be set to true to complete the authentication.<br/><br/>DECOUPLED_AUTH_IN_PROGRESS\
             \ means that the bank is waiting for the completion of the decoupled authentication\
-            \ by the user. Until this is done, the service should be recalled with\
-            \ the 'decoupledCallback' field set to ‘true’. Once the decoupled authentication\
-            \ is completed by the user, the service returns a successful response."
+            \ by the user. Until this is done, the service should be recalled at most\
+            \ every 5 seconds with the 'decoupledCallback' field set to ‘true’. Once\
+            \ the decoupled authentication is completed by the user, the service returns\
+            \ a successful response."
           schema:
             $ref: "#/definitions/ErrorMessage"
       security:
@@ -1231,15 +1236,13 @@ paths:
             \ not given, but the bank connection has the REDIRECT_APPROACH property\
             \ set and no web form flow is used;<br/>ILLEGAL_ENTITY_STATE:<br/> - if\
             \ finAPI supports only web scraping for the bank, but web scraping is\
-            \ disabled for the client;<br/> - if using the XS2A interface is requested,\
-            \ but XS2A services are not allowed for the client;<br/>BANK_SERVER_REJECTION\
-            \ if the bank server responded with an error message when finAPI tried\
-            \ to retrieve the user's data. The response's error message can be forwarded\
-            \ to the user, it will typically contain a german message from the bank\
-            \ server that contains useful information (like that the given login credentials\
-            \ were not correct or that the connection is not activated for online\
-            \ banking);<br/>NO_ACCOUNTS_FOR_TYPE_LIST if none of the accounts from\
-            \ bank are matching your given accountTypeIds;<br/>NO_EXISTING_CHALLENGE\
+            \ disabled for the client;<br/>BANK_SERVER_REJECTION if the bank server\
+            \ responded with an error message when finAPI tried to retrieve the user's\
+            \ data. The response's error message can be forwarded to the user, it\
+            \ will typically contain a german message from the bank server that contains\
+            \ useful information (like that the given login credentials were not correct\
+            \ or that the connection is not activated for online banking);<br/>NO_ACCOUNTS_FOR_TYPE_LIST\
+            \ if none of the accounts from bank are matching your given accountTypeIds;<br/>NO_EXISTING_CHALLENGE\
             \ in case the 'challengeResponse' field was set, but there is no pending\
             \ challenge for this bank connection;<br/>"
           schema:
@@ -1280,9 +1283,10 @@ paths:
             \ for the decoupled authentication. In this case, the 'decoupledCallback'\
             \ field must be set to true to complete the authentication.<br/><br/>DECOUPLED_AUTH_IN_PROGRESS\
             \ means that the bank is waiting for the completion of the decoupled authentication\
-            \ by the user. Until this is done, the service should be recalled with\
-            \ the 'decoupledCallback' field set to ‘true’. Once the decoupled authentication\
-            \ is completed by the user, the service returns a successful response."
+            \ by the user. Until this is done, the service should be recalled at most\
+            \ every 5 seconds with the 'decoupledCallback' field set to ‘true’. Once\
+            \ the decoupled authentication is completed by the user, the service returns\
+            \ a successful response."
           schema:
             $ref: "#/definitions/ErrorMessage"
       security:
@@ -1414,18 +1418,17 @@ paths:
             \ bank connection has the REDIRECT_APPROACH property set and no web form\
             \ flow is used;<br/>ILLEGAL_ENTITY_STATE:<br/> - if finAPI supports only\
             \ web scraping for the bank, but web scraping is disabled for the client;<br/>\
-            \ - if using the XS2A interface is requested, but XS2A services are not\
-            \ allowed for the client;<br/> - if 'skipPositionsDownload' is set to\
-            \ true, but positions have already been downloaded previously;<br/>BANK_SERVER_REJECTION\
-            \ if the bank server responded with an error message when finAPI tried\
-            \ to  retrieve the user's data. The response's error message can be forwarded\
-            \ to the user, it will typically contain a german message from the bank\
-            \ server that contains useful information (like that the given login credentials\
-            \ were not correct or that the connection is not activated for online\
-            \ banking);<br/>NO_EXISTING_CHALLENGE in case the 'challengeResponse'\
-            \ field was set, but there is no pending challenge for this bank connection;<br/>INVALID_CONSENT\
-            \ if access data of the bank connection has already expired. Please retry\
-            \ the call to request a new consent."
+            \ - if 'skipPositionsDownload' is set to true, but positions have already\
+            \ been downloaded previously;<br/>BANK_SERVER_REJECTION if the bank server\
+            \ responded with an error message when finAPI tried to  retrieve the user's\
+            \ data. The response's error message can be forwarded to the user, it\
+            \ will typically contain a german message from the bank server that contains\
+            \ useful information (like that the given login credentials were not correct\
+            \ or that the connection is not activated for online banking);<br/>NO_EXISTING_CHALLENGE\
+            \ in case the 'challengeResponse' field was set, but there is no pending\
+            \ challenge for this bank connection;<br/>INVALID_CONSENT if access data\
+            \ of the bank connection has already expired. Please retry the call to\
+            \ request a new consent."
           schema:
             $ref: "#/definitions/ErrorMessage"
         "423":
@@ -1470,9 +1473,10 @@ paths:
             \ for the decoupled authentication. In this case, the 'decoupledCallback'\
             \ field must be set to true to complete the authentication.<br/><br/>DECOUPLED_AUTH_IN_PROGRESS\
             \ means that the bank is waiting for the completion of the decoupled authentication\
-            \ by the user. Until this is done, the service should be recalled with\
-            \ the 'decoupledCallback' field set to ‘true’. Once the decoupled authentication\
-            \ is completed by the user, the service returns a successful response."
+            \ by the user. Until this is done, the service should be recalled at most\
+            \ every 5 seconds with the 'decoupledCallback' field set to ‘true’. Once\
+            \ the decoupled authentication is completed by the user, the service returns\
+            \ a successful response."
           schema:
             $ref: "#/definitions/ErrorMessage"
       security:
@@ -1717,6 +1721,75 @@ paths:
         - "all"
       x-finapi:
         order: "6"
+  /api/v1/bankConnections/{id}/aisConsent:
+    delete:
+      tags:
+      - "Bank Connections"
+      summary: "Delete a consent"
+      description: "Deletes a consent for an interface of a bank connection."
+      operationId: "deleteAccessData"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Identifier of a bank connection"
+        required: true
+        type: "integer"
+        pattern: "[\\d]+"
+        format: "int64"
+        x-exportParamName: "Id"
+      - name: "interface"
+        in: "query"
+        description: "Banking interface"
+        required: true
+        type: "string"
+        enum:
+        - "WEB_SCRAPER"
+        - "FINTS_SERVER"
+        - "XS2A"
+        x-exportParamName: "Interface_"
+      responses:
+        "200":
+          description: "Consent deletion result"
+          schema:
+            $ref: "#/definitions/DeleteConsent"
+        "400":
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "401":
+          description: "Not authenticated or invalid access_token"
+          schema:
+            $ref: "#/definitions/BadCredentialsError"
+        "403":
+          description: "Incorrect authorization role"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "422":
+          description: "UNKNOWN_ENTITY:<br/> - if the given bank connection identifier\
+            \ does not exist;<br/> - if the given interface does not exist for the\
+            \ bank connection;<br/>INVALID_CONSENT:<br/> - if the bank server responded\
+            \ with an error message when finAPI tried to delete the consent.<br/>"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "423":
+          description: "The consent cannot be removed at the moment as the bank connection\
+            \ interface is currently being imported or updated (either by the user\
+            \ or by finAPI's automatic batch update)."
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "500":
+          description: "An unexpected error occurred"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "501":
+          description: "This bank is currently not supported by finAPI"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+      security:
+      - finapi_auth:
+        - "all"
+      x-finapi:
+        order: "11"
   /api/v1/banks:
     get:
       tags:
@@ -4149,7 +4222,12 @@ paths:
       tags:
       - "Payments"
       summary: "Get payments"
-      description: "Get payments of the user that is authorized by the access_token."
+      description: "Get payments of the user that is authorized by the access_token.\
+        \ Must pass the user's access_token.<br/>This service lists all payments created\
+        \ by executing one of the following services:<br/>&bull; createMoneyTransfer<br/>&bull;\
+        \ createDirectDebit<br/>&bull; requestSepaMoneyTransfer (deprecated)<br/>&bull;\
+        \ requestSepaDirectDebit (deprecated)<br/><br/>You can set optional search\
+        \ criteria to get only those payments returned you are interested in."
       operationId: "getPayments"
       parameters:
       - name: "ids"
@@ -4194,6 +4272,18 @@ paths:
         type: "number"
         x-exportParamName: "MaxAmount"
         x-optionalDataType: "Float32"
+      - name: "status"
+        in: "query"
+        description: "A comma-separated list of payment statuses. If provided, then\
+          \ only payments whose status is matching any of the given statuses will\
+          \ be returned. Allowed values 'OPEN', 'PENDING', 'SUCCESSFUL', 'NOT_SUCCESSFUL'\
+          \ or 'DISCARDED'. Example: 'OPEN,PENDING'."
+        required: false
+        type: "array"
+        items:
+          type: "string"
+        collectionFormat: "multi"
+        x-exportParamName: "Status"
       - name: "page"
         in: "query"
         description: "Result page that you want to retrieve"
@@ -4256,6 +4346,267 @@ paths:
         - "all"
       x-finapi:
         order: "1"
+  /api/v1/payments/directDebits:
+    post:
+      tags:
+      - "Payments"
+      summary: "Create direct debit"
+      description: "Create a payment for a single or collective direct debit order.<br/>Note\
+        \ that this service only creates a payment resource in finAPI and there is\
+        \ no bank communication involved.<br/>To submit the direct debit to the bank,\
+        \ please call the submitPayment service afterwards.<br/>Existing direct debits\
+        \ can be retrieved by the getPayments service.<br/><br/>A collective direct\
+        \ debit contains more than one order in the 'directDebits' list. It is specially\
+        \ handled by the bank and can be booked by the bank either as a single booking\
+        \ for each order or as a single cumulative booking. The preferred booking\
+        \ type can be given with the 'singleBooking' flag, but it is not guaranteed\
+        \ each bank will regard this flag.<br/><br/>Note: Prior creation of the payment\
+        \ resource is also necessary if you are using finAPI's web form flow.<br/><br/>Note\
+        \ that this service only works when your client has payments enabled (see\
+        \ client configuration)."
+      operationId: "createDirectDebit"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Create direct debit parameters"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateDirectDebitParams"
+        x-exportParamName: "Body"
+      responses:
+        "201":
+          description: "Created payment"
+          schema:
+            $ref: "#/definitions/Payment"
+        "400":
+          description: "Bad request"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "401":
+          description: "Not authenticated or invalid access_token"
+          schema:
+            $ref: "#/definitions/BadCredentialsError"
+        "403":
+          description: "Incorrect authorization role or your client does not have\
+            \ payments enabled (see client configuration)"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "404":
+          description: "Given account not found"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "422":
+          description: "ILLEGAL_FIELD_VALUE: if the given execution date is in the\
+            \ past;<br/>UNSUPPORTED_ORDER: if the request doesn't fit to the capabilities\
+            \ of any of the interfaces connected to the given account;<br/>"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "500":
+          description: "An unexpected error occurred"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+      security:
+      - finapi_auth:
+        - "all"
+      x-finapi:
+        order: "3"
+  /api/v1/payments/moneyTransfers:
+    post:
+      tags:
+      - "Payments"
+      summary: "Create money transfer"
+      description: "Create a payment for a single or collective money transfer order.<br/>Note\
+        \ that this service only creates a payment resource in finAPI and there is\
+        \ no bank communication involved.<br/>To submit the money transfer to the\
+        \ bank, please call the submitPayment service afterwards.<br/>Existing money\
+        \ transfers can be retrieved by the getPayments service.<br/><br/>A collective\
+        \ money transfer contains more than one order in the 'moneyTransfers' list.\
+        \ It is specially handled by the bank and can be booked by the bank either\
+        \ as a single booking for each order or as a single cumulative booking. The\
+        \ preferred booking type can be given with the 'singleBooking' flag, but it\
+        \ is not guaranteed each bank will regard this flag.<br/><br/>Note: Prior\
+        \ creation of the payment resource is also necessary if you are using finAPI's\
+        \ web form flow.<br/><br/>Note that this service only works when your client\
+        \ has payments enabled (see client configuration)."
+      operationId: "createMoneyTransfer"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Create money transfer parameters"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateMoneyTransferParams"
+        x-exportParamName: "Body"
+      responses:
+        "201":
+          description: "Created payment"
+          schema:
+            $ref: "#/definitions/Payment"
+        "400":
+          description: "Bad request"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "401":
+          description: "Not authenticated or invalid access_token"
+          schema:
+            $ref: "#/definitions/BadCredentialsError"
+        "403":
+          description: "Incorrect authorization role or your client does not have\
+            \ payments enabled (see client configuration)"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "404":
+          description: "Given account not found"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "422":
+          description: "ILLEGAL_FIELD_VALUE: if the given execution date is in the\
+            \ past;<br/>UNSUPPORTED_ORDER: if the request doesn't fit to the capabilities\
+            \ of any of the interfaces connected to the given account;<br/>"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "500":
+          description: "An unexpected error occurred"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+      security:
+      - finapi_auth:
+        - "all"
+      x-finapi:
+        order: "2"
+  /api/v1/payments/submit:
+    post:
+      tags:
+      - "Payments"
+      summary: "Submit payment"
+      description: "Submit a payment to the bank which was previously created with\
+        \ either the createMoneyTransfer or createDirectDebit service.<br/><br/>Before\
+        \ you submit the payment, please check the given bank interface supports the\
+        \ required payment capabilities. You can do this by calling the accounts service\
+        \ for the account for which you created the payment and check the supported\
+        \ capabilities for the given interface in the 'interfaces' list.<br/>The following\
+        \ capabilities must be available for the given interface to submit a payment:<br/>&bull;\
+        \ SEPA_MONEY_TRANSFER for a single money transfer<br/>&bull; SEPA_COLLECTIVE_MONEY_TRANSFER\
+        \ for a collective money transfer<br/>&bull; SEPA_BASIC_DIRECT_DEBIT for a\
+        \ single direct debit with directDebitType set to BASIC<br/>&bull; SEPA_BASIC_COLLECTIVE_DIRECT_DEBIT\
+        \ for a collective direct debit with directDebitType set to BASIC<br/>&bull;\
+        \ SEPA_B2B_DIRECT_DEBIT for a single direct debit with directDebitType set\
+        \ to B2B<br/>&bull; SEPA_B2B_COLLECTIVE_DIRECT_DEBIT for a collective direct\
+        \ debit with directDebitType set to B2B<br/><br/>Additionally, ‘counterpartBic’\
+        \ is mandatory for all orders in the payment if the account interface does\
+        \ not have the capability IBAN_ONLY_SEPA_MONEY_TRANSFER for money transfers,\
+        \ respectively IBAN_ONLY_SEPA_DIRECT_DEBIT for direct debits.<br/><br/>If\
+        \ the given interface doesn't have the required capabilities for the account,\
+        \ the payment will be rejected.<br/><br/>Usually banks require a multi-step\
+        \ authentication to authorize the payment. In this case, and if the finAPI\
+        \ web form flow is not used, the service will respond with HTTP code 510 and\
+        \ an error object containing a multiStepAuthentication object which describes\
+        \ the necessary next authentication steps. You must then retry the service\
+        \ call, passing the same arguments plus an additional 'multiStepAuthentication'\
+        \ element.<br/>Please refer to the description of the HTTP 510 error code\
+        \ below and the documentation of the 'MultiStepAuthenticationCallback' response\
+        \ object for details.<br/><br/>NOTE: Depending on your license, this service\
+        \ may respond with HTTP code 451, containing an error message with a identifier\
+        \ of web form in it. In addition to that the response will also have included\
+        \ a 'Location' header, which contains the URL to the web form. In this case,\
+        \ you must forward your user to finAPI's web form. For a detailed explanation\
+        \ of the Web Form Flow, please refer to this article: <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391'\
+        \ target='_blank'>finAPI's Web Form Flow</a><br/><br/>Note that this service\
+        \ only works when your client has payments enabled (see client configuration)."
+      operationId: "submitPayment"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Parameters for payment submission"
+        required: true
+        schema:
+          $ref: "#/definitions/SubmitPaymentParams"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "Submitted payment with updated status"
+          schema:
+            $ref: "#/definitions/Payment"
+        "400":
+          description: "Bad request"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "401":
+          description: "Not authenticated or invalid access_token"
+          schema:
+            $ref: "#/definitions/BadCredentialsError"
+        "403":
+          description: "Incorrect authorization role or your client does not have\
+            \ payments enabled (see client configuration)"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "404":
+          description: "Given payment not found"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "422":
+          description: "ILLEGAL_ENTITY_STATE:<br/> - if finAPI supports only web scraping\
+            \ for the bank, but web scraping is disabled for the client;<br/> - if\
+            \ not all login fields required by the bank connection interface are provided;<br/>\
+            \ - if the given interface doesn't exist for the account or has deprecated\
+            \ status;<br/>ILLEGAL_FIELD_VALUE:<br/> - if 'redirectUrl' is not given,\
+            \ but the bank connection's interface has the REDIRECT_APPROACH property\
+            \ set and no web form flow is used;<br/> - if 'redirectUrl' is given,\
+            \ but the bank connection's interface doesn't have the REDIRECT_APPROACH\
+            \ property set or the web form flow is used;<br/>UNSUPPORTED_ORDER:<br/>\
+            \ - if the given interface doesn't have capabilities to submit the payment;<br/>UNSUPPORTED_FEATURE:<br/>\
+            \ - if the bank rejects the given payment because it requires a feature\
+            \ that the bank does not support (e.g. FUTURE_DATED_PAYMENT);"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "451":
+          description: "In case the user must enter credentials within finAPI's web\
+            \ form. See: <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391'\
+            \ target='_blank'>finAPI's Web Form Flow</a>"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "500":
+          description: "An unexpected error occurred"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "501":
+          description: "The bank associated with the payment is currently not supported\
+            \ by finAPI"
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+        "510":
+          description: "In case the bank requires an additional authentication by\
+            \ the user. The error's 'multiStepAuthentication' field contains further\
+            \ instructions. The actual MSA flow depends on the bank and may contain\
+            \ following statuses:<br/><br/>TWO_STEP_PROCEDURE_REQUIRED means that\
+            \ the bank has requested an SCA method selection for the user. In this\
+            \ case, the service should be recalled with a chosen TSP-ID set to the\
+            \ 'twoStepProcedureId' field.<br/>When the web form flow is used, the\
+            \ user is forwarded to finAPI's web form to prompt for his credentials\
+            \ (if they are not stored in finAPI) and to select the preferred SCA method.<br/><br/>CHALLENGE_RESPONSE_REQUIRED\
+            \ means that the bank has requested a challenge code for the previously\
+            \ given TSP (SCA). This status can be completed by setting the 'challengeResponse'\
+            \ field.<br/>When the web form flow is used, the user should submit the\
+            \ challenge response for the challenge message shown by the web form.<br/><br/>REDIRECT_REQUIRED\
+            \ means that the user must be redirected to the bank's website, where\
+            \ the authentication can be finished.<br/>When the web form flow is used,\
+            \ the user should visit the web form, get a redirect to the bank's website,\
+            \ complete the authentication and will then be redirected back to the\
+            \ web form.<br/><br/>DECOUPLED_AUTH_REQUIRED means that the bank has asked\
+            \ for the decoupled authentication. In this case, the 'decoupledCallback'\
+            \ field must be set to true to complete the authentication.<br/><br/>DECOUPLED_AUTH_IN_PROGRESS\
+            \ means that the bank is waiting for the completion of the decoupled authentication\
+            \ by the user. Until this is done, the service should be recalled at most\
+            \ every 5 seconds with the 'decoupledCallback' field set to ‘true’. Once\
+            \ the decoupled authentication is completed by the user, the service returns\
+            \ a successful response."
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+      security:
+      - finapi_auth:
+        - "all"
+      x-finapi:
+        order: "4"
   /api/v1/securities:
     get:
       tags:
@@ -4563,10 +4914,11 @@ paths:
         \ that exists in its database and the data that is reported by the bank server,\
         \ and try to fix this with the insertion of an adjusting entry ('Zwischensaldo'\
         \ transaction). Also, new real transactions might not get imported as finAPI\
-        \ could match them to mocked transactions. <b>THIS SERVICE IS MEANT FOR TESTING\
-        \ PURPOSES DURING DEVELOPMENT OF YOUR APPLICATION ONLY!</b> This is why it\
-        \ will work only on the sandbox or alpha environments. Calling it on the live\
-        \ environment will result in <b>403 Forbidden</b>."
+        \ could match them to mocked transactions. Also note that transactions older\
+        \ than 89 days from the current date will be skipped. <b>THIS SERVICE IS MEANT\
+        \ FOR TESTING PURPOSES DURING DEVELOPMENT OF YOUR APPLICATION ONLY!</b> This\
+        \ is why it will work only on the sandbox or alpha environments. Calling it\
+        \ on the live environment will result in <b>403 Forbidden</b>."
       operationId: "mockBatchUpdate"
       parameters:
       - in: "body"
@@ -6677,33 +7029,36 @@ paths:
         \ 401. To restore access you can simply get a new token (as it is described\
         \ above) or use <code>grant_type=refresh_token</code> (which works for user-related\
         \ tokens only). In the latter case you just have to pass the previously received\
-        \ <code>refresh_token</code> for the user.</p><p>If the user that you want\
-        \ to authorize is not yet verified by the client (please see the 'isUserAutoVerificationEnabled'\
-        \ flag in the Client Configuration), then the service will respond with HTTP\
-        \ code 403. If the user is locked (see 'maxUserLoginAttempts' in the Client\
-        \ Configuration), the service will respond with HTTP code 423.</p><p>If the\
-        \ current role has no privileges to call a certain service (e.g. if a user\
-        \ tries to create a new user, or if a client tries to access user data outside\
-        \ of any user context), then the request will fail with the HTTP code 403.</p><p><b>IMPORTANT\
-        \ NOTES:</b><br/>&bull; Even though finAPI is not logging query parameters,\
-        \ it is still recommended to pass the parameters in the POST body instead\
-        \ of in the URL. Also, please set the Content-Type of your request to 'application/x-www-form-urlencoded'\
-        \ when calling this service.<br/>&bull; You should use this service only when\
-        \ you actually need a new token. As long as a token exists and has not expired,\
-        \ the service will always return the same token for the same credentials.\
-        \ Calling this service repeatedly with the same credentials contradicts the\
-        \ idea behind the tokens in OAuth, and will have a negative impact on the\
-        \ performance of your application. So instead of retrieving the same tokens\
-        \ over and over with this service, you should cache the tokens and re-use\
-        \ them as long as they have not expired - or at least as long as you're using\
-        \ the same tokens repeatedly, e.g. for the time of an active user session\
-        \ in your application.</p>"
+        \ <code>refresh_token</code> for the user.</p><p>If explicit user verification\
+        \ is required (the 'isUserAutoVerificationEnabled' flag in the client configuration\
+        \ is set to false, see Client Configuration) and the user that you want to\
+        \ authorize is not yet verified by the client (see Verify a User), then the\
+        \ service will respond with HTTP code 403. If the user is locked (see 'maxUserLoginAttempts'\
+        \ in the Client Configuration), the service will respond with HTTP code 423.</p><p>If\
+        \ the current role has no privileges to call a certain service (e.g. if a\
+        \ user tries to create a new user, or if a client tries to access user data\
+        \ outside of any user context), then the request will fail with the HTTP code\
+        \ 403.</p><p><b>IMPORTANT NOTES:</b><br/>&bull; Even though finAPI is not\
+        \ logging query parameters, it is still recommended to pass the parameters\
+        \ in the POST body instead of in the URL. Also, please set the Content-Type\
+        \ of your request to 'application/x-www-form-urlencoded' when calling this\
+        \ service.<br/>&bull; You should use this service only when you actually need\
+        \ a new token. As long as a token exists and has not expired, the service\
+        \ will always return the same token for the same credentials. Calling this\
+        \ service repeatedly with the same credentials contradicts the idea behind\
+        \ the tokens in OAuth, and will have a negative impact on the performance\
+        \ of your application. So instead of retrieving the same tokens over and over\
+        \ with this service, you should cache the tokens and re-use them as long as\
+        \ they have not expired - or at least as long as you're using the same tokens\
+        \ repeatedly, e.g. for the time of an active user session in your application.</p>"
       operationId: "getToken"
+      consumes:
+      - "application/x-www-form-urlencoded"
       produces:
       - "application/json"
       parameters:
       - name: "grant_type"
-        in: "query"
+        in: "formData"
         description: "Determines the required type of authorization:password - authorize\
           \ a user; client_credentials - authorize a client;refresh_token - refresh\
           \ a user's access_token."
@@ -6715,36 +7070,38 @@ paths:
         - "refresh_token"
         x-exportParamName: "GrantType"
       - name: "client_id"
-        in: "query"
+        in: "formData"
         description: "Client identifier"
         required: true
         type: "string"
         x-exportParamName: "ClientId"
       - name: "client_secret"
-        in: "query"
+        in: "formData"
         description: "Client secret"
         required: true
         type: "string"
+        format: "password"
         x-exportParamName: "ClientSecret"
       - name: "refresh_token"
-        in: "query"
+        in: "formData"
         description: "Refresh token. Required for grant_type=refresh_token only."
         required: false
         type: "string"
         x-exportParamName: "RefreshToken"
         x-optionalDataType: "String"
       - name: "username"
-        in: "query"
+        in: "formData"
         description: "User identifier. Required for grant_type=password only."
         required: false
         type: "string"
         x-exportParamName: "Username"
         x-optionalDataType: "String"
       - name: "password"
-        in: "query"
+        in: "formData"
         description: "User password. Required for grant_type=password only."
         required: false
         type: "string"
+        format: "password"
         x-exportParamName: "Password"
         x-optionalDataType: "String"
       responses:
@@ -6792,14 +7149,10 @@ definitions:
     - "scope"
     - "token_type"
     properties:
-      token_type:
+      access_token:
         type: "string"
-        example: "bearer"
-        description: "Token type (it's always 'bearer')"
-      scope:
-        type: "string"
-        example: "all"
-        description: "Requested scopes (it's always 'all')"
+        example: "yvMbx_TgwdYE0hgOVb8N4ZOvxOukqfjzYOGRZcJiCjQuRGkVIBfjjV3YG4zKTGiY2aPn2cQTGaQOT8uo5uo7_QOXts1s5UBSVuRHc6a8X30RrGBTyqV9h26SUHcZPNbZ"
+        description: "Access token. Token has a length of up to 128 characters."
       refresh_token:
         type: "string"
         example: "0b9KjiBVlZLz7a4HshSAIcFuscStiXT1VzT5mgNYwCQ_dWctTDsaIjedAhD1LpsOFJ7x6K8Emf8M3VOQkwNFR9FHijALYSQw2UeRwAC2MvrOKwfF1dHmOq5VEVYEaGf6"
@@ -6812,10 +7165,14 @@ definitions:
         description: "Expiration time in seconds. A value of 0 means that the token\
           \ never expires (unless it is explicitly invalidated, e.g. by revocation,\
           \ or when a user gets locked)."
-      access_token:
+      token_type:
         type: "string"
-        example: "yvMbx_TgwdYE0hgOVb8N4ZOvxOukqfjzYOGRZcJiCjQuRGkVIBfjjV3YG4zKTGiY2aPn2cQTGaQOT8uo5uo7_QOXts1s5UBSVuRHc6a8X30RrGBTyqV9h26SUHcZPNbZ"
-        description: "Access token. Token has a length of up to 128 characters."
+        example: "bearer"
+        description: "Token type (it's always 'bearer')"
+      scope:
+        type: "string"
+        example: "all"
+        description: "Requested scopes (it's always 'all')"
     description: "User access token info"
     example:
       access_token: "yvMbx_TgwdYE0hgOVb8N4ZOvxOukqfjzYOGRZcJiCjQuRGkVIBfjjV3YG4zKTGiY2aPn2cQTGaQOT8uo5uo7_QOXts1s5UBSVuRHc6a8X30RrGBTyqV9h26SUHcZPNbZ"
@@ -7242,6 +7599,8 @@ definitions:
       status: "UPDATED"
   AccountList:
     type: "object"
+    required:
+    - "accounts"
     properties:
       accounts:
         type: "array"
@@ -7452,6 +7811,7 @@ definitions:
     - "blzs"
     - "health"
     - "id"
+    - "interfaces"
     - "isCustomerIdPassword"
     - "isSupported"
     - "isTestBank"
@@ -7584,11 +7944,12 @@ definitions:
         description: "THIS FIELD IS DEPRECATED AND WILL BE REMOVED. Refer to the 'isVolatile'\
           \ field of the 'loginCredentials' in 'interfaces' instead.<br/><br/>Whether\
           \ the PINs that are used for authentication with the bank are volatile.\
-          \ If the PINs are volatile, it means that a PIN is usually valid only for\
-          \ a single authentication, and is then invalidated. If a bank uses volatile\
-          \ PINs, it is strongly inadvisable to store PINs in finAPI, as a stored\
-          \ PIN will not work for future authentications.<br><br>NOTE: This field\
-          \ is deprecated and will be removed at some point."
+          \ If the PINs are volatile, it means that the value for the field, which\
+          \ is provided by the user, is valid only for a single authentication and\
+          \ then gets invalidated on bank-side. If pinsAreVolatile is true, it is\
+          \ not possible to store the PIN in finAPI, as a stored PIN will never work\
+          \ for future authentications.<br><br>NOTE: This field is deprecated and\
+          \ will be removed at some point."
       isCustomerIdPassword:
         type: "boolean"
         example: false
@@ -7632,6 +7993,9 @@ definitions:
           \ all (for details, see POST /bankConnections/import and POST /bankConnections/update)."
         items:
           $ref: "#/definitions/BankInterface"
+      bankGroup:
+        description: "Bank group"
+        $ref: "#/definitions/BankGroup"
       lastCommunicationAttempt:
         type: "string"
         example: "2018-01-01 00:00:00.000"
@@ -7655,6 +8019,7 @@ definitions:
       - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
         lastCommunicationAttempt: "2018-01-01 00:00:00.000"
         lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+        isMoneyTransferSupported: false
         health: 100
         interface: "FINTS_SERVER"
         tppAuthenticationGroup:
@@ -7672,6 +8037,7 @@ definitions:
       - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
         lastCommunicationAttempt: "2018-01-01 00:00:00.000"
         lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+        isMoneyTransferSupported: false
         health: 100
         interface: "FINTS_SERVER"
         tppAuthenticationGroup:
@@ -7687,6 +8053,9 @@ definitions:
         properties:
         - "REDIRECT_APPROACH"
       city: "München"
+      bankGroup:
+        name: "FinAPI Test Bank Group"
+        id: 1
       health: 100
       isSupported: true
       isTestBank: true
@@ -7856,7 +8225,6 @@ definitions:
           \ or /requestSepaDirectDebit). The available two-step-procedures are re-evaluated\
           \ each time this bank connection is updated (/bankConnections/update). This\
           \ means that this list may change as a result of an update."
-        uniqueItems: true
         items:
           $ref: "#/definitions/TwoStepProcedure"
       interfaces:
@@ -8003,6 +8371,7 @@ definitions:
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
           lastCommunicationAttempt: "2018-01-01 00:00:00.000"
           lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          isMoneyTransferSupported: false
           health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
@@ -8020,6 +8389,7 @@ definitions:
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
           lastCommunicationAttempt: "2018-01-01 00:00:00.000"
           lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          isMoneyTransferSupported: false
           health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
@@ -8035,6 +8405,9 @@ definitions:
           properties:
           - "REDIRECT_APPROACH"
         city: "München"
+        bankGroup:
+          name: "FinAPI Test Bank Group"
+          id: 1
         health: 100
         isSupported: true
         isTestBank: true
@@ -8286,6 +8659,7 @@ definitions:
           - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
             lastCommunicationAttempt: "2018-01-01 00:00:00.000"
             lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+            isMoneyTransferSupported: false
             health: 100
             interface: "FINTS_SERVER"
             tppAuthenticationGroup:
@@ -8303,6 +8677,7 @@ definitions:
           - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
             lastCommunicationAttempt: "2018-01-01 00:00:00.000"
             lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+            isMoneyTransferSupported: false
             health: 100
             interface: "FINTS_SERVER"
             tppAuthenticationGroup:
@@ -8318,6 +8693,9 @@ definitions:
             properties:
             - "REDIRECT_APPROACH"
           city: "München"
+          bankGroup:
+            name: "FinAPI Test Bank Group"
+            id: 1
           health: 100
           isSupported: true
           isTestBank: true
@@ -8463,6 +8841,7 @@ definitions:
           - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
             lastCommunicationAttempt: "2018-01-01 00:00:00.000"
             lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+            isMoneyTransferSupported: false
             health: 100
             interface: "FINTS_SERVER"
             tppAuthenticationGroup:
@@ -8480,6 +8859,7 @@ definitions:
           - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
             lastCommunicationAttempt: "2018-01-01 00:00:00.000"
             lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+            isMoneyTransferSupported: false
             health: 100
             interface: "FINTS_SERVER"
             tppAuthenticationGroup:
@@ -8495,6 +8875,9 @@ definitions:
             properties:
             - "REDIRECT_APPROACH"
           city: "München"
+          bankGroup:
+            name: "FinAPI Test Bank Group"
+            id: 1
           health: 100
           isSupported: true
           isTestBank: true
@@ -8626,6 +9009,25 @@ definitions:
     example:
       expiresAt: "2019-07-20 09:05:10.546"
       status: "PRESENT"
+  BankGroup:
+    type: "object"
+    required:
+    - "id"
+    - "name"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 1
+        description: "Bank group identifier"
+      name:
+        type: "string"
+        example: "FinAPI Test Bank Group"
+        description: "Name of bank group"
+    description: "Container for a bank group's data"
+    example:
+      name: "FinAPI Test Bank Group"
+      id: 1
   BankInterface:
     type: "object"
     required:
@@ -8667,10 +9069,10 @@ definitions:
           \ selected bank you have already imported successfully the following accounts:\
           \ &lt;account list&gt;. Are you sure that you want to import another bank\
           \ connection from &lt;bank name&gt;?\n</blockquote>&bull; <code>DECOUPLED_APPROACH</code>\
-          \ - means that the interface uses a decoupled approach when authorizing\
-          \ the user.<br/><br/>&bull; <code>DETAILED_CONSENT</code> - means that the\
-          \ interface requires a list of account references when authorizing the user.\
-          \ It requires you to pass the 'accountReferences' field in all services\
+          \ - means that the interface can trigger a decoupled approval during user\
+          \ authorization.<br/><br/>&bull; <code>DETAILED_CONSENT</code> - means that\
+          \ the interface requires a list of account references when authorizing the\
+          \ user. It requires you to pass the 'accountReferences' field in all services\
           \ which define the field.<br/><br/>Note that this set can be empty, if the\
           \ interface does not have any specific properties."
         uniqueItems: true
@@ -8718,11 +9120,24 @@ definitions:
           \ during an import, update or connect interface (across the entire finAPI\
           \ system). The value is returned in the format 'YYYY-MM-DD HH:MM:SS.SSS'\
           \ (german time)."
+      isMoneyTransferSupported:
+        type: "boolean"
+        example: false
+        description: "Whether this interface has the general capability to do money\
+          \ transfers. Note that it still depends on the specifics of an account whether\
+          \ you will actually be able to do money transfers for that account or not\
+          \ - see the field AccountInterface.capabilities for more. In general, you\
+          \ should prefer the field AccountInterface.capabilities to determine what\
+          \ kind of payments an account supports. This field here is meant to be used\
+          \ mainly for when you are planning to do standalone money transfers, i.e.\
+          \ when you do not plan to import an account and thus will not have the data\
+          \ about the account's exact capabilities."
     description: "Interface used to connect to a bank"
     example:
       loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
       lastCommunicationAttempt: "2018-01-01 00:00:00.000"
       lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+      isMoneyTransferSupported: false
       health: 100
       interface: "FINTS_SERVER"
       tppAuthenticationGroup:
@@ -8759,12 +9174,12 @@ definitions:
       isVolatile:
         type: "boolean"
         example: false
-        description: "Whether this field depicts a credential that is volatile. If\
-          \ a field is volatile, it means that the value for the field, as provided\
-          \ by the user, is usually valid only for a single authentication, and is\
-          \ then invalidated on bank-side. If a bank uses volatile login credentials,\
-          \ it is strongly inadvisable to store the credentials in finAPI, as stored\
-          \ credentials will not work for future authentications."
+        description: "This field depicts whether the given credential is volatile.\
+          \ If a field is volatile, it means that the value for the field, which is\
+          \ provided by the user, is valid only for a single authentication and then\
+          \ gets invalidated on bank-side. If a login credential field is volatile,\
+          \ it is not possible to store it in finAPI, as stored credentials will never\
+          \ work for future authentications."
     description: "Container for a bank's login credential field"
     example:
       isSecret: false
@@ -8788,6 +9203,7 @@ definitions:
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
           lastCommunicationAttempt: "2018-01-01 00:00:00.000"
           lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          isMoneyTransferSupported: false
           health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
@@ -8805,6 +9221,7 @@ definitions:
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
           lastCommunicationAttempt: "2018-01-01 00:00:00.000"
           lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          isMoneyTransferSupported: false
           health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
@@ -8820,6 +9237,9 @@ definitions:
           properties:
           - "REDIRECT_APPROACH"
         city: "München"
+        bankGroup:
+          name: "FinAPI Test Bank Group"
+          id: 1
         health: 100
         isSupported: true
         isTestBank: true
@@ -8845,6 +9265,7 @@ definitions:
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
           lastCommunicationAttempt: "2018-01-01 00:00:00.000"
           lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          isMoneyTransferSupported: false
           health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
@@ -8862,6 +9283,7 @@ definitions:
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
           lastCommunicationAttempt: "2018-01-01 00:00:00.000"
           lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          isMoneyTransferSupported: false
           health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
@@ -8877,6 +9299,9 @@ definitions:
           properties:
           - "REDIRECT_APPROACH"
         city: "München"
+        bankGroup:
+          name: "FinAPI Test Bank Group"
+          id: 1
         health: 100
         isSupported: true
         isTestBank: true
@@ -9310,6 +9735,7 @@ definitions:
     - "availableBankGroups"
     - "isAutomaticBatchUpdateEnabled"
     - "isMandatorAdmin"
+    - "isStandalonePaymentsEnabled"
     - "isUserAutoVerificationEnabled"
     - "isWebScrapingEnabled"
     - "isXs2aEnabled"
@@ -9443,6 +9869,11 @@ definitions:
         example: true
         description: "NOTE: This field is deprecated and will be removed at some point.<br><br>Whether\
           \ this client is allowed to access XS2A services."
+      isStandalonePaymentsEnabled:
+        type: "boolean"
+        example: true
+        description: "Whether this client is allowed to do standalone payments (payments\
+          \ for accounts that are not imported in finAPI)."
       availableBankGroups:
         type: "array"
         example:
@@ -9477,10 +9908,9 @@ definitions:
         type: "boolean"
         example: true
         description: "Whether <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391'\
-          \ target='_blank'>finAPI's web form</a> will provide a checkbox for the\
-          \ user allowing him to choose whether to store login secrets (like a PIN)\
-          \ in finAPI. If this field is set to false, then the user won't have an\
-          \ option to store this data."
+          \ target='_blank'>finAPI's web form</a> will allow the user to choose whether\
+          \ to store login secrets (like a PIN) in finAPI. If this field is set to\
+          \ false, the option will not be available and the secrets not stored."
       supportSubjectDefault:
         type: "string"
         example: "Some subject"
@@ -9505,6 +9935,7 @@ definitions:
     description: "Client configuration parameters"
     example:
       paymentsEnabled: true
+      isStandalonePaymentsEnabled: true
       isUserAutoVerificationEnabled: true
       finTSProductRegistrationNumber: "XXXXX"
       maxUserLoginAttempts: 3
@@ -9609,10 +10040,9 @@ definitions:
         type: "boolean"
         example: true
         description: "Whether <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391'\
-          \ target='_blank'>finAPI's web form</a> will provide a checkbox for the\
-          \ user allowing him to choose whether to store login secrets (like a PIN)\
-          \ in finAPI. If this field is set to false, then the user won't have an\
-          \ option to store this data."
+          \ target='_blank'>finAPI's web form</a> will allow the user to choose whether\
+          \ to store login secrets (like a PIN) in finAPI. If this field is set to\
+          \ false, the option will not be available and the secrets not stored."
       applicationName:
         type: "string"
         example: "My App"
@@ -9621,6 +10051,7 @@ definitions:
           \ \"Weiterleitung auf finAPI von ...\" (e.g. \"Weiterleitung auf finAPI\
           \ von My App\"). If you have previously set a application name and now want\
           \ to clear it, you can pass an empty string (\"\"). Maximum length: 64"
+        pattern: "[A-Za-z0-9¡-ʯ &\\(\\)\\{\\}\\[\\]\\.:,;\\?!\\+\\-_\\$@#~`\\^€]*"
       finTSProductRegistrationNumber:
         type: "string"
         example: "ABCDEF1234567890ABCDEF123"
@@ -9654,6 +10085,7 @@ definitions:
     type: "object"
     required:
     - "bankConnectionId"
+    - "interface"
     properties:
       bankConnectionId:
         type: "integer"
@@ -9664,6 +10096,22 @@ definitions:
         type: "string"
         example: "XS2A"
         description: "The interface to use for connecting with the bank."
+        enum:
+        - "FINTS_SERVER"
+        - "WEB_SCRAPER"
+        - "XS2A"
+      sourceInterface:
+        type: "string"
+        example: "XS2A"
+        description: "The source interface that should be used as the source of credentials.\
+          \ Set it to one of already existing bank connection's interfaces and finAPI\
+          \ will try to use the stored credentials of that interface for the current\
+          \ service call. The source interface must fit the following requirements:<br/>-\
+          \ it must have the same set of bank login fields as the main interface (the\
+          \ 'interface' parameter);<br/>- it must have stored values for all its bank\
+          \ login fields.<br/>If any of those conditions are not met - the service\
+          \ will throw an appropriate error.<br/>Note: the source interface is ignored\
+          \ if any login credentials are given."
         enum:
         - "FINTS_SERVER"
         - "WEB_SCRAPER"
@@ -9728,6 +10176,37 @@ definitions:
           \ property set."
         items:
           $ref: "#/definitions/AccountReference"
+      accountTypes:
+        type: "array"
+        example:
+        - "Checking"
+        - "Savings"
+        - "CreditCard"
+        - "Security"
+        - "Loan"
+        - "Pocket"
+        - "Membership"
+        - "Bausparen"
+        description: "A set of account types of finAPI account types that are considered\
+          \ for the import. Only accounts whose type matches with one of the given\
+          \ types will be imported. Note that when the bank connection does not contain\
+          \ any accounts of the given types, the import will fail with error code\
+          \ NO_ACCOUNTS_FOR_TYPE_LIST. If no values is given, then all accounts will\
+          \ be imported.<br/><br/><br/>Checking,<br/>Savings,<br/>CreditCard,<br/>Security,<br/>Loan,<br/>Pocket\
+          \ (DEPRECATED; will not be returned for any account unless this type has\
+          \ explicitly been set via PATCH),<br/>Membership,<br/>Bausparen<br/><br/><b>This\
+          \ flag is currently not guaranteed to work for all banks!</b>"
+        items:
+          type: "string"
+          enum:
+          - "Checking"
+          - "Savings"
+          - "CreditCard"
+          - "Security"
+          - "Loan"
+          - "Pocket"
+          - "Membership"
+          - "Bausparen"
       multiStepAuthentication:
         description: "Container for multi-step authentication data"
         $ref: "#/definitions/MultiStepAuthenticationCallback"
@@ -9736,9 +10215,125 @@ definitions:
         example: "https://myapp.com"
         description: "Must only be passed when the used interface has the property\
           \ REDIRECT_APPROACH and no web form flow is used. The user will be redirected\
-          \ to the given URL from the bank's website after having entered his credentials.\
-          \ Must use HTTPS protocol."
+          \ to the given URL from the bank's website after having entered his credentials."
+      maxDaysForDownload:
+        type: "integer"
+        format: "int32"
+        example: 365
+        description: "Use this parameter if you want to limit the date range for transactions\
+          \ download. The value depicts the number of days that finAPI will download\
+          \ transactions for, starting from - and including - today. For example,\
+          \ if you want to download only transactions from within the past 30 days\
+          \ (including today), then pass the value 30. The minimum allowed value is\
+          \ 14, the maximum value is 3650. You may also pass the value 0 though (which\
+          \ is also the default value when you do not specify this parameter), in\
+          \ which case there will be no limit to the transactions download and finAPI\
+          \ will try to get all transactions that it can. Please note that when you\
+          \ specify the parameter there is no guarantee that finAPI will actually\
+          \ download transactions for the entire given date range, as the bank servers\
+          \ may limit the date range on their own. Also note that this parameter only\
+          \ applies to transactions, not to security positions; finAPI will always\
+          \ download all positions that it can get.<br/><br/><b>Please note: If you\
+          \ are not limiting the maxDaysForDownload with a value smaller than 90 days,\
+          \ the bank is more likely to trigger a strong customer authentication request\
+          \ for the user.<br/>This parameter is applied for the current 'bankingInterface'.</b>"
+        default: 0
     description: "Container for interface connection parameters"
+  CreateDirectDebitParams:
+    type: "object"
+    required:
+    - "accountId"
+    - "directDebitType"
+    - "directDebits"
+    - "executionDate"
+    - "sequenceType"
+    properties:
+      accountId:
+        type: "integer"
+        format: "int64"
+        example: 1
+        description: "Identifier of the account that should be used for the payment."
+      directDebitType:
+        type: "string"
+        example: "B2B"
+        description: "Type of the direct debit; either <code>BASIC</code> or <code>B2B</code>\
+          \ (Business-To-Business)."
+        enum:
+        - "B2B"
+        - "BASIC"
+      sequenceType:
+        type: "string"
+        example: "OOFF"
+        description: "Sequence type of the direct debit. Possible values:<br/><br/>&bull;\
+          \ <code>OOFF</code> - means that this is a one-time direct debit order<br/>&bull;\
+          \ <code>FRST</code> - means that this is the first in a row of multiple\
+          \ direct debit orders<br/>&bull; <code>RCUR</code> - means that this is\
+          \ one (but not the first or final) within a row of multiple direct debit\
+          \ orders<br/>&bull; <code>FNAL</code> - means that this is the final in\
+          \ a row of multiple direct debit orders<br/><br/>"
+        enum:
+        - "OOFF"
+        - "FRST"
+        - "RCUR"
+        - "FNAL"
+      directDebits:
+        type: "array"
+        description: "List of direct debit orders (may contain at most 15000 items).\
+          \ Please note that collective direct debit may not always be supported."
+        items:
+          $ref: "#/definitions/DirectDebitOrderParams"
+        maxItems: 15000
+        minItems: 1
+      singleBooking:
+        type: "boolean"
+        example: false
+        description: "This field is only relevant when you pass multiple orders. It\
+          \ determines whether the orders should be processed by the bank as one collective\
+          \ booking (in case of 'false'), or as single bookings (in case of 'true').\
+          \ Note that it is subject to the bank whether it will regard the field.\
+          \ Default value is 'false'."
+        default: false
+      executionDate:
+        type: "string"
+        example: "2018-01-01"
+        description: "Execution date for the direct debit(s), in the format 'YYYY-MM-DD'.\
+          \ May not be in the past."
+    description: "Container for direct debit creation parameters"
+  CreateMoneyTransferParams:
+    type: "object"
+    required:
+    - "accountId"
+    - "moneyTransfers"
+    properties:
+      accountId:
+        type: "integer"
+        format: "int64"
+        example: 1
+        description: "Identifier of the account that should be used for the payment."
+      moneyTransfers:
+        type: "array"
+        description: "List of money transfer orders (may contain at most 15000 items).\
+          \ Please note that collective money transfer may not always be supported."
+        items:
+          $ref: "#/definitions/MoneyTransferOrderParams"
+        maxItems: 15000
+        minItems: 1
+      singleBooking:
+        type: "boolean"
+        example: false
+        description: "This field is only relevant when you pass multiple orders. It\
+          \ determines whether the orders should be processed by the bank as one collective\
+          \ booking (in case of 'false'), or as single bookings (in case of 'true').\
+          \ Note that it is subject to the bank whether it will regard the field.\
+          \ Default value is 'false'."
+        default: false
+      executionDate:
+        type: "string"
+        example: "2018-01-01"
+        description: "Execution date for the money transfer(s), in the format 'YYYY-MM-DD'.\
+          \ May not be in the past. If not specified, then the current date will be\
+          \ used."
+    description: "Container for money transfer creation parameters"
   DailyBalance:
     type: "object"
     required:
@@ -9841,6 +10436,98 @@ definitions:
         - 1
         - 2
         - 3
+  DeleteConsent:
+    type: "object"
+    required:
+    - "local"
+    - "remote"
+    properties:
+      local:
+        type: "string"
+        example: "DELETED"
+        description: "Result of deleting a consent stored in the finAPI database (local):<br/><br/>&bull;\
+          \ <code>DELETED</code> - when there was a stored consent and it was deleted.<br/>&bull;\
+          \ <code>NOT_EXIST</code> - if there is no stored consent.<br/>"
+        enum:
+        - "DELETED"
+        - "NOT_EXIST"
+        - "NOT_SUPPORTED"
+      remote:
+        type: "string"
+        example: "DELETED"
+        description: "Result of deleting a consent stored on the bank's side (remote):<br/><br/>&bull;\
+          \ <code>DELETED</code> - if the consent was successfully deleted on the\
+          \ bank side.<br/>&bull; <code>NOT_SUPPORTED</code> - if the bank doesn't\
+          \ support the feature of deleting consents.<br/>&bull; <code>NOT_EXIST</code>\
+          \ - if either there is no remote consent, or there is no local consent (and\
+          \ that makes impossible to identify any remote data).<br/>"
+        enum:
+        - "DELETED"
+        - "NOT_EXIST"
+        - "NOT_SUPPORTED"
+    description: "Container for a result of the consent deleting"
+    example:
+      remote: "DELETED"
+      local: "DELETED"
+  DirectDebitOrderParams:
+    type: "object"
+    required:
+    - "amount"
+    - "counterpartIban"
+    - "counterpartName"
+    - "creditorId"
+    - "mandateDate"
+    - "mandateId"
+    properties:
+      counterpartName:
+        type: "string"
+        example: "Max Mustermann"
+        description: "Name of the counterpart. Note: Neither finAPI nor the involved\
+          \ bank servers are guaranteed to validate the counterpart name. Even if\
+          \ the name does not depict the actual registered account holder of the target\
+          \ account, the order might still be successful."
+      counterpartIban:
+        type: "string"
+        example: "DE13700800000061110500"
+        description: "IBAN of the counterpart's account."
+      counterpartBic:
+        type: "string"
+        example: "DRESDEFF700"
+        description: "BIC of the counterpart's account. Only required when there is\
+          \ no 'IBAN_ONLY'-capability in the respective account/interface combination\
+          \ that is to be used when submitting the payment."
+      amount:
+        type: "number"
+        example: 99.99
+        description: "The amount of the payment. Must be a positive decimal number\
+          \ with at most two decimal places."
+      purpose:
+        type: "string"
+        example: "Test Payment"
+        description: "The purpose of the transfer transaction"
+      sepaPurposeCode:
+        type: "string"
+        example: "OTHR"
+        description: "SEPA purpose code, according to ISO 20022, external codes set.<br/>Please\
+          \ note that the SEPA purpose code may be ignored by some banks."
+      endToEndId:
+        type: "string"
+        example: "001100550526"
+        description: "End-To-End ID for the transfer transaction"
+      mandateId:
+        type: "string"
+        example: "1"
+        description: "Mandate ID that this direct debit order is based on."
+      mandateDate:
+        type: "string"
+        example: "2018-01-01"
+        description: "Date of the mandate that this direct debit order is based on,\
+          \ in the format 'YYYY-MM-DD'"
+      creditorId:
+        type: "string"
+        example: "DE02ABC01234567890"
+        description: "Creditor ID of the source account's holder"
+    description: "Parameters for a direct debit order"
   DirectDebitOrderingResponse:
     type: "object"
     required:
@@ -10029,7 +10716,8 @@ definitions:
           \ be used"
       label:
         type: "string"
-        description: "Optional label for credentials"
+        example: "Demo bank TPP credentials"
+        description: "Label for credentials"
       tppClientId:
         type: "string"
         example: "a23312"
@@ -10042,7 +10730,12 @@ definitions:
           \ ASPSP as the result of registration"
       tppApiKey:
         type: "string"
+        example: "dontFollowTheWhiteRabbit"
         description: "API Key provided by ASPSP  as the result of registration"
+      tppName:
+        type: "string"
+        example: "finAPI"
+        description: "TPP name"
       validFromDate:
         type: "string"
         example: "2019-04-23"
@@ -10070,40 +10763,43 @@ definitions:
         description: "Error code. See the documentation of the individual services\
           \ for details about what values may be returned."
         enum:
-        - "MISSING_FIELD"
-        - "UNKNOWN_ENTITY"
-        - "METHOD_NOT_ALLOWED"
-        - "ENTITY_EXISTS"
-        - "ILLEGAL_ENTITY_STATE"
-        - "UNEXPECTED_ERROR"
-        - "ILLEGAL_FIELD_VALUE"
-        - "UNAUTHORIZED_ACCESS"
-        - "BAD_REQUEST"
-        - "UNSUPPORTED_ORDER"
-        - "ILLEGAL_PAGE_SIZE"
-        - "INVALID_FILTER_OPTIONS"
-        - "TOO_MANY_IDS"
-        - "BANK_SERVER_REJECTION"
-        - "IBAN_ONLY_MONEY_TRANSFER_NOT_SUPPORTED"
-        - "IBAN_ONLY_DIRECT_DEBIT_NOT_SUPPORTED"
-        - "COLLECTIVE_MONEY_TRANSFER_NOT_SUPPORTED"
-        - "INVALID_TWO_STEP_PROCEDURE"
-        - "MISSING_TWO_STEP_PROCEDURE"
-        - "UNSUPPORTED_MEDIA_TYPE"
-        - "UNSUPPORTED_BANK"
-        - "USER_NOT_VERIFIED"
-        - "USER_ALREADY_VERIFIED"
-        - "INVALID_TOKEN"
-        - "LOCKED"
-        - "NO_ACCOUNTS_FOR_TYPE_LIST"
-        - "FORBIDDEN"
-        - "NO_EXISTING_CHALLENGE"
         - "ADDITIONAL_AUTHENTICATION_REQUIRED"
-        - "WEB_FORM_REQUIRED"
-        - "WEB_FORM_ABORTED"
+        - "BAD_REQUEST"
+        - "BANK_SERVER_REJECTION"
+        - "COLLECTIVE_MONEY_TRANSFER_NOT_SUPPORTED"
+        - "ENTITY_EXISTS"
+        - "FORBIDDEN"
+        - "IBAN_ONLY_DIRECT_DEBIT_NOT_SUPPORTED"
+        - "IBAN_ONLY_MONEY_TRANSFER_NOT_SUPPORTED"
+        - "ILLEGAL_ENTITY_STATE"
+        - "ILLEGAL_FIELD_VALUE"
+        - "ILLEGAL_PAGE_SIZE"
         - "INVALID_CONSENT"
+        - "INVALID_FILTER_OPTIONS"
+        - "INVALID_TOKEN"
+        - "INVALID_TWO_STEP_PROCEDURE"
+        - "LOCKED"
+        - "LOGIN_FIELDS_MISMATCH"
+        - "METHOD_NOT_ALLOWED"
+        - "MISSING_CREDENTIALS"
+        - "MISSING_FIELD"
+        - "MISSING_TWO_STEP_PROCEDURE"
+        - "NO_ACCOUNTS_FOR_TYPE_LIST"
         - "NO_CERTIFICATE"
+        - "NO_EXISTING_CHALLENGE"
         - "NO_TPP_CLIENT_CREDENTIALS"
+        - "TOO_MANY_IDS"
+        - "UNAUTHORIZED_ACCESS"
+        - "UNEXPECTED_ERROR"
+        - "UNKNOWN_ENTITY"
+        - "UNSUPPORTED_BANK"
+        - "UNSUPPORTED_FEATURE"
+        - "UNSUPPORTED_MEDIA_TYPE"
+        - "UNSUPPORTED_ORDER"
+        - "USER_ALREADY_VERIFIED"
+        - "USER_NOT_VERIFIED"
+        - "WEB_FORM_ABORTED"
+        - "WEB_FORM_REQUIRED"
       type:
         type: "string"
         example: "TECHNICAL"
@@ -10176,7 +10872,6 @@ definitions:
         example: "password"
         description: "User's new password. Minimum length is 6, and maximum length\
           \ is 128."
-        pattern: "[A-Za-z0-9¡-ʯ &\\(\\)\\{\\}\\[\\]\\.:,;\\?!\\+\\-_\\$@#~`\\^€]*"
       passwordChangeToken:
         type: "string"
         example: "45a611d8-8a19-4a02-8726-a24b6a691ce9"
@@ -10452,7 +11147,9 @@ definitions:
           \ is stored, it is not required to pass the PIN again when updating this\
           \ bank connection or when executing orders (like money transfers). Default\
           \ is false. <br/><br/>NOTES:<br/> - before you set this field to true, please\
-          \ regard the 'pinsAreVolatile' flag of this connection's bank;<br/> - this\
+          \ regard the 'pinsAreVolatile' flag of this connection's bank. Please note\
+          \ that volatile credentials will not be stored, even if provided, to enforce\
+          \ user involvement in the next communication with the bank;<br/> - this\
           \ field is ignored in case when the user will need to use finAPI's web form.\
           \ The user will be able to decide whether to store the PIN or not in the\
           \ web form, depending on the 'storeSecretsAvailableInWebForm' setting (see\
@@ -10539,7 +11236,7 @@ definitions:
           \ download all positions that it can get.<br/><br/><b>Please note: If you\
           \ are not limiting the maxDaysForDownload with a value smaller than 90 days,\
           \ the bank is more likely to trigger a strong customer authentication request\
-          \ for the user.</b>"
+          \ for the user.<br/>This parameter is applied for the current 'bankingInterface'.</b>"
         default: 0
       accountTypes:
         type: "array"
@@ -10561,7 +11258,6 @@ definitions:
           \ (DEPRECATED; will not be returned for any account unless this type has\
           \ explicitly been set via PATCH),<br/>Membership,<br/>Bausparen<br/><br/><b>This\
           \ flag is currently not guaranteed to work for all banks!</b>"
-        uniqueItems: true
         items:
           type: "string"
           enum:
@@ -10626,8 +11322,7 @@ definitions:
         example: "https://myapp.com"
         description: "Must only be passed when the used interface has the property\
           \ REDIRECT_APPROACH and no web form flow is used. The user will be redirected\
-          \ to the given URL from the bank's website after having entered his credentials.\
-          \ Must use HTTPS protocol."
+          \ to the given URL from the bank's website after having entered his credentials."
     description: "Container for bank connection import parameters"
   KeywordRule:
     type: "object"
@@ -10983,6 +11678,49 @@ definitions:
           \ Default is 'false'."
         default: false
     description: "Data for mock bank connection updates"
+  MoneyTransferOrderParams:
+    type: "object"
+    required:
+    - "amount"
+    - "counterpartIban"
+    - "counterpartName"
+    properties:
+      counterpartName:
+        type: "string"
+        example: "Max Mustermann"
+        description: "Name of the counterpart. Note: Neither finAPI nor the involved\
+          \ bank servers are guaranteed to validate the counterpart name. Even if\
+          \ the name does not depict the actual registered account holder of the target\
+          \ account, the order might still be successful."
+      counterpartIban:
+        type: "string"
+        example: "DE13700800000061110500"
+        description: "IBAN of the counterpart's account."
+      counterpartBic:
+        type: "string"
+        example: "DRESDEFF700"
+        description: "BIC of the counterpart's account. Only required when there is\
+          \ no 'IBAN_ONLY'-capability in the respective account/interface combination\
+          \ that is to be used when submitting the payment."
+      amount:
+        type: "number"
+        example: 99.99
+        description: "The amount of the payment. Must be a positive decimal number\
+          \ with at most two decimal places."
+      purpose:
+        type: "string"
+        example: "Test Payment"
+        description: "The purpose of the transfer transaction"
+      sepaPurposeCode:
+        type: "string"
+        example: "OTHR"
+        description: "SEPA purpose code, according to ISO 20022, external codes set.<br/>Please\
+          \ note that the SEPA purpose code may be ignored by some banks."
+      endToEndId:
+        type: "string"
+        example: "001100550526"
+        description: "End-To-End ID for the transfer transaction"
+    description: "Parameters for a money transfer order"
   MoneyTransferOrderingResponse:
     type: "object"
     required:
@@ -11131,7 +11869,10 @@ definitions:
           \ had status 'DECOUPLED_AUTH_REQUIRED' or 'DECOUPLED_AUTH_IN_PROGRESS'.\
           \ The field represents the state of the decoupled authentication meaning\
           \ that when it's set to 'true', the end-user has completed the authentication\
-          \ process on bank's side."
+          \ process on bank's side.<br/><br/>Please note: Don't repeat the service\
+          \ call too frequently. Some banks limit the amount of requests per minute.\
+          \ Our suggestion is to repeat the service call for the decoupled approach\
+          \ every 5 seconds."
     description: "Container for multi-step authentication data, as passed by the client\
       \ to finAPI"
   MultiStepAuthenticationChallenge:
@@ -11167,9 +11908,10 @@ definitions:
           \ the decoupled authentication. In this case, the 'decoupledCallback' field\
           \ must be set to true to complete the authentication.<br/><br/>DECOUPLED_AUTH_IN_PROGRESS\
           \ means that the bank is waiting for the completion of the decoupled authentication\
-          \ by the user. Until this is done, the service should be recalled with the\
-          \ 'decoupledCallback' field set to ‘true’. Once the decoupled authentication\
-          \ is completed by the user, the service returns a successful response."
+          \ by the user. Until this is done, the service should be recalled at most\
+          \ every 5 seconds with the 'decoupledCallback' field set to ‘true’. Once\
+          \ the decoupled authentication is completed by the user, the service returns\
+          \ a successful response."
         enum:
         - "CHALLENGE_RESPONSE_REQUIRED"
         - "TWO_STEP_PROCEDURE_REQUIRED"
@@ -11433,6 +12175,7 @@ definitions:
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
           lastCommunicationAttempt: "2018-01-01 00:00:00.000"
           lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          isMoneyTransferSupported: false
           health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
@@ -11450,6 +12193,7 @@ definitions:
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
           lastCommunicationAttempt: "2018-01-01 00:00:00.000"
           lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          isMoneyTransferSupported: false
           health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
@@ -11465,6 +12209,9 @@ definitions:
           properties:
           - "REDIRECT_APPROACH"
         city: "München"
+        bankGroup:
+          name: "FinAPI Test Bank Group"
+          id: 1
         health: 100
         isSupported: true
         isTestBank: true
@@ -11490,6 +12237,7 @@ definitions:
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
           lastCommunicationAttempt: "2018-01-01 00:00:00.000"
           lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          isMoneyTransferSupported: false
           health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
@@ -11507,6 +12255,7 @@ definitions:
         - loginHint: "Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."
           lastCommunicationAttempt: "2018-01-01 00:00:00.000"
           lastSuccessfulCommunication: "2018-01-01 00:00:00.000"
+          isMoneyTransferSupported: false
           health: 100
           interface: "FINTS_SERVER"
           tppAuthenticationGroup:
@@ -11522,6 +12271,9 @@ definitions:
           properties:
           - "REDIRECT_APPROACH"
         city: "München"
+        bankGroup:
+          name: "FinAPI Test Bank Group"
+          id: 1
         health: 100
         isSupported: true
         isTestBank: true
@@ -12234,8 +12986,10 @@ definitions:
       executionDate:
         type: "string"
         example: "2019-01-01 00:00:00.000"
-        description: "Time of when this payment was executed, in the format 'YYYY-MM-DD\
-          \ HH:MM:SS.SSS' (german time)"
+        description: "Time of when this payment was executed by finAPI, in the format\
+          \ 'YYYY-MM-DD HH:MM:SS.SSS' (german time)<br/>Note: this is not necessarily\
+          \ identical to the date when the bank will book the payment, e.g. if a future\
+          \ date was given in the 'executionDate' field of the payment."
     description: "Container for a payment's data"
     example:
       accountId: 1
@@ -12373,9 +13127,11 @@ definitions:
           \ to pass the PIN again when executing SEPA orders. Default value is 'false'.\
           \ <br/><br/>NOTES:<br/> - before you set this field to true, please regard\
           \ the 'pinsAreVolatile' flag of the bank connection that the account belongs\
-          \ to;<br/> - this field is ignored in case when the user will need to use\
-          \ finAPI's web form. The user will be able to decide whether to store the\
-          \ PIN or not in the web form, depending on the 'storeSecretsAvailableInWebForm'\
+          \ to. Please note that volatile credentials will not be stored, even if\
+          \ provided, to enforce user involvement in the next communication with the\
+          \ bank;<br/> - this field is ignored in case when the user will need to\
+          \ use finAPI's web form. The user will be able to decide whether to store\
+          \ the PIN or not in the web form, depending on the 'storeSecretsAvailableInWebForm'\
           \ setting (see Client Configuration)."
         default: false
       twoStepProcedureId:
@@ -12453,9 +13209,11 @@ definitions:
           \ to pass the PIN again when executing SEPA orders. Default value is 'false'.\
           \ <br/><br/>NOTES:<br/> - before you set this field to true, please regard\
           \ the 'pinsAreVolatile' flag of the bank connection that the account belongs\
-          \ to;<br/> - this field is ignored in case when the user will need to use\
-          \ finAPI's web form. The user will be able to decide whether to store the\
-          \ PIN or not in the web form, depending on the 'storeSecretsAvailableInWebForm'\
+          \ to. Please note that volatile credentials will not be stored, even if\
+          \ provided, to enforce user involvement in the next communication with the\
+          \ bank;<br/> - this field is ignored in case when the user will need to\
+          \ use finAPI's web form. The user will be able to decide whether to store\
+          \ the PIN or not in the web form, depending on the 'storeSecretsAvailableInWebForm'\
           \ setting (see Client Configuration).<br><br>NOTE: This field is deprecated\
           \ and will be removed at some point. Use 'storeSecrets' instead."
         default: false
@@ -12539,9 +13297,11 @@ definitions:
           \ to pass the PIN again when executing SEPA orders. Default value is 'false'.\
           \ <br/><br/>NOTES:<br/> - before you set this field to true, please regard\
           \ the 'pinsAreVolatile' flag of the bank connection that the account belongs\
-          \ to;<br/> - this field is ignored in case when the user will need to use\
-          \ finAPI's web form. The user will be able to decide whether to store the\
-          \ PIN or not in the web form, depending on the 'storeSecretsAvailableInWebForm'\
+          \ to. Please note that volatile credentials will not be stored, even if\
+          \ provided, to enforce user involvement in the next communication with the\
+          \ bank;<br/> - this field is ignored in case when the user will need to\
+          \ use finAPI's web form. The user will be able to decide whether to store\
+          \ the PIN or not in the web form, depending on the 'storeSecretsAvailableInWebForm'\
           \ setting (see Client Configuration)."
         default: false
       twoStepProcedureId:
@@ -12594,16 +13354,16 @@ definitions:
           \ that in case of using finAPI's web form you have to leave this field unset\
           \ and the application will automatically recognize that the user has to\
           \ input challenge response and then a web form will be shown to the user."
-      multiStepAuthentication:
-        description: "Container for multi-step authentication data. Required when\
-          \ a previous service call initiated a multi-step authentication."
-        $ref: "#/definitions/MultiStepAuthenticationCallback"
       hideTransactionDetailsInWebForm:
         type: "boolean"
         example: false
         description: "Whether the finAPI web form should hide transaction details\
           \ when prompting the caller for the second factor. Default value is false."
         default: false
+      multiStepAuthentication:
+        description: "Container for multi-step authentication data. Required when\
+          \ a previous service call initiated a multi-step authentication."
+        $ref: "#/definitions/MultiStepAuthenticationCallback"
       storePin:
         type: "boolean"
         example: true
@@ -12611,9 +13371,11 @@ definitions:
           \ to pass the PIN again when executing SEPA orders. Default value is 'false'.\
           \ <br/><br/>NOTES:<br/> - before you set this field to true, please regard\
           \ the 'pinsAreVolatile' flag of the bank connection that the account belongs\
-          \ to;<br/> - this field is ignored in case when the user will need to use\
-          \ finAPI's web form. The user will be able to decide whether to store the\
-          \ PIN or not in the web form, depending on the 'storeSecretsAvailableInWebForm'\
+          \ to. Please note that volatile credentials will not be stored, even if\
+          \ provided, to enforce user involvement in the next communication with the\
+          \ bank;<br/> - this field is ignored in case when the user will need to\
+          \ use finAPI's web form. The user will be able to decide whether to store\
+          \ the PIN or not in the web form, depending on the 'storeSecretsAvailableInWebForm'\
           \ setting (see Client Configuration).<br><br>NOTE: This field is deprecated\
           \ and will be removed at some point. Use 'storeSecrets' instead."
         default: false
@@ -12818,7 +13580,7 @@ definitions:
           \ in the format 'YYYY-MM-DD'"
       creditorId:
         type: "string"
-        example: "Creditor"
+        example: "DE02ABC01234567890"
         description: "Creditor ID of the source account's holder"
       endToEndId:
         type: "string"
@@ -12956,6 +13718,70 @@ definitions:
           type: "integer"
           format: "int64"
     description: "Data of a sub-transaction"
+  SubmitPaymentParams:
+    type: "object"
+    required:
+    - "interface"
+    - "paymentId"
+    properties:
+      paymentId:
+        type: "integer"
+        format: "int64"
+        example: 1
+        description: "Payment identifier"
+      interface:
+        type: "string"
+        example: "FINTS_SERVER"
+        description: "Bank interface. Possible values:<br><br>&bull; <code>FINTS_SERVER</code>\
+          \ - means that finAPI will execute the payment via the bank's FinTS interface.<br>&bull;\
+          \ <code>WEB_SCRAPER</code> - means that finAPI will parse data from the\
+          \ bank's online banking website.<br>&bull; <code>XS2A</code> - means that\
+          \ finAPI will execute the payment via the bank's XS2A interface.Please note\
+          \ that XS2A doesn't support direct debits yet. <br/>To determine what interface(s)\
+          \ you can choose to submit a payment, please refer to the field AccountInterface.capabilities\
+          \ of the account that is related to the payment, or if this is a standalone\
+          \ payment without a related account imported in finAPI, refer to the field\
+          \ BankInterface.isMoneyTransferSupported.<br/>For standalone money transfers\
+          \ in particular, we suggest to always use XS2A if supported, and only use\
+          \ FINTS_SERVER or WEB_SCRAPER as a fallback, because non-XS2A interfaces\
+          \ might require not just a single, but multiple authentications when submitting\
+          \ the payment.<br/>"
+        enum:
+        - "WEB_SCRAPER"
+        - "FINTS_SERVER"
+        - "XS2A"
+      loginCredentials:
+        type: "array"
+        description: "Login credentials. May not be required when the credentials\
+          \ are stored in finAPI, or when the bank interface has no login credentials."
+        items:
+          $ref: "#/definitions/LoginCredential"
+      redirectUrl:
+        type: "string"
+        example: "https://myapp.com"
+        description: "Must only be passed when the used interface has the property\
+          \ REDIRECT_APPROACH and no web form flow is used. The user will be redirected\
+          \ to the given URL from the bank's website after having entered his credentials."
+      multiStepAuthentication:
+        description: "Container for multi-step authentication data. Required when\
+          \ a previous service call initiated a multi-step authentication."
+        $ref: "#/definitions/MultiStepAuthenticationCallback"
+      hideTransactionDetailsInWebForm:
+        type: "boolean"
+        example: false
+        description: "Whether the finAPI web form should hide transaction details\
+          \ when prompting the caller for the second factor. Default value is false."
+        default: false
+      forceWebForm:
+        type: "boolean"
+        example: false
+        description: "If the user has stored his credentials and a default two step\
+          \ procedure, the finAPI web form will only be shown in case a TAN has to\
+          \ be provided or an error has occurred. In case the user wants to change\
+          \ his stored data, you can set this field to true. It will force the webform\
+          \ flow for the user and allow changes to the data he has stored."
+        default: false
+    description: "Payment submission parameters"
   TppAuthenticationGroup:
     type: "object"
     required:
@@ -13101,7 +13927,8 @@ definitions:
           \ be used"
       label:
         type: "string"
-        description: "Optional label to credentials"
+        example: "Demo bank TPP credentials"
+        description: "Label to credentials"
       tppClientId:
         type: "string"
         example: "a23312"
@@ -13114,7 +13941,12 @@ definitions:
           \ ASPSP as the result of registration"
       tppApiKey:
         type: "string"
-        description: "API Key provided by ASPSP  as the result of registration"
+        example: "dontFollowTheWhiteRabbit"
+        description: "API Key provided by ASPSP as the result of registration"
+      tppName:
+        type: "string"
+        example: "finAPI"
+        description: "TPP name"
       validFromDate:
         type: "string"
         example: "2019-04-23"
@@ -13707,7 +14539,9 @@ definitions:
           \ is stored, it is not required to pass the PIN again when updating this\
           \ bank connection or when executing orders (like money transfers). Default\
           \ is false. <br/><br/>NOTES:<br/> - before you set this field to true, please\
-          \ regard the 'pinsAreVolatile' flag of this connection's bank;<br/> - this\
+          \ regard the 'pinsAreVolatile' flag of this connection's bank. Please note\
+          \ that volatile credentials will not be stored, even if provided, to enforce\
+          \ user involvement in the next communication with the bank;<br/> - this\
           \ field is ignored in case when the user will need to use finAPI's web form.\
           \ The user will be able to decide whether to store the PIN or not in the\
           \ web form, depending on the 'storeSecretsAvailableInWebForm' setting (see\
@@ -13724,14 +14558,15 @@ definitions:
       loginCredentials:
         type: "array"
         description: "Set of login credentials. Must be passed in combination with\
-          \ the 'interface' field. The labels that you pass must match with the login\
-          \ credential labels that the respective interface defines. finAPI will combine\
-          \ the given credentials with any credentials that it has stored. You can\
-          \ leave this field unset in case finAPI has stored all required credentials.\
-          \ When you must use a web form, you can also leave this field unset and\
-          \ the web form will take care of getting the credentials from the user.\
-          \ However, if you do pass credentials in that case, the web form will show\
-          \ only those fields that you have given."
+          \ the 'interface' field, if the credentials have not been previously stored.\
+          \ The labels that you pass must match with the login credential labels that\
+          \ the respective interface defines. finAPI will combine the given credentials\
+          \ with any credentials that it has stored. You can leave this field unset\
+          \ in case finAPI has stored all required credentials. When you must use\
+          \ a web form, you can also leave this field unset and the web form will\
+          \ take care of getting the credentials from the user. However, if you do\
+          \ pass credentials in that case, the web form will show only those fields\
+          \ that you have given."
         items:
           $ref: "#/definitions/LoginCredential"
       storeSecrets:
@@ -13823,8 +14658,16 @@ definitions:
         example: "https://myapp.com"
         description: "Must only be passed when the used interface has the property\
           \ REDIRECT_APPROACH and no web form flow is used. The user will be redirected\
-          \ to the given URL from the bank's website after having entered his credentials.\
-          \ Must use HTTPS protocol."
+          \ to the given URL from the bank's website after having entered his credentials."
+      forceWebForm:
+        type: "boolean"
+        example: false
+        description: "If the user has stored his credentials and a default two step\
+          \ procedure, the finAPI web form will only be shown in case a TAN has to\
+          \ be provided or an error has occurred. In case the user wants to change\
+          \ his stored data, you can set this field to true. It will force the webform\
+          \ flow for the user and allow changes to the data he has stored."
+        default: false
     description: "Container for bank connection update parameters"
   UpdateMultipleTransactionsParams:
     type: "object"
@@ -14075,7 +14918,6 @@ definitions:
         example: "password"
         description: "User's password. Minimum length is 6, and maximum length is\
           \ 128. If not specified, then a unique random value will be generated."
-        pattern: "[A-Za-z0-9¡-ʯ &\\(\\)\\{\\}\\[\\]\\.:,;\\?!\\+\\-_\\$@#~`\\^€]*"
       email:
         type: "string"
         example: "email@localhost.de"
