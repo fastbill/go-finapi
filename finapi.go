@@ -43,7 +43,7 @@ func (c *Client) NewClientContext() (context.Context, error) {
 
 // NewUserContext creates a context for user based actions like connection new banks, gettig transactions etc.
 func (c *Client) NewUserContext(finAPIUserID string, password string) (context.Context, error) {
-	opts := &GetTokenOpts{Username: optional.NewString(finAPIUserID), Password: optional.NewString(password)}
+	opts := &AuthorizationApiGetTokenOpts{Username: optional.NewString(finAPIUserID), Password: optional.NewString(password)}
 	token, _, err := c.AuthorizationApi.GetToken(context.Background(), "password", c.clientID, c.clientSecret, opts)
 	if err != nil {
 		return nil, err
