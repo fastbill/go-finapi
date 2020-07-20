@@ -1,4 +1,4 @@
-module github.com/fastbill/go-finapi/v3
+module github.com/fastbill/go-finapi/v4
 
 go 1.13
 

@@ -14,8 +14,8 @@
 ## Usage
 ```go
 import ( 
-    "github.com/fastbill/go-finapi/v3"
-    finapimodel "github.com/fastbill/go-finapi/v3/model"
+    "github.com/fastbill/go-finapi/v4"
+    finapimodel "github.com/fastbill/go-finapi/v4/model"
 )
 
 
@@ -293,7 +293,7 @@ Class | Method | HTTP request | Description
 4. Delete everything in the current `model` folder and then copy all files starting with `model_` from the freshly downloaded SDK to the repositories `model` folder.
 5. Copy all files besides the ones with `model_`, `README.md` and `git_push.sh` and use them to replace the files on root level in the current repository.
 6. Rename all occurances of `package swagger` to `package finapi` in the repository.
-7. Add the import statement `. "github.com/fastbill/go-finapi/v3/model"` to all the files in the root folder of the repository besides `configuration.go`, `finapi.go`, `client.go` and `response.go`. When you save the file your IDE should also automatically fix all Go formatting errors in the file. Also some missing import statements for the package `optional` might be added in this process.
+7. Add the import statement `. "github.com/fastbill/go-finapi/v4/model"` to all the files in the root folder of the repository besides `configuration.go`, `finapi.go`, `client.go` and `response.go`. When you save the file your IDE should also automatically fix all Go formatting errors in the file. Also some missing import statements for the package `optional` might be added in this process.
 8. In the file `client.go` make sure to keep the following change for the serialization of the Swagger error (either revert the change from copying the file or just paste in the old version again):
     ```go
     func (e GenericSwaggerError) Error() string {
