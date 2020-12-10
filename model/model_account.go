@@ -36,13 +36,13 @@ type Account struct {
 	// An account type.<br/><br/>Checking,<br/>Savings,<br/>CreditCard,<br/>Security,<br/>Loan,<br/>Pocket (DEPRECATED; will not be returned for any account unless this type has explicitly been set via PATCH),<br/>Membership,<br/>Bausparen<br/><br/>
 	AccountType string `json:"accountType,omitempty"`
 	// Current account balance
-	Balance float32 `json:"balance,omitempty"`
+	Balance float64 `json:"balance,omitempty"`
 	// Current overdraft
-	Overdraft float32 `json:"overdraft,omitempty"`
+	Overdraft float64 `json:"overdraft,omitempty"`
 	// Overdraft limit
-	OverdraftLimit float32 `json:"overdraftLimit,omitempty"`
+	OverdraftLimit float64 `json:"overdraftLimit,omitempty"`
 	// Current available funds. Note that this field is only set if finAPI can make a definite statement about the current available funds. This might not always be the case, for example if there is not enough information available about the overdraft limit and current overdraft.
-	AvailableFunds float32 `json:"availableFunds,omitempty"`
+	AvailableFunds float64 `json:"availableFunds,omitempty"`
 	// THIS FIELD IS DEPRECATED AND WILL BE REMOVED. Refer to the corresponding field in 'interfaces' instead.<br/><br/>Timestamp of when the account was last successfully updated (or initially imported); more precisely: time when the account data (balance and positions) has been stored into the finAPI databases. The value is returned in the format 'YYYY-MM-DD HH:MM:SS.SSS' (german time).
 	LastSuccessfulUpdate string `json:"lastSuccessfulUpdate,omitempty"`
 	// THIS FIELD IS DEPRECATED AND WILL BE REMOVED. Refer to the corresponding field in 'interfaces' instead.<br/><br/>Timestamp of when the account was last tried to be updated (or initially imported); more precisely: time when the update (or initial import) was triggered. The value is returned in the format 'YYYY-MM-DD HH:MM:SS.SSS' (german time).

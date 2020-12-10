@@ -16,7 +16,7 @@ type CheckCategorizationTransactionData struct {
 	// Identifier of account type.<br/><br/>1 = Checking,<br/>2 = Savings,<br/>3 = CreditCard,<br/>4 = Security,<br/>5 = Loan,<br/>6 = Pocket (DEPRECATED; will not be returned for any account unless this type has explicitly been set via PATCH),<br/>7 = Membership,<br/>8 = Bausparen<br/><br/>
 	AccountTypeId int64 `json:"accountTypeId"`
 	// Amount
-	Amount float32 `json:"amount"`
+	Amount float64 `json:"amount"`
 	// Purpose. Any symbols are allowed. Maximum length is 2000. Default value: null.
 	Purpose string `json:"purpose,omitempty"`
 	// Counterpart. Any symbols are allowed. Maximum length is 80. Default value: null.

@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **RecipientBic** | **string** | BIC of the recipient&#39;s account. Note: This field is optional when you pass a clearing account as the recipient or if the bank connection of the account that you want to transfer money from supports the IBAN-Only money transfer. You can find this out via GET /bankConnections/&lt;id&gt;. If no BIC is given, finAPI will try to recognize it using the given recipientIban value (if it&#39;s given). And then if the result value is not empty, it will be used for the money transfer request independent of whether it is required or not (unless you pass a clearing account, in which case the value will always be ignored). | [optional] [default to null]
 **ClearingAccountId** | **string** | Identifier of a clearing account. If this field is set, then the fields &#39;recipientName&#39;, &#39;recipientIban&#39; and &#39;recipientBic&#39; will be ignored and the recipient account will be the specified clearing account. | [optional] [default to null]
 **EndToEndId** | **string** | End-To-End ID for the transfer transaction | [optional] [default to null]
-**Amount** | **float32** | The amount to transfer. Must be a positive decimal number with at most two decimal places (e.g. 99.99) | [default to null]
+**Amount** | **float64** | The amount to transfer. Must be a positive decimal number with at most two decimal places (e.g. 99.99) | [default to null]
 **Purpose** | **string** | The purpose of the transfer transaction | [optional] [default to null]
 **SepaPurposeCode** | **string** | SEPA purpose code, according to ISO 20022, external codes set. | [optional] [default to null]
 **AccountId** | **int64** | Identifier of the bank account that you want to transfer money from | [default to null]

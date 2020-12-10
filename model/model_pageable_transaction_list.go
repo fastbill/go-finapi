@@ -16,9 +16,9 @@ type PageableTransactionList struct {
 	// Information for pagination
 	Paging *Paging `json:"paging"`
 	// The total income of all transactions (across all pages)
-	Income float32 `json:"income"`
+	Income float64 `json:"income"`
 	// The total spending of all transactions (across all pages)
-	Spending float32 `json:"spending"`
+	Spending float64 `json:"spending"`
 	// The total sum of all transactions (across all pages)
-	Balance float32 `json:"balance"`
+	Balance float64 `json:"balance"`
 }

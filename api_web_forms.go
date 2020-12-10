@@ -12,7 +12,7 @@ package finapi
 import (
 	"context"
 	"fmt"
-	. "github.com/fastbill/go-finapi/v4/model"
+	. "github.com/fastbill/go-finapi/v5/model"
 	"io/ioutil"
 	"net/http"
 	"net/url"

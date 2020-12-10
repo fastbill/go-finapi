@@ -24,7 +24,7 @@ type Transaction struct {
 	// finAPI Booking date in the format 'YYYY-MM-DD HH:MM:SS.SSS' (german time). NOTE: In some cases, banks may deliver transactions that are booked in future, but already included in the current account balance. To keep the account balance consistent with the set of transactions, such \"future transactions\" will be imported with their finapiBookingDate set to the current date (i.e.: date of import). The finapiBookingDate will automatically get adjusted towards the bankBookingDate each time the associated bank account is updated. Example: A transaction is imported on July, 3rd, with a bank reported booking date of July, 6th. The transaction will be imported with its finapiBookingDate set to July, 3rd. Then, on July 4th, the associated account is updated. During this update, the transaction's finapiBookingDate will be automatically adjusted to July 4th. This adjustment of the finapiBookingDate takes place on each update until the bank account is updated on July 6th or later, in which case the transaction's finapiBookingDate will be adjusted to its final value, July 6th.<br/> The finapiBookingDate is the date that is used by the finAPI PFM services. E.g. when you calculate the spendings of an account for the current month, and have a transaction with finapiBookingDate in the current month but bankBookingDate at the beginning of the next month, then this transaction is included in the calculations (as the bank has this transaction's amount included in the current account balance as well).
 	FinapiBookingDate string `json:"finapiBookingDate"`
 	// Transaction amount
-	Amount float32 `json:"amount"`
+	Amount float64 `json:"amount"`
 	// Transaction purpose. Maximum length: 2000
 	Purpose string `json:"purpose,omitempty"`
 	// Counterpart name. Maximum length: 80
@@ -76,9 +76,9 @@ type Transaction struct {
 	// End-To-End reference
 	EndToEndReference string `json:"endToEndReference,omitempty"`
 	// Compensation Amount. Sum of reimbursement of out-of-pocket expenses plus processing brokerage in case of a national return / refund debit as well as an optional interest equalisation. Exists predominantly for SEPA direct debit returns.
-	CompensationAmount float32 `json:"compensationAmount,omitempty"`
+	CompensationAmount float64 `json:"compensationAmount,omitempty"`
 	// Original Amount of the original direct debit. Exists predominantly for SEPA direct debit returns.
-	OriginalAmount float32 `json:"originalAmount,omitempty"`
+	OriginalAmount float64 `json:"originalAmount,omitempty"`
 	// Payer's/debtor's reference party (in the case of a credit transfer) or payee's/creditor's reference party (in the case of a direct debit)
 	DifferentDebitor string `json:"differentDebitor,omitempty"`
 	// Payee's/creditor's reference party (in the case of a credit transfer) or payer's/debtor's reference party (in the case of a direct debit)

@@ -12,7 +12,7 @@ package finapi
 import (
 	"context"
 	"github.com/antihax/optional"
-	. "github.com/fastbill/go-finapi/v4/model"
+	. "github.com/fastbill/go-finapi/v5/model"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -345,8 +345,8 @@ Get payments of the user that is authorized by the access_token. Must pass the u
  * @param optional nil or *PaymentsApiGetPaymentsOpts - Optional Parameters:
      * @param "Ids" (optional.Interface of []int64) -  A comma-separated list of payment identifiers. If specified, then only payments whose identifier is matching any of the given identifiers will be regarded. The maximum number of identifiers is 1000.
      * @param "AccountIds" (optional.Interface of []int64) -  A comma-separated list of account identifiers. If specified, then only payments that relate to the given account(s) will be regarded. The maximum number of identifiers is 1000.
-     * @param "MinAmount" (optional.Float32) -  If specified, then only those payments are regarded whose (absolute) total amount is equal or greater than the given amount will be regarded. The value must be a positive (absolute) amount.
-     * @param "MaxAmount" (optional.Float32) -  If specified, then only those payments are regarded whose (absolute) total amount is equal or less than the given amount will be regarded. Value must be a positive (absolute) amount.
+     * @param "MinAmount" (optional.Float64) -  If specified, then only those payments are regarded whose (absolute) total amount is equal or greater than the given amount will be regarded. The value must be a positive (absolute) amount.
+     * @param "MaxAmount" (optional.Float64) -  If specified, then only those payments are regarded whose (absolute) total amount is equal or less than the given amount will be regarded. Value must be a positive (absolute) amount.
      * @param "Status" (optional.Interface of []string) -  A comma-separated list of payment statuses. If provided, then only payments whose status is matching any of the given statuses will be returned. Allowed values &#39;OPEN&#39;, &#39;PENDING&#39;, &#39;SUCCESSFUL&#39;, &#39;NOT_SUCCESSFUL&#39; or &#39;DISCARDED&#39;. Example: &#39;OPEN,PENDING&#39;.
      * @param "Page" (optional.Int32) -  Result page that you want to retrieve
      * @param "PerPage" (optional.Int32) -  Maximum number of records per page. By default it&#39;s 20. Can be at most 500. NOTE: Due to its validation and visualization, the swagger frontend might show very low performance, or even crashes, when a service responds with a lot of data. It is recommended to use a HTTP client like Postman or DHC instead of our swagger frontend for service calls with large page sizes.
@@ -358,8 +358,8 @@ Get payments of the user that is authorized by the access_token. Must pass the u
 type PaymentsApiGetPaymentsOpts struct {
 	Ids        optional.Interface
 	AccountIds optional.Interface
-	MinAmount  optional.Float32
-	MaxAmount  optional.Float32
+	MinAmount  optional.Float64
+	MaxAmount  optional.Float64
 	Status     optional.Interface
 	Page       optional.Int32
 	PerPage    optional.Int32

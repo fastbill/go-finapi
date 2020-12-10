@@ -18,7 +18,7 @@ type Payment struct {
 	// Payment type
 	Type_ string `json:"type"`
 	// Total money amount of the payment order(s), as absolute value
-	Amount float32 `json:"amount"`
+	Amount float64 `json:"amount"`
 	// Total count of orders included in this payment
 	OrderCount int32 `json:"orderCount"`
 	// Current payment status:<br/> &bull; OPEN: means that this payment has been created in finAPI, but not yet submitted to the bank.<br/> &bull; PENDING: means that this payment has been requested at the bank, but not yet executed.<br/> &bull; SUCCESSFUL: means that this payment has been successfully executed.<br/> &bull; NOT_SUCCESSFUL: means that this payment could not be executed successfully.<br/> &bull; DISCARDED: means that this payment was discarded, either because another payment was requested for the same account before this payment was executed and the bank does not support this, or because the bank has rejected the payment even before the execution.

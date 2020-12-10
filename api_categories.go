@@ -13,7 +13,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/antihax/optional"
-	. "github.com/fastbill/go-finapi/v4/model"
+	. "github.com/fastbill/go-finapi/v5/model"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -812,8 +812,8 @@ Get the cash flow(s) (&#x3D; total income, spending, and balance) for one or sev
      * @param "MaxBankBookingDate" (optional.String) -  Upper bound for a transaction&#39;s booking date as returned by the bank (&#x3D; original booking date), in the format &#39;YYYY-MM-DD&#39; (e.g. &#39;2016-01-01&#39;). If specified, then only transactions whose &#39;bankBookingDate&#39; is equal to or earlier than the given date will be regarded.
      * @param "MinFinapiBookingDate" (optional.String) -  Lower bound for a transaction&#39;s booking date as set by finAPI, in the format &#39;YYYY-MM-DD&#39; (e.g. &#39;2016-01-01&#39;). For details about the meaning of the finAPI booking date, please see the field&#39;s documentation in the service&#39;s response.
      * @param "MaxFinapiBookingDate" (optional.String) -  Upper bound for a transaction&#39;s booking date as set by finAPI, in the format &#39;YYYY-MM-DD&#39; (e.g. &#39;2016-01-01&#39;). For details about the meaning of the finAPI booking date, please see the field&#39;s documentation in the service&#39;s response.
-     * @param "MinAmount" (optional.Float32) -  If specified, then only transactions whose amount is equal to or greater than the given amount will be regarded. Can contain a positive or negative number with at most two decimal places. Examples: -300.12, or 90.95
-     * @param "MaxAmount" (optional.Float32) -  If specified, then only transactions whose amount is equal to or less than the given amount will be regarded. Can contain a positive or negative number with at most two decimal places. Examples: -300.12, or 90.95
+     * @param "MinAmount" (optional.Float64) -  If specified, then only transactions whose amount is equal to or greater than the given amount will be regarded. Can contain a positive or negative number with at most two decimal places. Examples: -300.12, or 90.95
+     * @param "MaxAmount" (optional.Float64) -  If specified, then only transactions whose amount is equal to or less than the given amount will be regarded. Can contain a positive or negative number with at most two decimal places. Examples: -300.12, or 90.95
      * @param "Direction" (optional.String) -  If specified, then only transactions with the given direction(s) will be regarded. Use &#39;income&#39; for regarding only received payments (amount &gt;&#x3D; 0), &#39;spending&#39; for regarding only outgoing payments (amount &lt; 0), or &#39;all&#39; to regard both directions. If not specified, the direction defaults to &#39;all&#39;.
      * @param "LabelIds" (optional.Interface of []int64) -  A comma-separated list of label identifiers. If specified, then only transactions that have been marked with at least one of the given labels will be contained in the result.
      * @param "CategoryIds" (optional.Interface of []int64) -  If specified, then the result will contain only those cash flows that relate to the given categories. Note that the cash flow for a category may include/exclude the cash flows of its sub-categories, depending on the &#39;includeSubCashFlows&#39; setting. To include the cash flow of not categorized transactions, pass the value &#39;0&#39; as categoryId. Note: When this parameter is NOT set, then the result will contain a cash flow for all categories that have transactions associated to them (this includes the &#39;null&#39;-category for the cash flow of not categorized transactions), more precisely: transactions that fulfill the filter criteria. Categories that have no associated transactions according to the filter criteria will not appear in the result. However, when you specify this parameter, then all specified categories will have a cash flow entry in the result, even if there are no associated transactions for the category (the cash flow will have income, spending and balance all set to zero).
@@ -835,8 +835,8 @@ type CategoriesApiGetCashFlowsOpts struct {
 	MaxBankBookingDate   optional.String
 	MinFinapiBookingDate optional.String
 	MaxFinapiBookingDate optional.String
-	MinAmount            optional.Float32
-	MaxAmount            optional.Float32
+	MinAmount            optional.Float64
+	MaxAmount            optional.Float64
 	Direction            optional.String
 	LabelIds             optional.Interface
 	CategoryIds          optional.Interface

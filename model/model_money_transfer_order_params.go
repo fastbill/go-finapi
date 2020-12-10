@@ -18,7 +18,7 @@ type MoneyTransferOrderParams struct {
 	// BIC of the counterpart's account. Only required when there is no 'IBAN_ONLY'-capability in the respective account/interface combination that is to be used when submitting the payment.
 	CounterpartBic string `json:"counterpartBic,omitempty"`
 	// The amount of the payment. Must be a positive decimal number with at most two decimal places.
-	Amount float32 `json:"amount"`
+	Amount float64 `json:"amount"`
 	// The purpose of the transfer transaction
 	Purpose string `json:"purpose,omitempty"`
 	// SEPA purpose code, according to ISO 20022, external codes set.<br/>Please note that the SEPA purpose code may be ignored by some banks.
