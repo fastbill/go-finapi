@@ -14,9 +14,9 @@ type PaypalTransactionData struct {
 	// Invoice Number.<br/>NOTE: This field is deprecated as the bank with blz 'PAYPAL' is no longer supported. Do not use this field, as it will be removed at some point.
 	InvoiceNumber string `json:"invoiceNumber,omitempty"`
 	// Fee value.<br/>NOTE: This field is deprecated as the bank with blz 'PAYPAL' is no longer supported. Do not use this field, as it will be removed at some point.
-	Fee float32 `json:"fee,omitempty"`
+	Fee float64 `json:"fee,omitempty"`
 	// Net value.<br/>NOTE: This field is deprecated as the bank with blz 'PAYPAL' is no longer supported. Do not use this field, as it will be removed at some point.
-	Net float32 `json:"net,omitempty"`
+	Net float64 `json:"net,omitempty"`
 	// Auction Site.<br/>NOTE: This field is deprecated as the bank with blz 'PAYPAL' is no longer supported. Do not use this field, as it will be removed at some point.
 	AuctionSite string `json:"auctionSite,omitempty"`
 }

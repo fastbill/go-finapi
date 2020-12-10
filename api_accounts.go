@@ -13,7 +13,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/antihax/optional"
-	. "github.com/fastbill/go-finapi/v4/model"
+	. "github.com/fastbill/go-finapi/v5/model"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -943,8 +943,8 @@ Get bank accounts of the user that is authorized by the access_token. Must pass 
      * @param "BankConnectionIds" (optional.Interface of []int64) -  A comma-separated list of bank connection identifiers. If specified, then only accounts that relate to the given bank connections will be regarded. If not specified, then all accounts will be regarded.
      * @param "MinLastSuccessfulUpdate" (optional.String) -  Lower bound for a account&#39;s last successful update date, in the format &#39;YYYY-MM-DD&#39; (e.g. &#39;2016-01-01&#39;). If specified, then only accounts whose &#39;lastSuccessfulUpdate&#39; is equal to or later than the given date will be regarded.
      * @param "MaxLastSuccessfulUpdate" (optional.String) -  Upper bound for a account&#39;s last successful update date, in the format &#39;YYYY-MM-DD&#39; (e.g. &#39;2016-01-01&#39;). If specified, then only accounts whose &#39;lastSuccessfulUpdate&#39; is equal to or earlier than the given date will be regarded.
-     * @param "MinBalance" (optional.Float32) -  If specified, then only accounts whose balance is equal to or greater than the given balance will be regarded. Can contain a positive or negative number with at most two decimal places. Examples: -300.12, or 90.95
-     * @param "MaxBalance" (optional.Float32) -  If specified, then only accounts whose balance is equal to or less than the given balance will be regarded. Can contain a positive or negative number with at most two decimal places. Examples: -300.12, or 90.95
+     * @param "MinBalance" (optional.Float64) -  If specified, then only accounts whose balance is equal to or greater than the given balance will be regarded. Can contain a positive or negative number with at most two decimal places. Examples: -300.12, or 90.95
+     * @param "MaxBalance" (optional.Float64) -  If specified, then only accounts whose balance is equal to or less than the given balance will be regarded. Can contain a positive or negative number with at most two decimal places. Examples: -300.12, or 90.95
 
 @return AccountList
 */
@@ -957,8 +957,8 @@ type AccountsApiGetAndSearchAllAccountsOpts struct {
 	BankConnectionIds       optional.Interface
 	MinLastSuccessfulUpdate optional.String
 	MaxLastSuccessfulUpdate optional.String
-	MinBalance              optional.Float32
-	MaxBalance              optional.Float32
+	MinBalance              optional.Float64
+	MaxBalance              optional.Float64
 }
 
 func (a *AccountsApiService) GetAndSearchAllAccounts(ctx context.Context, localVarOptionals *AccountsApiGetAndSearchAllAccountsOpts) (AccountList, *http.Response, error) {

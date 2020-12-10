@@ -14,9 +14,9 @@ type CashFlowList struct {
 	// Array of cash flows
 	CashFlows []CashFlow `json:"cashFlows"`
 	// The total income
-	TotalIncome float32 `json:"totalIncome"`
+	TotalIncome float64 `json:"totalIncome"`
 	// The total spending
-	TotalSpending float32 `json:"totalSpending"`
+	TotalSpending float64 `json:"totalSpending"`
 	// The total balance
-	TotalBalance float32 `json:"totalBalance"`
+	TotalBalance float64 `json:"totalBalance"`
 }

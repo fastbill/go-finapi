@@ -12,7 +12,7 @@ package finapi
 // Data of a sub-transaction
 type SubTransactionParams struct {
 	// Amount
-	Amount float32 `json:"amount"`
+	Amount float64 `json:"amount"`
 	// Category identifier. If not specified, the original transaction's category will be applied. If you explicitly want the sub-transaction to have no category, then pass this field with value '0' (zero).
 	CategoryId int64 `json:"categoryId,omitempty"`
 	// Purpose. Maximum length is 2000. If not specified, the original transaction's value will be applied.

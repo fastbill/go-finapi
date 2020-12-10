@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Amount** | **float32** | Amount. Required. | [default to null]
+**Amount** | **float64** | Amount. Required. | [default to null]
 **Purpose** | **string** | Purpose. Any symbols are allowed. Maximum length is 2000. Optional. Default value: null. | [optional] [default to null]
 **Counterpart** | **string** | Counterpart. Any symbols are allowed. Maximum length is 80. Optional. Default value: null. | [optional] [default to null]
 **CounterpartIban** | **string** | Counterpart IBAN. Optional. Default value: null. | [optional] [default to null]

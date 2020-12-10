@@ -22,7 +22,7 @@ type SingleMoneyTransferRecipientData struct {
 	// End-To-End ID for the transfer transaction
 	EndToEndId string `json:"endToEndId,omitempty"`
 	// The amount to transfer. Must be a positive decimal number with at most two decimal places (e.g. 99.99)
-	Amount float32 `json:"amount"`
+	Amount float64 `json:"amount"`
 	// The purpose of the transfer transaction
 	Purpose string `json:"purpose,omitempty"`
 	// SEPA purpose code, according to ISO 20022, external codes set.

@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 **DebitorName** | **string** | Name of the debitor. Note: Neither finAPI nor the involved bank servers are guaranteed to validate the debitor name. Even if the debitor name does not depict the actual registered account holder of the specified debitor account, the direct debit request might still be successful. | [default to null]
 **DebitorIban** | **string** | IBAN of the debitor&#39;s account | [default to null]
 **DebitorBic** | **string** | BIC of the debitor&#39;s account. Note: This field is optional if - and only if - the bank connection of the account that you want to transfer money to supports the IBAN-Only direct debit. You can find this out via GET /bankConnections/&lt;id&gt;. If no BIC is given, finAPI will try to recognize it using the given debitorIban value (if it&#39;s given). And then if the result value is not empty, it will be used for the direct debit request independent of whether it is required or not. | [optional] [default to null]
-**Amount** | **float32** | The amount to transfer. Must be a positive decimal number with at most two decimal places (e.g. 99.99) | [default to null]
+**Amount** | **float64** | The amount to transfer. Must be a positive decimal number with at most two decimal places (e.g. 99.99) | [default to null]
 **Purpose** | **string** | The purpose of the transfer transaction | [optional] [default to null]
 **SepaPurposeCode** | **string** | SEPA purpose code, according to ISO 20022, external codes set. | [optional] [default to null]
 **MandateId** | **string** | Mandate ID that this direct debit order is based on. | [default to null]

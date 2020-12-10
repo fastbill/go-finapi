@@ -14,11 +14,11 @@ type DailyBalance struct {
 	// Date in the format 'YYYY-MM-DD HH:MM:SS.SSS' (german time).
 	Date string `json:"date"`
 	// Calculated balance at the end of day (aggregation of all regarded accounts).
-	Balance float32 `json:"balance"`
+	Balance float64 `json:"balance"`
 	// The sum of income of the given day (aggregation of all regarded accounts).
-	Income float32 `json:"income"`
+	Income float64 `json:"income"`
 	// The sum of spending of the given day (aggregation of all regarded accounts).
-	Spending float32 `json:"spending"`
+	Spending float64 `json:"spending"`
 	// Identifiers of the transactions for the given day
 	Transactions []int64 `json:"transactions"`
 }

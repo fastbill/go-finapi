@@ -12,7 +12,7 @@ package finapi
 // Mock transaction data
 type NewTransaction struct {
 	// Amount. Required.
-	Amount float32 `json:"amount"`
+	Amount float64 `json:"amount"`
 	// Purpose. Any symbols are allowed. Maximum length is 2000. Optional. Default value: null.
 	Purpose string `json:"purpose,omitempty"`
 	// Counterpart. Any symbols are allowed. Maximum length is 80. Optional. Default value: null.

@@ -130,7 +130,7 @@ paths:
         required: false
         type: "number"
         x-exportParamName: "MinBalance"
-        x-optionalDataType: "Float32"
+        x-optionalDataType: "Float64"
       - name: "maxBalance"
         in: "query"
         description: "If specified, then only accounts whose balance is equal to or\
@@ -140,7 +140,7 @@ paths:
         required: false
         type: "number"
         x-exportParamName: "MaxBalance"
-        x-optionalDataType: "Float32"
+        x-optionalDataType: "Float64"
       responses:
         "200":
           description: "List of requested accounts"
@@ -2402,7 +2402,7 @@ paths:
         required: false
         type: "number"
         x-exportParamName: "MinAmount"
-        x-optionalDataType: "Float32"
+        x-optionalDataType: "Float64"
       - name: "maxAmount"
         in: "query"
         description: "If specified, then only transactions whose amount is equal to\
@@ -2412,7 +2412,7 @@ paths:
         required: false
         type: "number"
         x-exportParamName: "MaxAmount"
-        x-optionalDataType: "Float32"
+        x-optionalDataType: "Float64"
       - name: "direction"
         in: "query"
         description: "If specified, then only transactions with the given direction(s)\
@@ -4262,7 +4262,7 @@ paths:
         required: false
         type: "number"
         x-exportParamName: "MinAmount"
-        x-optionalDataType: "Float32"
+        x-optionalDataType: "Float64"
       - name: "maxAmount"
         in: "query"
         description: "If specified, then only those payments are regarded whose (absolute)\
@@ -4271,7 +4271,7 @@ paths:
         required: false
         type: "number"
         x-exportParamName: "MaxAmount"
-        x-optionalDataType: "Float32"
+        x-optionalDataType: "Float64"
       - name: "status"
         in: "query"
         description: "A comma-separated list of payment statuses. If provided, then\
@@ -5677,7 +5677,7 @@ paths:
         required: false
         type: "number"
         x-exportParamName: "MinAmount"
-        x-optionalDataType: "Float32"
+        x-optionalDataType: "Float64"
       - name: "maxAmount"
         in: "query"
         description: "If specified, then only transactions whose amount is equal to\
@@ -5687,7 +5687,7 @@ paths:
         required: false
         type: "number"
         x-exportParamName: "MaxAmount"
-        x-optionalDataType: "Float32"
+        x-optionalDataType: "Float64"
       - name: "direction"
         in: "query"
         description: "If specified, then only transactions with the given direction(s)\

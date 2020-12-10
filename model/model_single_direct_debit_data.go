@@ -18,7 +18,7 @@ type SingleDirectDebitData struct {
 	// BIC of the debitor's account. Note: This field is optional if - and only if - the bank connection of the account that you want to transfer money to supports the IBAN-Only direct debit. You can find this out via GET /bankConnections/<id>. If no BIC is given, finAPI will try to recognize it using the given debitorIban value (if it's given). And then if the result value is not empty, it will be used for the direct debit request independent of whether it is required or not.
 	DebitorBic string `json:"debitorBic,omitempty"`
 	// The amount to transfer. Must be a positive decimal number with at most two decimal places (e.g. 99.99)
-	Amount float32 `json:"amount"`
+	Amount float64 `json:"amount"`
 	// The purpose of the transfer transaction
 	Purpose string `json:"purpose,omitempty"`
 	// SEPA purpose code, according to ISO 20022, external codes set.
