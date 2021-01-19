@@ -1,11 +1,11 @@
 module github.com/fastbill/go-finapi/v5
 
-go 1.13
+go 1.15
 
 require (
-	github.com/antihax/optional v0.0.0-20180407024304-ca021399b1a6
-	github.com/golang/protobuf v1.3.1 // indirect
-	golang.org/x/net v0.0.0-20190509222800-a4d6f7feada5 // indirect
-	golang.org/x/oauth2 v0.0.0-20190402181905-9f3314589c9a
-	google.golang.org/appengine v1.5.0 // indirect
+	github.com/antihax/optional v1.0.0
+	github.com/golang/protobuf v1.4.3 // indirect
+	golang.org/x/net v0.0.0-20201224014010-6772e930b67b // indirect
+	golang.org/x/oauth2 v0.0.0-20210113205817-d3ed898aa8a3
+	google.golang.org/appengine v1.6.7 // indirect
 )
