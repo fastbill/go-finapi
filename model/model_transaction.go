@@ -27,7 +27,7 @@ type Transaction struct {
 	Amount float64 `json:"amount"`
 	// Transaction purpose. Maximum length: 2000
 	Currency string `json:"currency,omitempty"`
-	// Transaction currency in ISO 4217 format.This field can be null if not explicitly provided the bank. In this case it can be assumed as account’s currency.
+	// Transaction currency in ISO 4217 format. This field can be null if not explicitly provided the bank. In this case it can be assumed as account’s currency.
 	Purpose string `json:"purpose,omitempty"`
 	// Counterpart name. Maximum length: 80
 	CounterpartName string `json:"counterpartName,omitempty"`
