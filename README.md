@@ -354,13 +354,14 @@ Each of these functions takes a value of the given basic type and returns a poin
   Then copy everything besides `gitpush.sh` and dot files from the new SDK that you downloaded into your existing repository.
 4. Replace all occurances of `package io.finapi.access` with `package finapi` besides the one in this README file.
 5. Revert the module name in the `go.mod` file to the one you had before. Consider increasing the major version in case you expect breaking changes from the update.
-6. In the file `client.go` make sure to keep the following change for the serialization of the OpenAPI error (either revert the change from copying the file or just paste in the old version again):
+6. Fix compiliation errors if there are some (e.g. the `NewTransaction` struct might need to be renamed to `ExtendedTransaction` to avoid a naming collision).
+7. In the file `client.go` make sure to keep the following change for the serialization of the OpenAPI error (either revert the change from copying the file or just paste in the old version again):
     ```go
     func (e GenericOpenAPIError) Error() string {
         return e.error + ", body: " + string(e.body)
     }
     ```
-7.  From the `README.md` file in the downloaded SDK copy the sections `Documentation for API Endpoints` and `Documentation For Models` and use them to replace those sections in the repository `README.md` file.'
+8.  From the `README.md` file in the downloaded SDK copy the sections `Documentation for API Endpoints` and `Documentation For Models` and use them to replace those sections in the repository `README.md` file.'
   Also update the API version mentioned at the top of the readme.
 10. Replace all `float32` with `float64` and `Float32` with `Float64` in the entire SDK with the exception of this README file and the `utils.go` file.
   This is needed because otherwise we get rounding errors for large transaction amounts.
