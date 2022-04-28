@@ -1,6 +1,6 @@
 # \MocksAndTestsApi
 
-All URIs are relative to *https://localhost*
+All URIs are relative to *https://sandbox.finapi.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,18 +8,56 @@ Method | HTTP request | Description
 [**MockBatchUpdate**](MocksAndTestsApi.md#MockBatchUpdate) | **Post** /api/v1/tests/mockBatchUpdate | Mock batch update
 
 
-# **CheckCategorization**
-> CategorizationCheckResults CheckCategorization(ctx, body)
+
+## CheckCategorization
+
+> CategorizationCheckResults CheckCategorization(ctx).CheckCategorizationData(checkCategorizationData).XRequestId(xRequestId).Execute()
+
 Check categorization
 
-This service can be used to check the categorization for a given set of transactions, without the need of having the transactions actually imported in finAPI. The result of the categorization is the same as if the transactions were actually imported (the service regards the user-specific categorization rules of the user that is authorized by the access_token). Must pass the user's access_token.
 
-### Required Parameters
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    checkCategorizationData := *openapiclient.NewCheckCategorizationData([]openapiclient.CheckCategorizationTransactionData{*openapiclient.NewCheckCategorizationTransactionData("transaction", int64(1), float64(-99.99))}) // CheckCategorizationData | Transactions data
+    xRequestId := "xRequestId_example" // string | With any API call, you can pass a request ID. The request ID can be an arbitrary string with up to 255 characters. Passing a longer string will result in an error. If you don't pass a request ID for a call, finAPI will generate a random ID internally. The request ID is always returned back in the response of a service, as a header with name 'X-Request-Id'. We highly recommend to always pass a (preferably unique) request ID, and include it into your client application logs whenever you make a request or receive a response (especially in the case of an error response). finAPI is also logging request IDs on its end. Having a request ID can help the finAPI support team to work more efficiently and solve tickets faster. (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    api_client := openapiclient.NewAPIClient(configuration)
+    resp, r, err := api_client.MocksAndTestsApi.CheckCategorization(context.Background()).CheckCategorizationData(checkCategorizationData).XRequestId(xRequestId).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `MocksAndTestsApi.CheckCategorization``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `CheckCategorization`: CategorizationCheckResults
+    fmt.Fprintf(os.Stdout, "Response from `MocksAndTestsApi.CheckCategorization`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCheckCategorizationRequest struct via the builder pattern
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **body** | [**CheckCategorizationData**](CheckCategorizationData.md)| Transactions data | 
+ **checkCategorizationData** | [**CheckCategorizationData**](CheckCategorizationData.md) | Transactions data | 
+ **xRequestId** | **string** | With any API call, you can pass a request ID. The request ID can be an arbitrary string with up to 255 characters. Passing a longer string will result in an error. If you don&#39;t pass a request ID for a call, finAPI will generate a random ID internally. The request ID is always returned back in the response of a service, as a header with name &#39;X-Request-Id&#39;. We highly recommend to always pass a (preferably unique) request ID, and include it into your client application logs whenever you make a request or receive a response (especially in the case of an error response). finAPI is also logging request IDs on its end. Having a request ID can help the finAPI support team to work more efficiently and solve tickets faster. | 
 
 ### Return type
 
@@ -27,27 +65,65 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[finapi_auth](../README.md#finapi_auth)
+[finapi_auth](../README.md#finapi_auth), [finapi_auth](../README.md#finapi_auth)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
-# **MockBatchUpdate**
-> MockBatchUpdate(ctx, body)
+
+## MockBatchUpdate
+
+> MockBatchUpdate(ctx).MockBatchUpdateParams(mockBatchUpdateParams).XRequestId(xRequestId).Execute()
+
 Mock batch update
 
-This service can be used to mock an update of one or several bank connections by letting you simulate finAPI's communication with a bank server. More specifically, you can provide custom balances and transactions for existing accounts and finAPI will import that data into the accounts as if the data had been delivered by a real bank server during a real update. The idea of this service is to allow you to create accounts with specific data in them so that you can test your application in different scenarios.<br/><br/>You can also test your application's reception and processing of push notifications with this service, by enabling the 'triggerNotifications' flag in your request. When this flag is enabled, finAPI will send notifications to your application based on the notification rules that are set up for the user and on the data you provided in the request, the same way as it works with finAPI's real automatic batch update process.<br/><br/>Note that this service behaves mostly like calling the bank connection update service, meaning that it returns immediately after having asynchronously started the update process, and also meaning that you have to check the status of the updated bank connections and accounts to find out when the update has finished and what the result is. As you can update several bank connections at once, this service is closer to how finAPI's automatic batch updates work as it is to the manual update service though. Because of this, the result of the mocked bank connection updates will be stored in the 'lastAutoUpdate' field of the bank connections and not in the 'lastManualUpdate' field. Also, just like with the real batch update, any bank connection that you use with this service must have a PIN stored (even though it is not actually forwarded to any bank server).<br/><br/>Also note that this service may be called only when the user's automatic bank connection updates are disabled, to make sure that the mock updates cannot intervene with a real update (please see the User field 'isAutoUpdateEnabled'). Also, it is currently not possible to mock data for security accounts with this service, as you can only pass transactions, but not security positions.<br/><br/>Please be aware that you will 'mess up' the accounts when using this service, meaning that when you perform a real update of accounts that you have previously updated with this service, finAPI might detect inconsistencies in the data that exists in its database and the data that is reported by the bank server, and try to fix this with the insertion of an adjusting entry ('Zwischensaldo' transaction). Also, new real transactions might not get imported as finAPI could match them to mocked transactions. Also note that transactions older than 89 days from the current date will be skipped. <b>THIS SERVICE IS MEANT FOR TESTING PURPOSES DURING DEVELOPMENT OF YOUR APPLICATION ONLY!</b> This is why it will work only on the sandbox or alpha environments. Calling it on the live environment will result in <b>403 Forbidden</b>.
 
-### Required Parameters
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    mockBatchUpdateParams := *openapiclient.NewMockBatchUpdateParams([]openapiclient.MockBankConnectionUpdate{*openapiclient.NewMockBankConnectionUpdate(int64(1))}) // MockBatchUpdateParams | Data for mock bank connection updates
+    xRequestId := "xRequestId_example" // string | With any API call, you can pass a request ID. The request ID can be an arbitrary string with up to 255 characters. Passing a longer string will result in an error. If you don't pass a request ID for a call, finAPI will generate a random ID internally. The request ID is always returned back in the response of a service, as a header with name 'X-Request-Id'. We highly recommend to always pass a (preferably unique) request ID, and include it into your client application logs whenever you make a request or receive a response (especially in the case of an error response). finAPI is also logging request IDs on its end. Having a request ID can help the finAPI support team to work more efficiently and solve tickets faster. (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    api_client := openapiclient.NewAPIClient(configuration)
+    resp, r, err := api_client.MocksAndTestsApi.MockBatchUpdate(context.Background()).MockBatchUpdateParams(mockBatchUpdateParams).XRequestId(xRequestId).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `MocksAndTestsApi.MockBatchUpdate``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiMockBatchUpdateRequest struct via the builder pattern
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **body** | [**MockBatchUpdateParams**](MockBatchUpdateParams.md)| Data for mock bank connection updates | 
+ **mockBatchUpdateParams** | [**MockBatchUpdateParams**](MockBatchUpdateParams.md) | Data for mock bank connection updates | 
+ **xRequestId** | **string** | With any API call, you can pass a request ID. The request ID can be an arbitrary string with up to 255 characters. Passing a longer string will result in an error. If you don&#39;t pass a request ID for a call, finAPI will generate a random ID internally. The request ID is always returned back in the response of a service, as a header with name &#39;X-Request-Id&#39;. We highly recommend to always pass a (preferably unique) request ID, and include it into your client application logs whenever you make a request or receive a response (especially in the case of an error response). finAPI is also logging request IDs on its end. Having a request ID can help the finAPI support team to work more efficiently and solve tickets faster. | 
 
 ### Return type
 
@@ -55,12 +131,14 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[finapi_auth](../README.md#finapi_auth)
+[finapi_auth](../README.md#finapi_auth), [finapi_auth](../README.md#finapi_auth)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
