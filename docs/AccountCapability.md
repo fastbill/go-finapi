@@ -1,0 +1,27 @@
+# AccountCapability
+
+## Enum
+
+
+* `DATA_DOWNLOAD` (value: `"DATA_DOWNLOAD"`)
+
+* `IBAN_ONLY_SEPA_MONEY_TRANSFER` (value: `"IBAN_ONLY_SEPA_MONEY_TRANSFER"`)
+
+* `IBAN_ONLY_SEPA_DIRECT_DEBIT` (value: `"IBAN_ONLY_SEPA_DIRECT_DEBIT"`)
+
+* `SEPA_MONEY_TRANSFER` (value: `"SEPA_MONEY_TRANSFER"`)
+
+* `SEPA_COLLECTIVE_MONEY_TRANSFER` (value: `"SEPA_COLLECTIVE_MONEY_TRANSFER"`)
+
+* `SEPA_BASIC_DIRECT_DEBIT` (value: `"SEPA_BASIC_DIRECT_DEBIT"`)
+
+* `SEPA_BASIC_COLLECTIVE_DIRECT_DEBIT` (value: `"SEPA_BASIC_COLLECTIVE_DIRECT_DEBIT"`)
+
+* `SEPA_B2_B_DIRECT_DEBIT` (value: `"SEPA_B2B_DIRECT_DEBIT"`)
+
+* `SEPA_B2_B_COLLECTIVE_DIRECT_DEBIT` (value: `"SEPA_B2B_COLLECTIVE_DIRECT_DEBIT"`)
+
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
