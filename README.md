@@ -44,15 +44,6 @@ user, res, err := client.UsersApi.CreateUser(ctx, newUser)
 // Use a user context for user based actions like connection banks etc.
 userCtx, err := client.NewUserContext("put finapi user id here", "put user password here")
 // handle error
-newBankConn := finapimodel.ImportBankConnectionParams{
-    BankId: 1234,
-    BankingUserId: "",
-    BankingPin: "",
-    StorePin: true,
-    MaxDaysForDownload: 90,
-    AccountTypeIds: []int{1,2,3}
-}
-bankConnection, res, err := client.BankConnectionsApi.ImportBankConnection(userCtx, newBankConn)
 ```
 
 ## Documentation for API Endpoints
