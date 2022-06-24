@@ -339,13 +339,13 @@ Each of these functions takes a value of the given basic type and returns a poin
 * `PtrTime`
 
 ## How to Update This SDK
-1. Download the newest version of the official SDK from [docs.finapi.io](https://docs.finapi.io). For that click the download button on the top of the page and select "go" as language.
+1. Download the newest version of the official SDK from [docs.finapi.io](https://docs.finapi.io). Select "finAPI Access (with deprecation)" from the product selection. Than click the download button on the top of the page and select "go" as language.
 2. Save the zip file you get there to some place on your PC and extract it. Open the folder `go-client`.
-3. In the current SDK folder, delete everything besides `README.md` and `finapi.go`.
+3. In the current SDK folder, delete everything besides `README.md`, `LICENSE` and `finapi.go`.
   Then copy everything besides `gitpush.sh` and dot files from the new SDK that you downloaded into your existing repository.
 4. Replace all occurances of `package io.finapi.access` with `package finapi` besides the one in this README file.
 5. Revert the module name in the `go.mod` file to the one you had before. Consider increasing the major version in case you expect breaking changes from the update.
-6. Fix compiliation errors if there are some (e.g. the `NewTransaction` struct might need to be renamed to `ExtendedTransaction` to avoid a naming collision).
+6. Fix compiliation errors if there are some (e.g. the `NewTransaction` struct might need to be renamed to `ExtendedTransaction` to avoid a naming collision). In case you see a lot of compilation errors of the type `... redeclared in the block` for enum equivalents, it is best to genereate the SDK yourself (see instructions below) and start again at step 3 afterwards.
 7. In the file `client.go` make sure to keep the following change for the serialization of the OpenAPI error (either revert the change from copying the file or just paste in the old version again):
     ```go
     func (e GenericOpenAPIError) Error() string {
@@ -358,3 +358,17 @@ Each of these functions takes a value of the given basic type and returns a poin
   This is needed because otherwise we get rounding errors for large transaction amounts.
   Float64 only garantees 6 correct digits, not enought for amounts like `123456.78`.
 11. Review the changes in the Git diff before commiting them. Files in `docs` folder can be commited without thourough checking since they only contain text changes.
+
+### Generating the SDK in Case the Download Has a Lot of Compilation Errors <!-- omit in toc -->
+1. In some folder, create a file `config.json` with the following content.
+  ```json
+  {
+    "packageName": "finapi",
+    "enumClassPrefix": true
+  }
+  ```
+2. Download the openapi.yml file (not the SDK) from [docs.finapi.io](https://docs.finapi.io) and place it in the same folder as the config.json file.
+3. Install the generator via `npm install @openapitools/openapi-generator-cli -g`.
+4. Run the generator by executing `openapi-generator-cli generate -i ./openapi.yaml -g go -o ./sdk -c ./config.json` in the folder that contains the config and openapi file.
+5. In case the result contains a lot of compilation errors, delete the generated folder and use `openapi-generator-cli version-manager set 5.0.1` to go back to a more stable version of the generator. Then run the command in step 4 again.
+6. Now you can follow the update process described above (skipping steps 1, 2 and 4) by treating the generated SDK like the downloaded one from above.
